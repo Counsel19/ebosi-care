@@ -7,7 +7,7 @@ const DownloadAppCTA = () => {
     <div className="w__frame ">
       <div className=" grid lg:grid-cols-2 gap-[4rem] items-center">
         <div className=" space-y-[2rem]">
-          <h3 className="font-bold text-[5rem] uppercase leading-[4.5rem] text-[#506BA5]">
+          <h3 className="font-bold text-[3rem] leading-[4rem] lg:text-[5rem] uppercase lg:leading-[4.5rem] text-[#506BA5]">
             Download the app
           </h3>
           <p>
@@ -25,28 +25,30 @@ const DownloadAppCTA = () => {
             <Link href={""}>
               <Image
                 src={"/images/download_appstore.png"}
-                alt="download_appstore"
+                alt="download_appstore "
                 height={200}
                 width={200}
+                className="w-[15rem] md:w-[20rem]"
               />
             </Link>
             <Link href={""}>
               <Image
                 src={"/images/download_googleplay.png"}
-                alt="download_googleplay"
+                alt="download_googleplay "
                 height={200}
                 width={200}
+                className="w-[15rem] md:w-[20rem]"
               />
             </Link>
           </div>
         </div>
-        <div className="grid place-content-center">
+        <div className="grid order-2 lg:order-1 place-content-center">
           <Image
             alt="Ebosicare app"
             src={"/images/select_location.png"}
             width={700}
             height={400}
-            className=" h-[60rem] object-contain"
+            className="h-[30rem] lg:h-[60rem] object-contain"
           />
         </div>
       </div>

@@ -6,7 +6,7 @@ const Footer: FC = ({}) => {
   return (
     <div className="py-[8rem] bg-[#051029]">
       <div className="w__frame">
-        <div className="grid grid-cols-4 gap-[4rem] text-white">
+        <div className="grid lg:grid-cols-4 gap-[4rem] text-white">
           <div className="space-y-[2rem]">
             <Image
               alt="ebosi_logo_white"
@@ -47,10 +47,10 @@ const Footer: FC = ({}) => {
         </div>
 
         <hr className="mt-[5rem] mb-[1rem] " />
-        <div className="flex justify-between items-center  text-slate-400">
+        <div className="flex flex-col lg:flex-row gap-[4rem] justify-between lg:items-center  text-slate-400">
           <span>Ebosi ©. All rights reserved</span>
 
-          <div className="flex items-center text-[1.2rem] gap-[4rem]">
+          <div className="flex flex-col lg:flex-row lg:items-center text-[1.2rem] gap-[4rem]">
             <Link href={"/"}>PRIVACY POLICY </Link>
             <Link href={"/"}>TERMS OF SRVICE </Link>
           </div>

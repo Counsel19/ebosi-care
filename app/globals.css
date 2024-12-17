@@ -1,18 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
 
 html {
   font-size: 62.5%;
   height: 100%;
   scroll-behavior: smooth;
- 
 }
 
 body {
-  font-family: Arial, Helvetica, sans-serif;
   font-size: 1.6rem;
+  font-family: "Inter", sans-serif;
+  font-style: normal;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: "Instrument Sans", sans-serif;
+  font-optical-sizing: auto;
 }
 
 @layer utilities {
@@ -21,7 +32,6 @@ body {
     width: min(95%, 1200px);
     margin-inline: auto;
   }
-
 }
 
 @layer base {
@@ -32,7 +42,7 @@ body {
     --card-foreground: 0 0% 3.9%;
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 3.9%;
-    --primary: 0 0% 9%;
+    --primary: 221 49% 44%;
     --primary-foreground: 0 0% 98%;
     --secondary: 0 0% 96.1%;
     --secondary-foreground: 0 0% 9%;
@@ -51,7 +61,6 @@ body {
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
- 
   }
   .dark {
     --background: 0 0% 3.9%;
@@ -78,19 +87,14 @@ body {
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
- 
   }
- 
 }
 
 @layer base {
   * {
     @apply border-border;
- 
   }
   body {
     @apply bg-background text-foreground;
- 
   }
- 
 }

@@ -17,37 +17,40 @@ const currencyOptions = [{ value: "usd", label: "$(USD)" }];
 const BookRideWindow = () => {
   return (
     <div className="p-[2rem] rounded-lg bg-white shadow-lg grid gap-[4rem]">
-      <div className="grid  grid-cols-[2fr_0.5fr] items-center">
-        <h4 className="align-end font-bold text-xl">Book a Ride</h4>
-        <div className="flex gap-[1rem] ">
-          <Select>
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Select Language" />
-            </SelectTrigger>
-            <SelectContent>
-              {languageOptions.map((item) => (
-                <SelectItem key={item.value} value={item.value}>
-                  {item.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          <Select>
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Select Currency" />
-            </SelectTrigger>
-            <SelectContent>
-              {currencyOptions.map((item) => (
-                <SelectItem key={item.value} value={item.value}>
-                  {item.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+      <div className="space-y-[2rem]">
+        <div className="flex justify-end">
+          <div className="flex  gap-[1rem] ">
+            <Select>
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Select Language" />
+              </SelectTrigger>
+              <SelectContent>
+                {languageOptions.map((item) => (
+                  <SelectItem key={item.value} value={item.value}>
+                    {item.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            <Select>
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Select Currency" />
+              </SelectTrigger>
+              <SelectContent>
+                {currencyOptions.map((item) => (
+                  <SelectItem key={item.value} value={item.value}>
+                    {item.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
         </div>
+
+        <h4 className="text-center font-bold text-xl">Book a Ride</h4>
       </div>
 
-      <div className="flex gap-[2rem] ">
+      <div className="flex flex-col lg:flex-row gap-[2rem] ">
         <div className="w-full space-y-4">
           <label htmlFor="">Enter your pickup Location:</label>
           <Input className="w-full" placeholder="E.g Airport, Hotel" />
@@ -58,9 +61,9 @@ const BookRideWindow = () => {
         </div>
       </div>
 
-      <div className="w-full space-y-[3rem]">
-        <div className=" mx-auto w-[50%] grid gap-[2rem]">
-          <Button className="bg-[#CC1815] w-full  text-white">
+      <div className="w-full space-y-[3rem] text-[1.4rem] lg:text-base">
+        <div className=" mx-auto lg:w-[50%] grid gap-[2rem]">
+          <Button className="bg-[#CC1815] lg:w-full  text-white">
             Get a Qoute
           </Button>
 
@@ -76,13 +79,15 @@ const BookRideWindow = () => {
           </div>
         </div>
 
-        <div className=" mx-auto w-[60%]">
+        <div className=" mx-auto md:w-[60%] text-[1.4rem] lg:text-base">
           <div className=" before:flex before:w-full before:h-1 before:bg-[#00000040] italic text-[2rem] flex items-center gap-4  after:flex after:w-full after:h-1 after:bg-[#00000040] ">
             or
           </div>
           <p className="text-slate-500 text-[1.6rem] text-center">
             Do you have a coperate account?{" "}
-            <Link href={"/"} className="text-blue-500">Login/Signup here</Link>
+            <Link href={"/"} className="text-blue-500">
+              Login/Signup here
+            </Link>
           </p>
         </div>
       </div>

@@ -1,6 +1,5 @@
 import BookingBenefits from "@/components/home/BookingBenefits";
 import DownloadAppCTA from "@/components/home/DownloadAppCTA";
-import Footer from "@/components/home/Footer";
 import HomeBanner from "@/components/home/HomeBanner";
 import ReachOutCTA from "@/components/home/ReachOutCTA";
 import ServicesWeOffer from "@/components/home/ServicesWeOffer";
@@ -17,7 +16,7 @@ export default function Home() {
       <BookingBenefits />
       <Testimonials />
       <ReachOutCTA />
-      <Footer />
+
     </div>
   );
 }

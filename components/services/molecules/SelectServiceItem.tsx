@@ -19,7 +19,7 @@ const SelectServiceItem: FC<SelectServiceItemProps> = ({
   title,
 }) => {
   return (
-    <div className="grid grid-cols-[1fr_3fr] rounded-lg border border-[#395BA6] cursor-pointer  ">
+    <div className="grid md:grid-cols-[1fr_3fr] rounded-lg border border-[#395BA6] cursor-pointer  ">
       <div className="bg-[#D9D9D987] grid place-content-center">
         <Image
           src={image}

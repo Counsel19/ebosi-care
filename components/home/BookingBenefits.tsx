@@ -8,8 +8,8 @@ function BookingBenefits() {
         Booking a Ride is Super Fast & Easy.
       </h3>
 
-      <div className="grid grid-cols-2 gap-[4rem]">
-        <div className="relative">
+      <div className="grid lg:grid-cols-2 gap-[4rem]">
+        <div className="relative hidden lg:block">
           <div className="w-[47rem] h-[47rem] rounded-full bg-[#3A65C5]" />
           <Image
             src={"/images/app_mockup.png"}
@@ -19,7 +19,7 @@ function BookingBenefits() {
             className="absolute top-0 bottom-0 left-0 right-0"
           />
         </div>
-        <div className="grid grid-cols-2 gap-[2rem]">
+        <div className="grid lg:grid-cols-2 gap-[2rem]">
           <div>
             <Image
               src={"/icons/location.png"}

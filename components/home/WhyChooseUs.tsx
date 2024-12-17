@@ -9,7 +9,7 @@ import React from "react";
 const WhyChooseUs = () => {
   return (
     <div className=" bg-[#F7F7F7] py-[4rem]">
-      <div className="w__frame grid grid-cols-4 gap-[4rem]">
+      <div className="w__frame grid md:grid-cols-2 lg:grid-cols-4 gap-[4rem]">
         <div className="flex gap-[1rem]">
           <SquareLibrary color="#395BA6" />
           No Price Surge

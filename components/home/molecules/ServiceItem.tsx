@@ -35,7 +35,7 @@ const ServiceItem: FC<ServiceItemProps> = ({
         </span>
       </div>
       <h4 className="text-[3.2rem] font-bold">{title}</h4>
-      <p className="text-[1.4rem] text-gray-500 leading-[1.6rem]">{description}
+      <p className="text-[1.4rem] text-gray-500 leading-[2.2rem]">{description}
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
         tempor incididunt ut labore et dolore magna aliqua.
       </p>

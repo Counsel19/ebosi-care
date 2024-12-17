@@ -15,7 +15,7 @@ const steps = [
 
 const ServiceTab: FC<ServiceTabProps> = ({ currentIndex, setCurrentIndex }) => {
   return (
-    <div className="shadow-md grid grid-cols-4 gap-[3rem]  h-[5rem] border">
+    <div className="shadow-md text-[1.2rem] lg:text-base grid grid-cols-4 gap-[3rem]  h-[5rem] border">
       {steps.map((step, index) => (
         <button
         onClick={() => setCurrentIndex(index + 1)}
