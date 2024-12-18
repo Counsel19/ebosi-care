@@ -34,7 +34,7 @@ const AboutPage = () => {
         <h4 className="font-medium  text-[5.4rem] leading-[6rem] text-center">
           About Us
         </h4>
-        <div className="grid gap-[2rem] text-gray-500 text-[1.4rem] leading-[1.8rem]">
+        <div className="grid gap-[2rem] text-gray-600  md:text-[1.4rem] leading-[1.8rem]">
           <p>
             Sed ut perspiciatis unde omnis iste natus error sit voluptatem
             accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
@@ -66,7 +66,7 @@ const AboutPage = () => {
         <h4 className="font-medium  text-[5.4rem] leading-[6rem] text-center">
           Mission and Vision
         </h4>
-        <div className="grid gap-[2rem] text-gray-500 text-[1.4rem] leading-[1.8rem]">
+        <div className="grid gap-[2rem] text-gray-600 text-[1.4rem] leading-[1.8rem]">
           <p>
             Sed ut perspiciatis unde omnis iste natus error sit voluptatem
             accusantium doloremque laudantium, totam rem aperiam, eaque ipsa

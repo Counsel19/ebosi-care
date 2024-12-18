@@ -16,12 +16,12 @@ const currencyOptions = [{ value: "usd", label: "$(USD)" }];
 
 const BookRideWindow = () => {
   return (
-    <div className="p-[2rem] rounded-lg bg-white shadow-lg grid gap-[4rem]">
-      <div className="space-y-[2rem]">
-        <div className="flex justify-end">
+    <div className="p-[2rem] w-full  rounded-lg bg-white shadow-lg space-y-[4rem]">
+      <div className="space-y-[2rem] w-full grid" >
+        <div className="flex justify-end max-w-full">
           <div className="flex  gap-[1rem] ">
             <Select>
-              <SelectTrigger className="w-[180px]">
+              <SelectTrigger className="lg:w-[180px]">
                 <SelectValue placeholder="Select Language" />
               </SelectTrigger>
               <SelectContent>
@@ -33,7 +33,7 @@ const BookRideWindow = () => {
               </SelectContent>
             </Select>
             <Select>
-              <SelectTrigger className="w-[180px]">
+              <SelectTrigger className="lg:w-[180px]">
                 <SelectValue placeholder="Select Currency" />
               </SelectTrigger>
               <SelectContent>
@@ -62,12 +62,12 @@ const BookRideWindow = () => {
       </div>
 
       <div className="w-full space-y-[3rem] text-[1.4rem] lg:text-base">
-        <div className=" mx-auto lg:w-[50%] grid gap-[2rem]">
-          <Button className="bg-[#CC1815] lg:w-full  text-white">
+        <div className=" mx-auto lg:w-[50%]  space-y-[2rem]">
+          <Button className="bg-[#CC1815] w-full  text-white">
             Get a Qoute
           </Button>
 
-          <div className="flex items-center gap-[2rem]">
+          <div className="grid  items-center grid-cols-2 justify-between">
             <Button variant={"ghost"}>
               <FilePenLine />
               <span>Edit/Cancel your ride</span>
@@ -78,8 +78,8 @@ const BookRideWindow = () => {
             </Button>
           </div>
         </div>
-
-        <div className=" mx-auto md:w-[60%] text-[1.4rem] lg:text-base">
+{/*  */}
+        <div className="mx-auto md:w-[60%] text-[1.4rem] lg:text-base ">
           <div className=" before:flex before:w-full before:h-1 before:bg-[#00000040] italic text-[2rem] flex items-center gap-4  after:flex after:w-full after:h-1 after:bg-[#00000040] ">
             or
           </div>

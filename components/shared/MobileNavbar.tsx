@@ -18,8 +18,8 @@ const MobileNavbar: FC<MobileNavbarProps> = ({ setIsOpen, isOpen }) => {
   const isActive = (path: string) => pathname === path;
 
   return (
-    <div>
-      <div className="flex justify-between items-center mb-[6rem]">
+    <div className="flex flex-col justify-start gap-[6rem] ">
+      <div className="flex justify-between items-center ">
         <button onClick={() => setIsOpen(!isOpen)} className="lg:hidden">
           <X />
         </button>
@@ -35,7 +35,7 @@ const MobileNavbar: FC<MobileNavbarProps> = ({ setIsOpen, isOpen }) => {
         <div></div>
       </div>
       <ul className="flex flex-col gap-[3rem] font-medium items-center ">
-        <li className="grid uppercase  ">
+        <li className=" uppercase  ">
           <Link
             onClick={() => setIsOpen(false)}
             className={cn(
@@ -47,7 +47,7 @@ const MobileNavbar: FC<MobileNavbarProps> = ({ setIsOpen, isOpen }) => {
             Home
           </Link>
         </li>
-        <li className="grid uppercase  ">
+        <li className=" uppercase  ">
           <Link
             onClick={() => setIsOpen(false)}
             className={cn(
@@ -61,7 +61,7 @@ const MobileNavbar: FC<MobileNavbarProps> = ({ setIsOpen, isOpen }) => {
             Services
           </Link>
         </li>
-        <li className="grid uppercase  ">
+        <li className=" uppercase  ">
           <Link
             onClick={() => setIsOpen(false)}
             className={cn(
@@ -75,7 +75,7 @@ const MobileNavbar: FC<MobileNavbarProps> = ({ setIsOpen, isOpen }) => {
             About Us
           </Link>
         </li>
-        <li className="grid uppercase  ">
+        <li className=" uppercase  ">
           <Link
             onClick={() => setIsOpen(false)}
             className={cn(
@@ -89,7 +89,7 @@ const MobileNavbar: FC<MobileNavbarProps> = ({ setIsOpen, isOpen }) => {
             Book a Ride
           </Link>
         </li>
-        <li className="grid uppercase  ">
+        <li className=" uppercase  ">
           <Link
             onClick={() => setIsOpen(false)}
             className={cn(
@@ -103,7 +103,7 @@ const MobileNavbar: FC<MobileNavbarProps> = ({ setIsOpen, isOpen }) => {
             Drive with us
           </Link>
         </li>
-        <li className="grid uppercase  ">
+        <li className=" uppercase  ">
           <Link
             onClick={() => setIsOpen(false)}
             className={cn(
