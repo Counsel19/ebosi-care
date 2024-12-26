@@ -62,7 +62,7 @@ const Categories = () => {
           Categories
         </h3>
 
-        <div className="grid grid-cols-4 gap-8 relative">
+        <div className="grid lg:grid-cols-4 gap-8 relative">
           <Button
             onClick={() => setCurrentSlide(currentSlide - 1)}
             className={cn(

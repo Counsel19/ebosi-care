@@ -76,7 +76,7 @@ const MyLearning = () => {
         </div>
       </div>
 
-      <div className=" w-[60%] mx-auto space-y-[4rem]">
+      <div className=" md:w-[60%] mx-auto space-y-[4rem]">
         <h3 className="  text-[3.4rem] font-medium">
           Assessments & Acknowledgements
         </h3>
