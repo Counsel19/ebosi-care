@@ -5,17 +5,69 @@ import { AlignJustify } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { FC, useState } from "react";
+import { FC, useRef, useState } from "react";
 import MobileNavbar from "./MobileNavbar";
+import { Button } from "../ui/button";
+import { IoMdArrowDropdown } from "react-icons/io";
+import { useOnClickOutside } from "@/hooks/useOnClickOutside";
 
-// interface NavbarProps {
+const servicesSubMenu = [
+  {
+    id: 1,
+    text: "Wheelchair",
+    link: "/services/wheelchair",
+  },
+  {
+    id: 2,
+    text: "Stretcher",
+    link: "/services/stretcher",
+  },
+  {
+    id: 3,
+    text: "Sedan Ambulatory",
+    link: "/services/sedan-ambulatory",
+  },
+  {
+    id: 4,
+    text: "Medical Courier",
+    link: "/services/medical-courier",
+  },
+  {
+    id: 5,
+    text: "Regular Delivery",
+    link: "/services/regular-delivery",
+  },
+  {
+    id: 6,
+    text: "Book Qualified Patient Support",
+    link: "/services/book-support",
+  },
+];
 
-// }
+const driveWithUsSubmenu = [
+  {
+    id: 6,
+    text: "Drive with Ebosi",
+    link: "/drive-with-us",
+  },
+  {
+    id: 7,
+    text: "Careers and Learning",
+    link: "/careers-and-learning",
+  },
+];
 
 const Navbar: FC = ({}) => {
   const pathname = usePathname();
   const isActive = (path: string) => pathname === path;
   const [isOpen, setIsOpen] = useState(false);
+  const [showServices, setShowServices] = useState(false);
+  const [showDrivewithUsMenu, setShowDrivewithUsMenu] = useState(false);
+
+  const showServiceRef = useRef(null);
+  const showDriveWithUsRef = useRef(null);
+  useOnClickOutside(showServiceRef, () => setShowServices(false));
+  useOnClickOutside(showDriveWithUsRef, () => setShowDrivewithUsMenu(false));
 
   return (
     <div>
@@ -48,18 +100,36 @@ const Navbar: FC = ({}) => {
                   Home
                 </Link>
               </li>
-              <li className="grid uppercase h-[15rem] ">
-                <Link
+              <li ref={showServiceRef} className=" h-[15rem] relative ">
+                <Button
+                  onClick={() => setShowServices(!showServices)}
                   className={cn(
                     isActive("/services")
                       ? "border-b-4 border-rose-500 text-[#395BA6]"
                       : "",
-                    "grid h-full place-content-center"
+                    " h-full flex gap-2 justify-center items-center rounded-none bg-transparent hover:bg-transparent text-black text-[1.6rem] uppercase"
                   )}
-                  href={"/services"}
                 >
                   Services
-                </Link>
+                  <IoMdArrowDropdown size={22} />
+                </Button>
+                <div
+                  className={cn(
+                    showServices ? "flex" : "hidden",
+                    "flex-col absolute w-[17.5rem] pb-8 top-[80%] z-50 bg-white "
+                  )}
+                >
+                  {servicesSubMenu.map((item) => (
+                    <Link
+                      onClick={() => setShowServices(false)}
+                      key={item.id}
+                      href={item.link}
+                      className="px-[2rem]  py-2 text-[1.4rem] text-black bg-white hover:bg-[#CC1815] hover:text-white"
+                    >
+                      {item.text}
+                    </Link>
+                  ))}
+                </div>
               </li>
               <li className="grid uppercase h-[15rem] ">
                 <Link
@@ -87,19 +157,39 @@ const Navbar: FC = ({}) => {
                   Book a Ride
                 </Link>
               </li>
-              <li className="grid uppercase h-[15rem] ">
-                <Link
+
+              <li ref={showDriveWithUsRef} className=" h-[15rem] relative ">
+                <Button
+                  onClick={() => setShowDrivewithUsMenu(!showDrivewithUsMenu)}
                   className={cn(
-                    isActive("/drive-with-us")
+                    isActive("/services")
                       ? "border-b-4 border-rose-500 text-[#395BA6]"
                       : "",
-                    "grid h-full place-content-center"
+                    " h-full flex gap-2 justify-center items-center rounded-none bg-transparent hover:bg-transparent text-black text-[1.6rem] uppercase"
                   )}
-                  href={"/drive-with-us"}
                 >
                   Drive with us
-                </Link>
+                  <IoMdArrowDropdown size={22} />
+                </Button>
+                <div
+                  className={cn(
+                    showDrivewithUsMenu ? "flex" : "hidden",
+                    "flex-col absolute w-[17.5rem] pb-8 top-[80%] z-50 bg-white "
+                  )}
+                >
+                  {driveWithUsSubmenu.map((item) => (
+                    <Link
+                      onClick={() => setShowDrivewithUsMenu(false)}
+                      key={item.id}
+                      href={item.link}
+                      className="px-[2rem]  py-2 text-[1.4rem] text-black bg-white hover:bg-[#CC1815] hover:text-white"
+                    >
+                      {item.text}
+                    </Link>
+                  ))}
+                </div>
               </li>
+
               <li className="grid uppercase h-[15rem] ">
                 <Link
                   className={cn(

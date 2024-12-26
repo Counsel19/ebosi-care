@@ -1,10 +1,34 @@
-import React from "react";
+"use client"
+
+import React, { useEffect, useState } from "react";
 import BookRideWindow from "./BookRideWindow";
+import { cn } from "@/lib/utils";
+
+const carouselSlides = [
+  "bg-[url('/images/weelchair-car-transaport.jpg')]",
+  "bg-[url('/images/customer-entering-car.jpg')]",
+  "bg-[url('/images/driver-with-customer.jpg')]",
+];
 
 const HomeBanner = () => {
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlide((prevIndex) => (prevIndex + 1) % carouselSlides.length);
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <div className="w-full overflow-hidden relative">
-      <div className="bg-[url('/images/weelchair-car-transaport.jpg')] bg-no-repeat bg-cover h-[55rem]  relative  lg:p-[6rem] ">
+      <div
+        className={cn(
+          "bg-no-repeat bg-cover h-[55rem]  relative  lg:p-[6rem] transition-all duration-500",
+          carouselSlides[currentSlide]
+        )}
+      >
         <div className="absolute top-0 right-0 bottom-0 left-0 bg-[#000000B2]" />
 
         <div className=" relative  w-full  md:w-[80%] mx-auto">
