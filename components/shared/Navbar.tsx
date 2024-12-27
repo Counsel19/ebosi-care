@@ -71,7 +71,7 @@ const Navbar: FC = ({}) => {
 
   return (
     <div>
-      <div className="h-[15rem] bg-white grid items-center border">
+      <div className="h-[10rem] md:h-[15rem] bg-white grid items-center border">
         <div className="w__frame flex justify-between items-center">
           <button onClick={() => setIsOpen(!isOpen)} className="lg:hidden">
             <AlignJustify />
