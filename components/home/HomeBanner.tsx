@@ -37,7 +37,7 @@ const HomeBanner = () => {
           </h3>
         </div>
       </div>
-      <div className="-translate-y-[60%] mx-auto p-[2rem] md:w-[80%]">
+      <div className="-translate-y-[60%] mx-auto p-[2rem] md:w-[75%]">
         <BookRideWindow />
       </div>
     </div>

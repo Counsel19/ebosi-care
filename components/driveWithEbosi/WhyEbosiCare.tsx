@@ -36,7 +36,7 @@ const WhyEbosiCare = () => {
     <div className="my-[8rem] w__frame">
       <h3 className="text-center mb-[3rem] text-[3.4rem] font-medium">Why EBOSICARE?</h3>
 
-      <div className="grid grid-cols-4 gap-[3rem]">
+      <div className="grid lg:grid-cols-4 gap-[3rem]">
         {whyEbosicareItemList.map((item) => (
           <WyEbosiCareItem key={item.id} {...item} />
         ))}

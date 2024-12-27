@@ -28,8 +28,8 @@ const AppShowCase = () => {
   return (
     <div className=" mb-[8rem] w__frame">
       <div className="grid gap-[1rem] mb-[8rem]">
-        <h3 className=" text-center text-[3.4rem] font-medium">Our App</h3>
-        <h4 className=" text-center text-[2.4rem] font-medium">
+        <h3 className=" text-center text-[2.8rem] lg:text-[3.4rem] font-medium">Our App</h3>
+        <h4 className=" text-center text-[2rem] lg:text-[2.4rem] font-medium">
           Designed to make your driving experience easier...
         </h4>
       </div>

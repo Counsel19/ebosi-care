@@ -55,15 +55,15 @@ const DriveWithUs = () => {
         </div>
       </div>
       <div className="w__frame">
-        <div className="grid grid-cols-3 gap-8 mt-[4rem]">
+        <div className="grid lg:grid-cols-3 gap-8 mt-[4rem]">
           <Link href={"#"}>
-            <Image width={400} height={400} alt="" src="/images/ride.png" />
+            <Image width={400} height={400} alt="" src="/images/ride.png" className="w-full " />
           </Link>
           <Link href={"#"}>
-            <Image width={400} height={400} alt="" src="/images/ride.png" />
+            <Image width={400} height={400} alt="" src="/images/ride.png" className="w-full " />
           </Link>
           <Link href={"#"}>
-            <Image width={400} height={400} alt="" src="/images/ride.png" />
+            <Image width={400} height={400} alt="" src="/images/ride.png" className="w-full " />
           </Link>
         </div>
 

@@ -26,12 +26,12 @@ const steps = [
 const DriveWithEbosiSteps = () => {
   return (
     <div className="my-[8rem] w__frame">
-      <h3 className="mb-[3rem] text-[3.4rem] font-medium">
+      <h3 className="mb-[3rem] text-[2.6rem] lg:text-[3.4rem] text-center md:text-left font-medium">
         Drive with us
         <br />
         with these EASY steps:
       </h3>
-      <div className="grid grid-cols-3 gap-[3rem]">
+      <div className="grid lg:grid-cols-3 gap-[6rem] md:gap-[3rem]">
         {steps.map((step) => (
           <DriveWithEbosiStepItem showDownloadBtn={step.sn == 1}  key={step.sn} {...step} />
         ))}
@@ -56,12 +56,12 @@ const DriveWithEbosiStepItem: FC<DriveWithEbosiStepItemProps> = ({
   showDownloadBtn,
 }) => {
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col items-center gap-4">
       <div className="w-[6.2rem] h-[6.2rem] grid place-content-center text-3xl font-semibold rounded-full bg-primary text-white">
         {sn}
       </div>
       <h6 className="font-semibold text-xl ">{title}</h6>
-      <p className="text-[1.4rem]">{description}</p>
+      <p className="text-[1.4rem] text-center">{description}</p>
       {showDownloadBtn && (
         <div className="flex gap-4">
           <Button className="bg-black p-2 gap-4 h-fit text-white hover:bg-black hover:text-white">

@@ -14,7 +14,7 @@ const ContactUs = () => {
             Get in touch
           </h3>
 
-          <div className="bg-white rounded-lg p-[4rem]  ">
+          <div className="bg-white rounded-lg p-[4rem] w-[75%] mx-auto ">
             <form className="space-y-[2rem]">
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2 text-gray-500">

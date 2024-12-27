@@ -11,9 +11,9 @@ const StartEarningToday = () => {
           work day that revolves entirely around your daily schedule
         </p>
 
-        <h3 className=" text-[4.4rem] font-medium">START EARNING TODAY!</h3>
+        <h3 className="text-[2.4rem] md:text-[4.4rem] font-medium">START EARNING TODAY!</h3>
         <hr className="w-full h-2" />
-        <p className="text-xl font-semibold">Start Driving with Ebosicare by downloading the app now!</p>
+        <p className="text-xl text-center font-semibold">Start Driving with Ebosicare by downloading the app now!</p>
 
         <div className="flex gap-4 mt-[2rem]">
           <Button className="bg-white p-2 gap-4 h-fit text-black hover:bg-white hover:text-black">
