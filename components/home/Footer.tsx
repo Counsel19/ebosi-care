@@ -13,7 +13,7 @@ const Footer: FC = ({}) => {
               src={"/images/ebosi_logo_white.svg"}
               width={300}
               height={300}
-              className="w-[19rem] "
+                          className="w-[11rem] lg:w-[13.4rem] "
             />
             <p className="text-[#9F9F9F] ">
               Non Emergency Medical Transportation “NEMT” at your service

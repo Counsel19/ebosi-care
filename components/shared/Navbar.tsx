@@ -71,8 +71,8 @@ const Navbar: FC = ({}) => {
 
   return (
     <div>
-      <div className="h-[10rem] md:h-[15rem] bg-white grid items-center border">
-        <div className="w__frame flex justify-between items-center">
+      <div className="h-[8rem] md:h-[10rem] bg-white grid items-center border text-[1.5rem]">
+        <div className="w__frame flex justify-between ">
           <button onClick={() => setIsOpen(!isOpen)} className="lg:hidden">
             <AlignJustify />
           </button>
@@ -80,14 +80,14 @@ const Navbar: FC = ({}) => {
             <Image
               alt="ebosi_logo"
               src={"/images/ebosi_logo.svg"}
-              className="w-[11rem] lg:w-[20.4rem] h-[5.1rem] lg:h-[9.3rem]"
+              className="w-[11rem] lg:w-[13.4rem] h-[5.1rem] lg:h-[9.3rem]"
               width={234}
               height={93}
             />
           </Link>
-          <div>
+          <div className="">
             <ul className="hidden  lg:flex lg:gap-[3rem] font-medium items-center ">
-              <li className="grid uppercase h-[15rem] ">
+              <li className="grid uppercase h-[10rem] ">
                 <Link
                   className={cn(
                     isActive("/")
@@ -100,14 +100,14 @@ const Navbar: FC = ({}) => {
                   Home
                 </Link>
               </li>
-              <li ref={showServiceRef} className=" h-[15rem] relative ">
+              <li ref={showServiceRef} className="h-[10rem] relative ">
                 <Button
                   onClick={() => setShowServices(!showServices)}
                   className={cn(
                     isActive("/services")
                       ? "border-b-4 border-rose-500 text-[#395BA6]"
                       : "",
-                    " h-full flex gap-2 justify-center items-center rounded-none bg-transparent hover:bg-transparent text-black text-[1.6rem] uppercase"
+                    " h-full flex gap-2 justify-center items-center rounded-none bg-transparent hover:bg-transparent text-black text-[1.5rem] uppercase"
                   )}
                 >
                   Services
@@ -131,7 +131,7 @@ const Navbar: FC = ({}) => {
                   ))}
                 </div>
               </li>
-              <li className="grid uppercase h-[15rem] ">
+              <li className="grid uppercase h-[10rem] ">
                 <Link
                   className={cn(
                     isActive("/about-us")
@@ -144,7 +144,7 @@ const Navbar: FC = ({}) => {
                   About Us
                 </Link>
               </li>
-              <li className="grid uppercase h-[15rem] ">
+              <li className="grid uppercase h-[10rem] ">
                 <Link
                   className={cn(
                     isActive("/book-a-ride")
@@ -158,14 +158,14 @@ const Navbar: FC = ({}) => {
                 </Link>
               </li>
 
-              <li ref={showDriveWithUsRef} className=" h-[15rem] relative ">
+              <li ref={showDriveWithUsRef} className="h-[10rem] relative ">
                 <Button
                   onClick={() => setShowDrivewithUsMenu(!showDrivewithUsMenu)}
                   className={cn(
                     isActive("/services")
                       ? "border-b-4 border-rose-500 text-[#395BA6]"
                       : "",
-                    " h-full flex gap-2 justify-center items-center rounded-none bg-transparent hover:bg-transparent text-black text-[1.6rem] uppercase"
+                    " h-full flex gap-2 justify-center items-center rounded-none bg-transparent hover:bg-transparent text-black text-[1.5rem] uppercase"
                   )}
                 >
                   Drive with us
@@ -190,7 +190,7 @@ const Navbar: FC = ({}) => {
                 </div>
               </li>
 
-              <li className="grid uppercase h-[15rem] ">
+              <li className="grid uppercase h-[10rem] ">
                 <Link
                   className={cn(
                     isActive("/contact-us") ? "border-b-4 border-rose-500" : "",

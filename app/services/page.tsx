@@ -67,12 +67,12 @@ const ServicePage: FC = ({}) => {
             </Select>
           </div>
         </div>
-        <div className="grid place-content-center"> 
+        <div className="grid place-content-center">
           <Link href={"/"}>
             <Image
               alt="ebosi_logo"
               src={"/images/ebosi_logo.svg"}
-              className="w-[20.4rem] h-[9.3rem]"
+              className="w-[11rem] lg:w-[13.4rem] "
               width={234}
               height={93}
             />

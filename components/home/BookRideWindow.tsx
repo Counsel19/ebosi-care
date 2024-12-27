@@ -16,8 +16,8 @@ const currencyOptions = [{ value: "usd", label: "$(USD)" }];
 
 const BookRideWindow = () => {
   return (
-    <div className="p-[2rem] w-full  rounded-lg bg-white shadow-lg space-y-[4rem]">
-      <div className="space-y-[2rem] w-full grid" >
+    <div className="p-[2rem] w-full  rounded-lg bg-white shadow-lg space-y-[2rem]">
+      <div className="space-y-[2rem] w-full grid">
         <div className="flex justify-end max-w-full">
           <div className="flex  gap-[1rem] ">
             <Select>
@@ -47,10 +47,10 @@ const BookRideWindow = () => {
           </div>
         </div>
 
-        <h4 className="text-center font-bold text-xl">Book a Ride</h4>
+        <h4 className="text-center font-bold text-xl">Book a Ride/Service</h4>
       </div>
 
-      <div className="flex flex-col lg:flex-row gap-[2rem] ">
+      <div className="flex flex-col gap-[1rem] lg:flex-row lg:gap-[2rem] ">
         <div className="w-full space-y-4">
           <label htmlFor="">Enter your pickup Location:</label>
           <Input className="w-full" placeholder="E.g Airport, Hotel" />
@@ -61,10 +61,10 @@ const BookRideWindow = () => {
         </div>
       </div>
 
-      <div className="w-full space-y-[3rem] text-[1.4rem] lg:text-base">
-        <div className=" mx-auto lg:w-[50%]  space-y-[2rem]">
-          <Button className="bg-[#CC1815] w-full  text-white">
-            Get a Qoute
+      <div className="w-full space-y-[1.5rem] text-[1.4rem] lg:text-base">
+        <div className=" mx-auto lg:w-[50%]  space-y-[1rem]">
+          <Button className="bg-[#CC1815] hover:bg-[#960d0a] w-full  text-white">
+            Book Now/Later
           </Button>
 
           <div className="grid  items-center grid-cols-2 justify-between">
@@ -78,7 +78,7 @@ const BookRideWindow = () => {
             </Button>
           </div>
         </div>
-{/*  */}
+        {/*  */}
         <div className="mx-auto md:w-[60%] text-[1.4rem] lg:text-base ">
           <div className=" before:flex before:w-full before:h-1 before:bg-[#00000040] italic text-[2rem] flex items-center gap-4  after:flex after:w-full after:h-1 after:bg-[#00000040] ">
             or
