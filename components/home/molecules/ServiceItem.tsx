@@ -34,7 +34,7 @@ const ServiceItem: FC<ServiceItemProps> = ({
           <Briefcase size={20} /> {numOfLuggages}
         </span>
       </div>
-      <h4 className="text-[3.2rem] font-bold">{title}</h4>
+      <h4 className="text-[3.2rem] text-[#0037AD] font-bold">{title}</h4>
       <p className="text-[1.4rem] text-gray-500 leading-[2.2rem]">
         {description}
       </p>

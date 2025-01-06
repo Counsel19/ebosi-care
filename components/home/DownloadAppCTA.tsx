@@ -1,6 +1,8 @@
+import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import { buttonVariants } from "../ui/button";
 
 const DownloadAppCTA = () => {
   return (
@@ -22,23 +24,52 @@ const DownloadAppCTA = () => {
           </ul>
 
           <div className="flex gap-[2rem] items-center">
-            <Link href={""}>
+            <Link
+              href={"/"}
+              className={cn(
+                buttonVariants({
+                  className:
+                    "  justify-start gap-2 rounded-2xl w-[19.57rem] p-4 h-fit  bg-black hover:bg-gray-900 text-white hover:text-white ",
+                })
+              )}
+            >
               <Image
-                src={"/images/download_appstore.png"}
-                alt="download_appstore "
-                height={200}
-                width={200}
-                className="w-[15rem] md:w-[20rem]"
+                src={"/icons/googleplay_logo.png"}
+                alt="googleplay_logo"
+                height={100}
+                width={100}
+                className="w-[2.9rem] h-[3.2rem]"
               />
+              <div className="flex flex-col">
+                <span className="uppercase font-light text-[1rem]">
+                  Avialable On
+                </span>
+                <span >Google Play</span>
+              </div>
             </Link>
-            <Link href={""}>
+            <Link
+              href={"/"}
+              className={cn(
+                buttonVariants({
+                  variant: "outline",
+                  className:
+                    "  justify-start gap-2 rounded-2xl w-[19.57rem] p-4 h-fit  bg-black hover:bg-gray-900 text-white hover:text-white ",
+                })
+              )}
+            >
               <Image
-                src={"/images/download_googleplay.png"}
-                alt="download_googleplay "
-                height={200}
-                width={200}
-                className="w-[15rem] md:w-[20rem]"
+                src={"/icons/apple_logo_white.png"}
+                alt="apple_logo_white"
+                height={100}
+                width={100}
+                className="w-[2.9rem] h-[3.2rem]"
               />
+              <div className="flex flex-col">
+                <span className="uppercase font-light text-[1rem]">
+                  Avialable On
+                </span>
+                <span >App Store</span>
+              </div>
             </Link>
           </div>
         </div>

@@ -1,8 +1,10 @@
-"use client"
+"use client";
 
-import React, { useEffect, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import BookRideWindow from "./BookRideWindow";
 import { cn } from "@/lib/utils";
+import EditCancelRide from "./EditCancelRide";
+import TrackVehicle from "./TrackVehicle";
 
 const carouselSlides = [
   "bg-[url('/images/weelchair-car-transaport.jpg')]",
@@ -10,7 +12,12 @@ const carouselSlides = [
   "bg-[url('/images/driver-with-customer.jpg')]",
 ];
 
-const HomeBanner = () => {
+interface HomeBannerProps {
+  editCancelRide?: boolean;
+  trackVehicle?: boolean;
+}
+
+const HomeBanner: FC<HomeBannerProps> = ({ editCancelRide, trackVehicle }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
 
   useEffect(() => {
@@ -38,7 +45,13 @@ const HomeBanner = () => {
         </div>
       </div>
       <div className="-translate-y-[60%] mx-auto p-[2rem] md:w-[75%]">
-        <BookRideWindow />
+        {editCancelRide ? (
+          <EditCancelRide />
+        ) : trackVehicle ? (
+          <TrackVehicle />
+        ) : (
+          <BookRideWindow />
+        )}
       </div>
     </div>
   );
