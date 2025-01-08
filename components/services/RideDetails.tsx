@@ -8,19 +8,19 @@ const RideDetails = () => {
       <div className="grid lg:grid-cols-4 gap-[2rem] text-gray-600">
         <div className="w-full space-y-4 ">
           <label htmlFor=" ">When do you need a ride:</label>
-          <Input className="w-full" placeholder="Schedule or ASAP" />
+          <Input className="w-full rounded-sm" placeholder="Schedule or ASAP" />
         </div>
         <div className="w-full space-y-4">
           <label htmlFor="">Passengers:</label>
-          <Input className="w-full" placeholder="Schedule or ASAP" />
+          <Input className="w-full rounded-sm" placeholder="1" />
         </div>
         <div className="w-full space-y-4">
           <label htmlFor="">Check-in Luggage</label>
-          <Input className="w-full" placeholder="Schedule or ASAP" />
+          <Input className="w-full rounded-sm" placeholder="1" />
         </div>
         <div className="w-full space-y-4">
           <label htmlFor="">Apartment/Gate # (Optional)</label>
-          <Input className="w-full" placeholder="Schedule or ASAP" />
+          <Input className="w-full rounded-sm" placeholder="e.g Suite 123" />
         </div>
       </div>
 

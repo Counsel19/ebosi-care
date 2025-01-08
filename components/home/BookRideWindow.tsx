@@ -105,9 +105,16 @@ const BookRideWindow = () => {
 
       <div className="w-full space-y-[1.5rem] text-[1.4rem] lg:text-base">
         <div className=" mx-auto lg:w-[50%]  space-y-[1rem]">
-          <Button className="bg-[#CC1815] hover:bg-[#960d0a] w-full  text-white">
+          <Link
+            href={"/services"}
+            className={cn(
+              buttonVariants({
+                className: "bg-[#CC1815] hover:bg-[#960d0a] w-full  text-white",
+              })
+            )}
+          >
             Book Now/Later
-          </Button>
+          </Link>
 
           <div className="grid  items-center grid-cols-2 justify-between">
             <Link

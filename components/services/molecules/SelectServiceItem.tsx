@@ -2,34 +2,62 @@
 
 import { Button } from "@/components/ui/button";
 import { useTargetBreakpoint } from "@/hooks/useTargetBreakpoint";
-import { cn } from "@/lib/utils";
+import { cn, formatToCurrency } from "@/lib/utils";
+import { IServices } from "@/types/services";
 import { Briefcase, User } from "lucide-react";
 import Image from "next/image";
 import { FC, useState } from "react";
+import { format } from "date-fns";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "@/lib/redux/store";
+import { updateServicesStateValues } from "@/lib/redux/slices/servicesSlice";
 
 interface SelectServiceItemProps {
-  image: string;
-  title: string;
-  description: string;
-  numOfPassangers: number;
-  numOfLuggages: number;
+  service: IServices;
 }
 
-const SelectServiceItem: FC<SelectServiceItemProps> = ({
-  description,
-  image,
-  numOfLuggages,
-  numOfPassangers,
-  title,
-}) => {
+const SelectServiceItem: FC<SelectServiceItemProps> = ({ service }) => {
+  const {
+    id,
+    description,
+    image,
+    numOfLuggages,
+    numOfPassangers,
+    title,
+    discount,
+    dropOffTime,
+    isOneWayFare,
+    price,
+  } = service;
   const [showMore, setShowMore] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
   useTargetBreakpoint({ setIsMobile, breakPoint: 640 });
 
+  const { selectedServices } = useSelector(
+    (store: RootState) => store.services
+  );
+
+  const dispatch = useDispatch<AppDispatch>();
+
   return (
-    <div className="grid md:grid-cols-[1fr_3fr] rounded-lg border border-[#395BA6] cursor-pointer  ">
-      <div className="bg-[#D9D9D987] grid place-content-center">
+    <div
+      onClick={() => {
+        dispatch(
+          updateServicesStateValues({
+            name: "selectedServices",
+            value: service,
+          })
+        );
+      }}
+      className="grid md:grid-cols-[1fr_3fr] rounded-lg border border-[#395BA6] cursor-pointer  "
+    >
+      <div
+        className={cn(
+          " grid place-content-center",
+          selectedServices?.id == id ? "bg-primary" : "bg-[#D9D9D987]"
+        )}
+      >
         <Image
           src={image}
           alt={title}
@@ -77,17 +105,24 @@ const SelectServiceItem: FC<SelectServiceItemProps> = ({
           </Button>
         </div>
         <div className="text-[1.2rem] text-gray-500  grid gap-[0.6rem] justify-center md:justify-end">
-          <h5 className="text-[#395BA6] text-[3rem]">$56.22</h5>
+          <h5 className="text-[#395BA6] text-[3rem]">
+            {formatToCurrency.format(price - discount.amount)}
+          </h5>
           <div>
             <span className="text-gray-600 flex italic">
               Plus applicable fees
             </span>
-            <span className="flex font-semibold">One-way Fare</span>
+            {isOneWayFare ? (
+              <span className="flex font-semibold">One-way Fare</span>
+            ) : null}
           </div>
           <div className="flex gap-4 items-center">
-            <h5 className="text-[1.8rem] line-through">$62.47</h5>
+            <h5 className="text-[1.8rem] line-through">
+              {" "}
+              {formatToCurrency.format(price)}
+            </h5>
             <div className="bg-[#CC1815] rounded-md text-[1rem] text-white p-[0.5rem]">
-              Save $6.54
+              Save {formatToCurrency.format(discount.amount)}
             </div>
           </div>
 
@@ -101,11 +136,20 @@ const SelectServiceItem: FC<SelectServiceItemProps> = ({
 
           <div>
             <p>Discount</p>
-            <p>4 days left</p>
+            <p>
+              {Math.floor(
+                (new Date(discount.end).getTime() -
+                  new Date(discount.start).getTime()) /
+                  (1000 * 60 * 60 * 24)
+              )}{" "}
+              days left
+            </p>
           </div>
           <div>
-            <p>*Drop Off: 02:55AM</p>
-            <p>Book in advance</p>
+            <p>*Drop Off: {format(dropOffTime, "h:m a..aa")}</p>
+            {new Date(dropOffTime).getTime > new Date().getTime ? (
+              <p>Book in advance</p>
+            ) : null}
           </div>
         </div>
         <div className={cn(isMobile ? "block" : "hidden", "space-y-[2rem]")}>
