@@ -13,6 +13,7 @@ import { Button, buttonVariants } from "../ui/button";
 import { FilePenLine, MapPinned, Minus, Plus } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import AuthDialog from "../auth/AuthDialog";
 
 const languageOptions = [{ value: "english", label: "English" }];
 const currencyOptions = [{ value: "usd", label: "$(USD)" }];
@@ -147,10 +148,7 @@ const BookRideWindow = () => {
             or
           </div>
           <p className="text-slate-500 text-[1.6rem] text-center">
-            Do you have a coperate account?{" "}
-            <Link href={"/"} className="text-blue-500">
-              Login/Signup here
-            </Link>
+            Do you have a coperate account? <AuthDialog />
           </p>
         </div>
       </div>

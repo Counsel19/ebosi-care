@@ -13,7 +13,7 @@ const Footer: FC = ({}) => {
               src={"/images/ebosi_logo_white.svg"}
               width={300}
               height={300}
-                          className="w-[11rem] lg:w-[13.4rem] "
+              className="w-[11rem] lg:w-[13.4rem] "
             />
             <p className="text-[#9F9F9F] ">
               Non Emergency Medical Transportation “NEMT” at your service
@@ -23,20 +23,33 @@ const Footer: FC = ({}) => {
           <div className="space-y-[1rem]">
             <h5 className="font-bold ">QUICK LINKS</h5>
             <ul className="text-slate-500 space-y-[1.4rem] text-[1.4rem]">
-              <li>ABOUT US</li>
-              <li>CAREERS</li>
-              <li>BOOK A RIDE</li>
-              <li>RIDE WITH EBOSI</li>
+              <li>
+                <Link href="/about-us">ABOUT US</Link>
+              </li>
+              <li>
+                <Link href="/careers-and-learning">CAREERS</Link>
+              </li>
+              <li>
+                <Link href="/contact">CONTACT</Link>
+              </li>
             </ul>
           </div>
 
           <div className="space-y-[1rem]">
             <h5 className="font-bold">RESOURCES</h5>
             <ul className="text-slate-500 space-y-[1.4rem] text-[1.4rem]">
-              <li>CREDENTIALING</li>
-              <li>DOCUMENTATIONS</li>
-              <li>LEARNING</li>
-              <li>SERVICES</li>
+              {/* <li>CREDENTIALING</li>
+              <li>DOCUMENTATIONS</li> */}
+              {/* <li>LEARNING</li> */}
+              <li>
+                <Link href="/book-a-ride">BOOK A RIDE</Link>
+              </li>
+              <li>
+                <Link href="/drive-with-us"> RIDE WITH EBOSI</Link>
+              </li>
+              <li>
+                <Link href="/services"> SERVICES</Link>
+              </li>
             </ul>
           </div>
 

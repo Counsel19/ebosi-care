@@ -76,7 +76,7 @@ const DownloadAppCTA = () => {
         <div className="grid order-2 lg:order-1 place-content-center">
           <Image
             alt="Ebosicare app"
-            src={"/images/app_lg.png"}
+            src={"/images/ebosi_app_show.png"}
             width={700}
             height={400}
             className="h-[30rem] lg:h-[60rem] object-contain"

@@ -19,18 +19,20 @@ const SelectService = () => {
     <div className="p-[1rem] lg:p-[4rem] shadow-lg grid gap-[4rem] border">
       <div className="flex justify-between items-center">
         <h3 className="font-semibold text-[2rem] ">2. Select A Service </h3>
-        <Button
-          onClick={() => {
-            dispatch(
-              updateServicesStateValues({
-                name: "selectedServices",
-                value: null,
-              })
-            );
-          }}
-        >
-          See More Service Options
-        </Button>
+        {selectedServices != null ? (
+          <Button
+            onClick={() => {
+              dispatch(
+                updateServicesStateValues({
+                  name: "selectedServices",
+                  value: null,
+                })
+              );
+            }}
+          >
+            See More Service Options
+          </Button>
+        ) : null}
       </div>
 
       <div className="bg-[#F4F4F4] rounded-lg grid gap-[4rem] p-[1rem] lg:p-[2rem] ">
