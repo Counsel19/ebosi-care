@@ -20,7 +20,7 @@ const currencyOptions = [{ value: "usd", label: "$(USD)" }];
 
 const BookRideWindow = () => {
   const [addStop, setAddStop] = useState(false);
-
+  
   return (
     <div className="p-[2rem] w-full  rounded-lg bg-white shadow-lg space-y-[2rem]">
       <div className="space-y-[2rem] w-full grid">

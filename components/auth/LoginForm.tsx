@@ -1,10 +1,14 @@
-import React from "react";
+import React, { FC } from "react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Checkbox } from "../ui/checkbox";
 import Link from "next/link";
 
-const LoginForm = () => {
+interface LoginFormProps {
+  setShowForgotPassword: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const LoginForm: FC<LoginFormProps> = ({ setShowForgotPassword }) => {
   return (
     <form className="space-y-[2rem]">
       <div className="w-full  space-y-4">
@@ -22,17 +26,25 @@ const LoginForm = () => {
           className="w-full shadow-inner rounded-sm outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
           placeholder="*********"
         />
-        <div className="flex gap-2 items-center">
-          <Checkbox
-            className="h-[1.3rem] w-[1.3rem] border-gray-500"
-            id="bookingForSomeone"
-          />
-          <p className="text-[1.4rem]">
-            I Agree with all the{" "}
-            <Link href={"/"} className="text-primary">
-              Terms & Conditions
-            </Link>
-          </p>
+        <div className="flex justify-between items-center">
+          <div className="flex gap-2 items-center">
+            <Checkbox
+              className="h-[1.3rem] w-[1.3rem] border-gray-500"
+              id="bookingForSomeone"
+            />
+            <p className="text-[1.4rem]">
+              I Agree with all the{" "}
+              <Link href={"/"} className="text-primary">
+                Terms & Conditions
+              </Link>
+            </p>
+          </div>
+          <span
+            onClick={() => setShowForgotPassword(true)}
+            className="cursor-pointer "
+          >
+            Forgot Password?
+          </span>
         </div>
       </div>
 
