@@ -45,7 +45,7 @@ export const allServices = [
   {
     id: "2",
     image: "/images/stretcher.png",
-    name: "Stretcher",
+    name: "Stretcher Van",
     description:
       "Our stretcher vans are ADA Compliant with experienced and professional drivers",
     passengers: 1,
@@ -126,7 +126,7 @@ export const allServices = [
   {
     id: "5",
     image: "/images/courier_transit.png",
-    name: "Regular Delivery",
+    name: "Delivery",
     description:
       "Our regular delivery option is available if you need to make a delivery, whether it be a single or bulk item(grocery etc.), we can meet the need 24/7",
     passengers: 1,
@@ -153,7 +153,7 @@ export const allServices = [
   {
     id: "6",
     image: "/images/book_sitter.png",
-    name: "Book a sitter",
+    name: "Book Qualified Patient Support (CNA/RN)",
     description:
       "Book a qualified CNA/RN to fill support a patient need on demand. CNA's/RN's are available round the clock 24/7 to fill various shift Scheduled booking is required terms and conditions apply",
     passengers: 1,
