@@ -9,17 +9,17 @@ const showCase = [
   },
   {
     id: 2,
-    image: "/images/app2.png",
+    image: "/images/app5.png",
     text: "Endless Profit Opportunities",
   },
   {
     id: 3,
-    image: "/images/app3.png",
+    image: "/images/app6.png",
     text: "Maximize Your Income",
   },
   {
     id: 4,
-    image: "/images/app4.png",
+    image: "/images/app7.png",
     text: "Track Your Earnings in Real-Time",
   },
 ];

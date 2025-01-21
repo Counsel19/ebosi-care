@@ -4,22 +4,22 @@ import { FC } from "react";
 
 interface ServiceItemProps {
   image: string;
-  title: string;
+  name: string;
   description: string;
-  numOfPassangers: number;
-  numOfLuggages: number;
+  passengers: number;
+  luggage: number;
 }
 const ServiceItem: FC<ServiceItemProps> = ({
   description,
   image,
-  numOfLuggages,
-  numOfPassangers,
-  title,
+  passengers,
+  luggage,
+  name,
 }) => {
   return (
     <div className="">
       <Image
-        alt={title}
+        alt={name}
         src={image}
         height={500}
         width={500}
@@ -28,13 +28,13 @@ const ServiceItem: FC<ServiceItemProps> = ({
 
       <div className="flex gap-[4rem]">
         <span className="flex gap-4 font-semibold">
-          <User size={20} /> {numOfPassangers}
+          <User size={20} /> {passengers}
         </span>
         <span className="flex gap-4 font-semibold">
-          <Briefcase size={20} /> {numOfLuggages}
+          <Briefcase size={20} /> {luggage}
         </span>
       </div>
-      <h4 className="text-[3.2rem] text-[#0037AD] font-bold">{title}</h4>
+      <h4 className="text-[3.2rem] text-[#0037AD] font-bold">{name}</h4>
       <p className="text-[1.4rem] text-gray-500 leading-[2.2rem]">
         {description}
       </p>

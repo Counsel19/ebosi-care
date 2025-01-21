@@ -3,84 +3,139 @@ import Image from "next/image";
 import React from "react";
 import AddressBox from "../home/molecules/AddressBox";
 import { Textarea } from "../ui/textarea";
+import { useSelector } from "react-redux";
+import { RootState } from "@/lib/redux/store";
+import { format } from "date-fns";
+import { formatToCurrency } from "@/lib/utils";
 
 const BookingSummary = () => {
+  const { bookingDetails } = useSelector((store: RootState) => store.rides);
+  const { selectedServices } = useSelector(
+    (store: RootState) => store.services
+  );
+
+  const today = new Date();
+  const tomorrow = new Date();
+  tomorrow.setDate(today.getDate() + 1).toString();
+  const calculateTotal = () => {
+    let total = 0;
+    if (selectedServices) {
+      total =
+        Number(selectedServices.base_price) -
+        Number(selectedServices.discount.amount) +
+        Number(selectedServices.fuel_surcharge) +
+        Number(selectedServices.rider_fee) +
+        Number(selectedServices.rider_fee);
+    }
+
+    return formatToCurrency.format(total);
+  };
+
   return (
     <div className=" shadow-lg">
-      <div className="p-[1rem] lg:p-[4rem] grid lg:grid-cols-2 gap-4 items-center ">
-        <div className="space-y-8">
-          <div className="text-gray-500">
-            <span className="text-[1.4rem]">Service Type</span>
-            <h6 className="font-bold">Wheelchair</h6>
+      {selectedServices ? (
+        <div>
+          <div className="p-[1rem] lg:p-[4rem] grid lg:grid-cols-2 gap-4 items-center ">
+            <div className="space-y-8">
+              <div className="text-gray-500">
+                <span className="text-[1.4rem]">Service Type</span>
+                <h6 className="font-bold">{selectedServices?.name}</h6>
+              </div>
+              <div className="text-gray-500">
+                <span className="text-[1.4rem]">Pickup Date</span>
+                <h6 className="font-bold">{`${bookingDetails?.ride_date} ${bookingDetails?.ride_time}`}</h6>
+              </div>
+              <div className="flex gap-[4rem]">
+                <span className="flex gap-4 font-semibold">
+                  <User size={20} /> {bookingDetails?.passengers}
+                </span>
+                <span className="flex gap-4 font-semibold">
+                  <Briefcase size={20} /> {bookingDetails?.luggage}
+                </span>
+              </div>
+            </div>
+
+            <Image
+              alt={selectedServices?.name || ""}
+              width={300}
+              height={300}
+              src={selectedServices?.image || ""}
+            />
           </div>
-          <div className="text-gray-500">
-            <span className="text-[1.4rem]">Pickup Date</span>
-            <h6 className="font-bold">Dec 13, 2024 01:47PM</h6>
+
+          <div className="p-[1rem] lg:p-[4rem] bg-[#F3F3F3] text-[1.4rem] space-y-[2rem]">
+            <div className="grid grid-cols-2  items-center">
+              <span className="font-semibold">Fare:</span>
+              <div className="flex gap-2">
+                {selectedServices?.discount?.amount > 0 ? (
+                  <>
+                    <span className="text-gray-400 line-through">$62.47 </span>
+                    <span>
+                      {formatToCurrency.format(
+                        Number(selectedServices.base_price) -
+                          Number(selectedServices.discount.amount)
+                      )}
+                    </span>
+                  </>
+                ) : (
+                  <span>${selectedServices.base_price}</span>
+                )}
+              </div>
+            </div>
+            <div className="grid grid-cols-2  items-center">
+              <span className="font-semibold">Rider Fee:</span>
+              <span>
+                {formatToCurrency.format(Number(selectedServices.rider_fee))}
+              </span>
+            </div>
+            <div className="grid grid-cols-2  items-center">
+              <span className="font-semibold">Fuel Surcharge:</span>
+              <span>
+                {formatToCurrency.format(
+                  Number(selectedServices.fuel_surcharge)
+                )}
+              </span>
+            </div>
+            <div className="grid grid-cols-2  items-center">
+              <span className="font-semibold">Tip:</span>
+              <span>
+                {formatToCurrency.format(Number(selectedServices.tip))}
+              </span>
+            </div>
+
+            <hr className="my-[2rem]" />
+
+            <div className="grid grid-cols-2 text-[3rem] font-light items-center">
+              <b className="">Total: </b>
+              <b>{calculateTotal()}</b>
+            </div>
           </div>
-          <div className="flex gap-[4rem]">
-            <span className="flex gap-4 font-semibold">
-              <User size={20} /> {1}
-            </span>
-            <span className="flex gap-4 font-semibold">
-              <Briefcase size={20} /> {1}
-            </span>
+
+          <div className="p-[1rem] lg:p-[4rem] space-y-[2rem]">
+            <AddressBox
+              address={bookingDetails?.pickup_location || ""}
+              boxTitle="Pick Up"
+              dateTime={`${bookingDetails?.ride_date} ${bookingDetails?.ride_time}`}
+            />
+            <AddressBox
+              address={bookingDetails?.dropoff_location || ""}
+              boxTitle="Drop Off"
+              dateTime={format(tomorrow, "MMM dd, yyyy h:m b..bb")}
+            />
+          </div>
+
+          <div className="p-[1rem] lg:p-[4rem] space-y-[2rem]">
+            <h4 className="text-gray-500 font-light text-[2rem]">
+              Driver Notes
+            </h4>
+            <Textarea className="h-[18.8rem]" />
           </div>
         </div>
-
-        <Image
-          alt="wheelchair_into_car"
-          width={300}
-          height={300}
-          src={"/images/wheelchair_into_car.png"}
-        />
-      </div>
-
-      <div className="p-[1rem] lg:p-[4rem] bg-[#F3F3F3] text-[1.4rem] space-y-[2rem]">
-        <div className="grid grid-cols-2  items-center">
-          <span className="font-semibold">Fare:</span>
-          <div className="flex">
-            <span className="text-gray-400 line-through">$62.47 </span>{" "}
-            <span>$56.22</span>
-          </div>
+      ) : (
+        <div className="p-[1rem] lg:p-[4rem] grid place-content-center ">
+          <h4 className="font-bold text-[3rem]">No Service Selected Yet</h4>
         </div>
-        <div className="grid grid-cols-2  items-center">
-          <span className="font-semibold">Rider Fee:</span>
-          <span>$4.68</span>
-        </div>
-        <div className="grid grid-cols-2  items-center">
-          <span className="font-semibold">Fuel Surcharge:</span>
-          <span>$3.12</span>
-        </div>
-        <div className="grid grid-cols-2  items-center">
-          <span className="font-semibold">Tip:</span>
-          <span>$0.00</span>
-        </div>
-
-        <hr className="my-[2rem]" />
-
-        <div className="grid grid-cols-2 text-[3rem] font-light items-center">
-          <b className="">Total: </b>
-          <b>$65.20</b>
-        </div>
-      </div>
-
-      <div className="p-[1rem] lg:p-[4rem] space-y-[2rem]">
-        <AddressBox
-          address="1313 Disneyland Dr, Anaheim, CA 92802, USA Apt/Gate: juuyttrree"
-          boxTitle="Pick Up"
-          dateTime="Dec 13, 2024 01:47PM"
-        />
-        <AddressBox
-          address="1313 Disneyland Dr, Anaheim, CA 92802, USA Apt/Gate: juuyttrree"
-          boxTitle="Drop Off"
-          dateTime="Dec 13, 2024 01:47PM"
-        />
-      </div>
-
-      <div className="p-[1rem] lg:p-[4rem] space-y-[2rem]">
-        <h4 className="text-gray-500 font-light text-[2rem]">Driver Notes</h4>
-        <Textarea className="h-[18.8rem]" />
-      </div>
+      )}
     </div>
   );
 };

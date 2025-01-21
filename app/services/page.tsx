@@ -1,8 +1,9 @@
 "use client";
 
 import BookingSummary from "@/components/services/BookingSummary";
-import PaymentInformation from "@/components/services/PaymentInformation";
+// import PaymentInformation from "@/components/services/PaymentInformation";
 import PersonalInformation from "@/components/services/PersonalInformation";
+import PreviewInfo from "@/components/services/PreviewInfo";
 import RideDetails from "@/components/services/RideDetails";
 import SelectService from "@/components/services/SelectService";
 import ServiceTab from "@/components/services/ServiceTab";
@@ -23,7 +24,7 @@ const ServicePage: FC = ({}) => {
   const [currentIndex, setCurrentIndex] = useState(1);
 
   const handleNext = () => {
-    if (currentIndex < 4) {
+    if (currentIndex < 3) {
       setCurrentIndex(currentIndex + 1);
     }
   };
@@ -107,14 +108,15 @@ const ServicePage: FC = ({}) => {
         </>
       ) : currentIndex == 2 ? (
         <div className="grid gap-[2rem] lg:grid-cols-[3fr_2.5fr]">
-          <PersonalInformation />
+          <PersonalInformation handleNext={handleNext}  />
 
           <BookingSummary />
         </div>
       ) : (
         <div className="grid gap-[2rem] lg:grid-cols-[3fr_2.5fr]">
-          <PaymentInformation />
+          {/* <PaymentInformation /> */}
           <BookingSummary />
+          <PreviewInfo />
         </div>
       )}
     </div>

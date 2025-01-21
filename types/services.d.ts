@@ -1,16 +1,25 @@
 export interface IServices {
   id: string;
+  name: string;
   image: string;
-  title: string;
   description: string;
-  numOfPassangers: number;
-  numOfLuggages: number;
-  price: number;
+  passengers: number;
+  luggage: number;
   discount: {
-    amount: number;
-    start: string;
     end: string;
+    start: string;
+    amount: number;
   };
-  dropOffTime: string;
-  isOneWayFare: boolean;
+  base_price: string;
+  additional_mile_price: string;
+  distance_lower_limit: number;
+  distance_upper_limit: number;
+  is_one_way: boolean;
+  rider_fee: string;
+  tip: string;
+  fuel_surcharge: string;
+  hourly_rate_cna: number | null;
+  hourly_rate_rn: number | null;
+  created_at: string;
+  updated_at: string;
 }

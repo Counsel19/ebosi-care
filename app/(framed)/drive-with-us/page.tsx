@@ -57,13 +57,31 @@ const DriveWithUs = () => {
       <div className="w__frame">
         <div className="grid lg:grid-cols-3 gap-8 mt-[4rem]">
           <Link href={"#"}>
-            <Image width={400} height={400} alt="" src="/images/ride.png" className="w-full " />
+            <Image
+              width={400}
+              height={400}
+              alt=""
+              src="/images/app_banner1.png"
+              className="w-full "
+            />
           </Link>
           <Link href={"#"}>
-            <Image width={400} height={400} alt="" src="/images/ride.png" className="w-full " />
+            <Image
+              width={400}
+              height={400}
+              alt=""
+              src="/images/app_banner2.png"
+              className="w-full "
+            />
           </Link>
           <Link href={"#"}>
-            <Image width={400} height={400} alt="" src="/images/ride.png" className="w-full " />
+            <Image
+              width={400}
+              height={400}
+              alt=""
+              src="/images/app_banner3.png"
+              className="w-full "
+            />
           </Link>
         </div>
 
@@ -73,14 +91,14 @@ const DriveWithUs = () => {
           </h3>
 
           <div className="space-y-[2rem]">
-            <p className="text-[1.4rem]">
+            <p className="text-[1.6rem] leading-[2.5rem]">
               We are inspired by the free market. Here at Ebosicare, we bring
               opportunity and freedom of choice to everyone by creating a
               rideshare service that focuses on customer value, safety, and
               pride.
             </p>
 
-            <p className="text-[1.4rem]">
+            <p className="text-[1.6rem] leading-[2.5rem]">
               We created a reservation system. We eliminated surge pricing. We
               ousted third-party fees by eliminating the middle man. We added a
               touch of class and personality.

@@ -6,16 +6,11 @@ interface ServiceTabProps {
   setCurrentIndex: Dispatch<SetStateAction<number>>;
 }
 
-const steps = [
-  "Choose your Ride",
-  "Enter your Details",
-  "Payment details",
-  "Review and book",
-];
+const steps = ["Choose your Ride", "Enter your Details", "Review and book"];
 
 const ServiceTab: FC<ServiceTabProps> = ({ currentIndex, setCurrentIndex }) => {
   return (
-    <div className="shadow-md text-[1.4rem] lg:text-base grid grid-cols-4 gap-[3rem]  h-[5rem] border">
+    <div className="shadow-md text-[1.4rem] lg:text-base grid grid-cols-3 gap-[3rem]  h-[5rem] border">
       {steps.map((step, index) => (
         <button
           onClick={() => setCurrentIndex(index + 1)}

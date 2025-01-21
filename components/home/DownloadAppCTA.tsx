@@ -23,7 +23,7 @@ const DownloadAppCTA = () => {
             <li> More pricing plans</li>
           </ul>
 
-          <div className="flex gap-[2rem] items-center">
+          <div className="flex flex-col lg:flex-row gap-[2rem] lg:items-center">
             <Link
               href={"/"}
               className={cn(
@@ -73,13 +73,13 @@ const DownloadAppCTA = () => {
             </Link>
           </div>
         </div>
-        <div className="grid order-2 lg:order-1 place-content-center">
+        <div className="grid order-2 lg:order-1 justify-start lg:place-content-center">
           <Image
             alt="Ebosicare app"
             src={"/images/ebosi_app_show.png"}
             width={700}
             height={400}
-            className="h-[30rem] lg:h-[60rem] object-contain"
+            className="h-[30rem] w-[40rem] lg:w-[70rem] lg:h-[60rem] object-contain"
           />
         </div>
       </div>

@@ -11,23 +11,34 @@ import { format } from "date-fns";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/lib/redux/store";
 import { updateServicesStateValues } from "@/lib/redux/slices/servicesSlice";
+import { updateRideStateValues } from "@/lib/redux/slices/ride/rideSlice";
 
 interface SelectServiceItemProps {
   service: IServices;
+  isPatientSupport?: boolean;
 }
 
-const SelectServiceItem: FC<SelectServiceItemProps> = ({ service }) => {
+const SelectServiceItem: FC<SelectServiceItemProps> = ({
+  service,
+  isPatientSupport,
+}) => {
   const {
     id,
     description,
     image,
-    numOfLuggages,
-    numOfPassangers,
-    title,
+    base_price,
+    additional_mile_price,
     discount,
-    dropOffTime,
-    isOneWayFare,
-    price,
+    distance_lower_limit,
+    distance_upper_limit,
+
+    is_one_way,
+    luggage,
+    name,
+    passengers,
+
+    hourly_rate_cna,
+    hourly_rate_rn,
   } = service;
   const [showMore, setShowMore] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
@@ -37,6 +48,7 @@ const SelectServiceItem: FC<SelectServiceItemProps> = ({ service }) => {
   const { selectedServices } = useSelector(
     (store: RootState) => store.services
   );
+  const { bookingDetails } = useSelector((store: RootState) => store.rides);
 
   const dispatch = useDispatch<AppDispatch>();
 
@@ -47,6 +59,15 @@ const SelectServiceItem: FC<SelectServiceItemProps> = ({ service }) => {
           updateServicesStateValues({
             name: "selectedServices",
             value: service,
+          })
+        );
+        dispatch(
+          updateRideStateValues({
+            name: "bookingDetails",
+            value: {
+              ...bookingDetails,
+              service_id: service.id,
+            },
           })
         );
       }}
@@ -60,7 +81,7 @@ const SelectServiceItem: FC<SelectServiceItemProps> = ({ service }) => {
       >
         <Image
           src={image}
-          alt={title}
+          alt={name}
           height={400}
           width={400}
           className="w-fit object-contain"
@@ -70,15 +91,15 @@ const SelectServiceItem: FC<SelectServiceItemProps> = ({ service }) => {
         <div className="grid gap-[3rem] justify-center sm:justify-start">
           <div className="flex gap-[4rem]">
             <span className="flex gap-4 font-semibold">
-              <User size={20} /> {numOfPassangers}
+              <User size={20} /> {passengers}
             </span>
             <span className="flex gap-4 font-semibold">
-              <Briefcase size={20} /> {numOfLuggages}
+              <Briefcase size={20} /> {luggage}
             </span>
           </div>
 
           <div>
-            <h4 className="text-[2.5rem] font-bold">{title}</h4>
+            <h4 className="text-[2.5rem] font-bold">{name}</h4>
             <div className={cn(isMobile ? "hidden" : "block")}>
               {showMore ? (
                 <p className="text-[1.4rem] text-gray-500 leading-[1.6rem]">
@@ -104,54 +125,66 @@ const SelectServiceItem: FC<SelectServiceItemProps> = ({ service }) => {
             {showMore ? "Hide More" : "More Info"}
           </Button>
         </div>
-        <div className="text-[1.2rem] text-gray-500  grid gap-[0.6rem] justify-center md:justify-end">
-          <h5 className="text-[#395BA6] text-[3rem]">
-            {formatToCurrency.format(price - discount.amount)}
-          </h5>
-          <div>
-            <span className="text-gray-600 flex italic">
-              Plus applicable fees
-            </span>
-            {isOneWayFare ? (
-              <span className="flex font-semibold">One-way Fare</span>
-            ) : null}
+
+        {isPatientSupport ? (
+          <div className="text-[2rem] text-primary">
+            <div>{hourly_rate_cna} : CNA</div>
+            <div>{hourly_rate_rn} : RN</div>
           </div>
-          <div className="flex gap-4 items-center">
-            <h5 className="text-[1.8rem] line-through">
-              {" "}
-              {formatToCurrency.format(price)}
+        ) : (
+          <div className="text-[1.2rem] text-gray-500  grid gap-[0.6rem] justify-center md:justify-end">
+            <h5 className="text-[#395BA6] text-[3rem]">
+              {formatToCurrency.format(
+                Number(base_price) - Number(discount.amount)
+              )}
             </h5>
-            <div className="bg-[#CC1815] rounded-md text-[1rem] text-white p-[0.5rem]">
-              Save {formatToCurrency.format(discount.amount)}
+            <div>
+              <span className="text-gray-600 flex italic">
+                Plus applicable fees
+              </span>
+              {is_one_way ? (
+                <span className="flex font-semibold">One-way Fare</span>
+              ) : null}
+            </div>
+            <div className="flex gap-2 font-semibold">
+              {distance_lower_limit} - {distance_upper_limit} miles
+            </div>
+            <div className="flex gap-4 items-center">
+              <h5 className="text-[1.8rem] line-through">
+                {" "}
+                {formatToCurrency.format(Number(base_price))}
+              </h5>
+              <div className="bg-[#CC1815] rounded-md text-[1rem] text-white p-[0.5rem]">
+                Save {formatToCurrency.format(Number(discount.amount))}
+              </div>
+            </div>
+
+            <div className="w-[19.3rem] flex flex-col gap-3 justify-center items-center h-[7.8rem] text-white bg-[url('/images/sales_badge.png')] bg-contain bg-center bg-no-repeat">
+              <h5 className=" text-[1.2rem] font-normal uppercase text-center">Additional Miles</h5>
+         
+              <h4 className="text-center font-bold text-[2rem]">${additional_mile_price}/mile</h4>
+            </div>
+
+            <div>
+              <p>Discount</p>
+              <p>
+                {Math.floor(
+                  (new Date(discount.end).getTime() -
+                    new Date(discount.start).getTime()) /
+                    (1000 * 60 * 60 * 24)
+                )}{" "}
+                days left
+              </p>
+            </div>
+            <div>
+              <p>*Drop Off: {format(new Date(), "h:m a")}</p>
+              {new Date(new Date()).getTime >= new Date().getTime ? (
+                <p>Book in advance</p>
+              ) : null}
             </div>
           </div>
+        )}
 
-          <Image
-            alt=""
-            src="/images/sales_badge.png"
-            width={100}
-            height={100}
-            className="w-[9rem]"
-          />
-
-          <div>
-            <p>Discount</p>
-            <p>
-              {Math.floor(
-                (new Date(discount.end).getTime() -
-                  new Date(discount.start).getTime()) /
-                  (1000 * 60 * 60 * 24)
-              )}{" "}
-              days left
-            </p>
-          </div>
-          <div>
-            <p>*Drop Off: {format(dropOffTime, "h:m a..aa")}</p>
-            {new Date(dropOffTime).getTime > new Date().getTime ? (
-              <p>Book in advance</p>
-            ) : null}
-          </div>
-        </div>
         <div className={cn(isMobile ? "block" : "hidden", "space-y-[2rem]")}>
           <p
             className={cn(

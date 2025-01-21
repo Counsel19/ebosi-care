@@ -14,13 +14,26 @@ import { FilePenLine, MapPinned, Minus, Plus } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import AuthDialog from "../auth/AuthDialog";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "@/lib/redux/store";
+import { useRouter } from "next/navigation";
+import { updateRideStateValues } from "@/lib/redux/slices/ride/rideSlice";
 
 const languageOptions = [{ value: "english", label: "English" }];
 const currencyOptions = [{ value: "usd", label: "$(USD)" }];
 
 const BookRideWindow = () => {
   const [addStop, setAddStop] = useState(false);
-  
+
+  const [pickupLocation, setPickUpLocation] = useState("");
+  const [stopLocation, setStopLocation] = useState("");
+  const [dropOffLocation, setDropOffLocation] = useState("");
+
+  const { bookingDetails } = useSelector((store: RootState) => store.rides);
+
+  const dispatch = useDispatch<AppDispatch>();
+  const router = useRouter();
+
   return (
     <div className="p-[2rem] w-full  rounded-lg bg-white shadow-lg space-y-[2rem]">
       <div className="space-y-[2rem] w-full grid">
@@ -61,6 +74,8 @@ const BookRideWindow = () => {
           <label htmlFor="">Enter your pickup Location:</label>
           <div className="flex shadow-inner w-full rounded-sm  border border-input bg-transparent p-0  ring-offset-background file:border-0 file:bg-transparent file:text-base file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accentGreen focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
             <Input
+              value={pickupLocation}
+              onChange={(e) => setPickUpLocation(e.target.value)}
               className="w-full flex-1 border-none outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
               placeholder="E.g Airport, Hotel"
             />
@@ -81,6 +96,8 @@ const BookRideWindow = () => {
             <label htmlFor="">Extra stop:</label>
             <div className="flex shadow-inner w-full rounded-sm  border border-input bg-transparent p-0  ring-offset-background file:border-0 file:bg-transparent file:text-base file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accentGreen focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
               <Input
+                value={stopLocation}
+                onChange={(e) => setStopLocation(e.target.value)}
                 className="w-full flex-1 border-none outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
                 placeholder="E.g Airport, Hotel"
               />
@@ -98,6 +115,8 @@ const BookRideWindow = () => {
         <div className="w-full  space-y-4">
           <label htmlFor="">Enter your dropoff Location:</label>
           <Input
+            value={dropOffLocation}
+            onChange={(e) => setDropOffLocation(e.target.value)}
             className="w-full shadow-inner rounded-sm outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
             placeholder="E.g Airport, Hotel"
           />
@@ -106,16 +125,24 @@ const BookRideWindow = () => {
 
       <div className="w-full space-y-[1.5rem] text-[1.4rem] lg:text-base">
         <div className=" mx-auto lg:w-[50%]  space-y-[1rem]">
-          <Link
-            href={"/services"}
-            className={cn(
-              buttonVariants({
-                className: "bg-[#CC1815] hover:bg-[#960d0a] w-full  text-white",
-              })
-            )}
+          <Button
+            onClick={() => {
+              dispatch(
+                updateRideStateValues({
+                  name: "bookingDetails",
+                  value: {
+                    ...bookingDetails,
+                    pickup_location: pickupLocation,
+                    dropoff_location: dropOffLocation,
+                  },
+                })
+              );
+              router.push("/services");
+            }}
+            className="bg-[#CC1815] hover:bg-[#960d0a] w-full  text-white"
           >
             Book Now/Later
-          </Link>
+          </Button>
 
           <div className="grid  items-center grid-cols-2 justify-between">
             <Link
