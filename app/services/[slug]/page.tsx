@@ -107,7 +107,7 @@ const ServicePage: FC = ({}) => {
         </>
       ) : currentIndex == 2 ? (
         <div className="grid gap-[2rem] lg:grid-cols-[3fr_2.5fr]">
-          <PersonalInformation />
+          <PersonalInformation handleNext={handleNext} />
 
           <BookingSummary />
         </div>
