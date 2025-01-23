@@ -79,9 +79,9 @@ const ServicesWeOffer: FC<ServicesWeOfferProps> = ({ filterSelected }) => {
       ) : (
         <div className="bg-gray-300 grid place-content-center h-[40rem]">
           <Hearts
-            height="100"
-            width="100"
-            color="#4fa94d"
+            height="150"
+            width="150"
+            color="#CC1815"
             ariaLabel="hearts-loading"
           />
         </div>
