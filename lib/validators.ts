@@ -49,3 +49,12 @@ export const ridePersonalDetailsValidator = yup.object({
     .oneOf([yup.ref("password")], "Passwords must match")
     .required("Confirm Password is required"),
 });
+
+
+export const trackRideValidator = yup.object({
+  last_name: yup.string().required("Last Name is required"),
+  first_name: yup.string().required("First Name is required"),
+  reservation_number: yup.string().required("Reservation No. is required"),
+  
+  
+});

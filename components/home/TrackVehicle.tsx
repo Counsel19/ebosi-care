@@ -11,6 +11,8 @@ import {
 import { Input } from "../ui/input";
 import { useRouter } from "next/navigation";
 import { Button } from "../ui/button";
+import { useFormik } from "formik";
+import { trackRideValidator } from "@/lib/validators";
 
 // interface TrackVehicleProps {
 
@@ -19,9 +21,32 @@ import { Button } from "../ui/button";
 const languageOptions = [{ value: "english", label: "English" }];
 const currencyOptions = [{ value: "usd", label: "$(USD)" }];
 
+interface ISubmitValus {
+  first_name: string;
+  last_name: string;
+  reservation_number: string;
+}
+
 const TrackVehicle: FC = ({}) => {
   const router = useRouter();
-  const handleContinue = () => {};
+
+  const { handleChange, handleSubmit, values, errors, touched } = useFormik({
+    initialValues: {
+      first_name: "",
+      last_name: "",
+      reservation_number: "",
+    },
+    validationSchema: trackRideValidator,
+    onSubmit(values: ISubmitValus) {
+      handleContinue(values);
+    },
+  });
+
+  const handleContinue = (values: ISubmitValus) => {
+    console.log(values);
+    router.push("/track-vehicle/1");
+  };
+
   return (
     <div className="p-[4rem] mb-[4rem] w-full rounded-lg bg-white shadow-lg space-y-[2rem]">
       <div className="space-y-[2rem] w-full grid">
@@ -54,51 +79,68 @@ const TrackVehicle: FC = ({}) => {
           </div>
         </div>
       </div>
+      <form onSubmit={handleSubmit} className="space-y-[2rem]">
+        <h3 className="text-[3rem] leading-[3.8rem] ">Track Your Vehicle</h3>
 
-      <h3 className="text-[3rem] leading-[3.8rem] ">Track Your Vehicle</h3>
+        <div className="space-y-[2rem]">
+          <label htmlFor="">
+            Please enter the following information to proceed:
+          </label>
+          <div className="flex flex-col gap-[1rem] lg:flex-row lg:gap-[2rem] ">
+            <Input
+              className="w-full shadow-inner rounded-sm  "
+              placeholder="Reservation Number"
+              name="reservation_number"
+              value={values.reservation_number}
+              error={errors["reservation_number"]}
+              touched={touched["reservation_number"]}
+              onChange={handleChange}
+            />
 
-      <div className="space-y-[2rem]">
-        <label htmlFor="">
-          Please enter the following information to proceed:
-        </label>
-        <div className="flex flex-col gap-[1rem] lg:flex-row lg:gap-[2rem] ">
-          <Input
-            className="w-full shadow-inner rounded-sm outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
-            placeholder="Reservation Number"
-          />
+            <Input
+              className="w-full shadow-inner rounded-sm  "
+              placeholder="First Name"
+              name="first_name"
+              value={values.first_name}
+              error={errors["first_name"]}
+              touched={touched["first_name"]}
+              onChange={handleChange}
+            />
 
-          <Input
-            className="w-full shadow-inner rounded-sm outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
-            placeholder="First Name"
-          />
-
-          <Input
-            className="w-full shadow-inner rounded-sm outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
-            placeholder="Last Name"
-          />
+            <Input
+              className="w-full shadow-inner rounded-sm  "
+              placeholder="Last Name"
+              name="last_name"
+              value={values.last_name}
+              error={errors["last_name"]}
+              touched={touched["last_name"]}
+              onChange={handleChange}
+            />
+          </div>
         </div>
-      </div>
-      <div className="flex lg:justify-end">
-        <div className="flex gap-[2rem]  items-center ">
-          <Button
-            onClick={() => {
-              router.back();
-            }}
-            className="border-[#395BA6] bg-gray-200 text-[#395BA6] min-w-[13.5rem]"
-            variant={"outline"}
-          >
-            <span>Cancel</span>
-          </Button>
-          <Button
-            onClick={handleContinue}
-            className="bg-[#395BA6] text-white min-w-[13.5rem]"
-          >
-            <span>Continue</span>
-          </Button>
+        <div className="flex lg:justify-end">
+          <div className="flex gap-[2rem]  items-center ">
+            <Button
+              type="button"
+              onClick={() => {
+                router.back();
+              }}
+              className="border-[#395BA6] bg-gray-200 text-[#395BA6] min-w-[13.5rem]"
+              variant={"outline"}
+            >
+              <span>Cancel</span>
+            </Button>
+            <Button
+              type="submit"
+              className="bg-[#395BA6] text-white min-w-[13.5rem]"
+            >
+              <span>Continue</span>
+            </Button>
+          </div>
         </div>
-      </div>
+      </form>
     </div>
   );
 };
 
-export default TrackVehicle;
+export default React.memo(TrackVehicle);

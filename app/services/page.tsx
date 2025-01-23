@@ -19,9 +19,13 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { FC, useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "@/lib/redux/store";
 
 const ServicePage: FC = ({}) => {
   const [currentIndex, setCurrentIndex] = useState(1);
+
+  const { bookingDetails } = useSelector((store: RootState) => store.rides);
 
   const handleNext = () => {
     if (currentIndex < 3) {
@@ -31,6 +35,30 @@ const ServicePage: FC = ({}) => {
   const handlPrev = () => {
     if (currentIndex > 0) {
       setCurrentIndex(currentIndex - 1);
+    }
+  };
+
+  const handleValidate = (nextIndex: number, func: VoidFunction) => {
+    if (nextIndex === 2) {
+      if (
+        bookingDetails?.ride_date &&
+        bookingDetails?.ride_time &&
+        bookingDetails?.passengers &&
+        bookingDetails.luggage &&
+        bookingDetails?.pickup_location &&
+        bookingDetails.dropoff_location &&
+        bookingDetails.service_id
+      ) {
+        func();
+      }
+    } else if (nextIndex === 3) {
+      if (
+        bookingDetails?.user_details.email &&
+        bookingDetails?.user_details.name &&
+        bookingDetails?.user_details.mobile_number
+      ) {
+        func();
+      }
     }
   };
 
@@ -82,6 +110,7 @@ const ServicePage: FC = ({}) => {
       </div>
 
       <ServiceTab
+        handleValidate={handleValidate}
         currentIndex={currentIndex}
         setCurrentIndex={setCurrentIndex}
       />
@@ -100,7 +129,10 @@ const ServicePage: FC = ({}) => {
               <ChevronLeft />
               <span>Prev</span>
             </Button>
-            <Button onClick={handleNext} className="bg-[#395BA6] text-white">
+            <Button
+              onClick={() => handleValidate(currentIndex + 1, handleNext)}
+              className="bg-[#395BA6] text-white"
+            >
               <span>Continue</span>
               <ChevronRight />
             </Button>
@@ -108,7 +140,10 @@ const ServicePage: FC = ({}) => {
         </>
       ) : currentIndex == 2 ? (
         <div className="grid gap-[2rem] lg:grid-cols-[3fr_2.5fr]">
-          <PersonalInformation handleNext={handleNext}  />
+          <PersonalInformation
+            handlPrev={handlPrev}
+            handleNext={() => handleValidate(currentIndex + 1, handleNext)}
+          />
 
           <BookingSummary />
         </div>

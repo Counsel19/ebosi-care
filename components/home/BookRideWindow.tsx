@@ -126,6 +126,7 @@ const BookRideWindow = () => {
       <div className="w-full space-y-[1.5rem] text-[1.4rem] lg:text-base">
         <div className=" mx-auto lg:w-[50%]  space-y-[1rem]">
           <Button
+            disabled={!pickupLocation || !dropOffLocation}
             onClick={() => {
               dispatch(
                 updateRideStateValues({

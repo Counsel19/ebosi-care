@@ -2,6 +2,7 @@ import DownloadAppSection from "@/components/trackBooking/DownloadAppSection";
 import DriverDetails from "@/components/trackBooking/DriverDetails";
 import ReservationDetails from "@/components/trackBooking/ReservationDetails";
 import TrackingMap from "@/components/trackBooking/TrackingMap";
+import { testRide } from "@/lib/data";
 import Link from "next/link";
 import React from "react";
 
@@ -17,7 +18,7 @@ const TrackedVechiclePage = () => {
           <DriverDetails />
         </div>
         <div className="grid gap-[2rem] grid-rows-[2.8fr_1fr]">
-          <ReservationDetails />
+          <ReservationDetails reservationDetails={testRide} />
           <DownloadAppSection />
         </div>
       </div>

@@ -202,3 +202,21 @@ export const testimonials = [
     note: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
   },
 ];
+
+export const testRide = {
+  pickup_location: "123 Main Street, Downtown",
+  dropoff_location: "456 Elm Street, Uptown",
+  schedule_type: "scheduled",
+  ride_date: "2025-02-01",
+  ride_time: "14:30",
+  apartment: "Apartment 5B",
+  service_id: "1",
+  is_self_booking: true,
+  passengers: 1,
+  luggage: 2,
+  user_details: {
+    name: "John Doe",
+    email: "john.doe@example.com",
+    mobile_number: "+1234567890",
+  },
+};

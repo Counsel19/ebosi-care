@@ -5,44 +5,14 @@ import { AlignJustify } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { FC, useRef, useState } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import MobileNavbar from "./MobileNavbar";
 import { Button } from "../ui/button";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { useOnClickOutside } from "@/hooks/useOnClickOutside";
-
-const servicesSubMenu = [
-  {
-    id: 1,
-    text: "Wheelchair",
-    link: "/services/wheelchair",
-  },
-  {
-    id: 2,
-    text: "Stretcher",
-    link: "/services/stretcher",
-  },
-  {
-    id: 3,
-    text: "Sedan Ambulatory",
-    link: "/services/sedan-ambulatory",
-  },
-  {
-    id: 4,
-    text: "Medical Courier",
-    link: "/services/medical-courier",
-  },
-  {
-    id: 5,
-    text: "Regular Delivery",
-    link: "/services/regular-delivery",
-  },
-  {
-    id: 6,
-    text: "Book Qualified Patient Support",
-    link: "/services/book-support",
-  },
-];
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "@/lib/redux/store";
+import { getServices } from "@/lib/redux/slices/service/serviceThunk";
 
 const driveWithUsSubmenu = [
   {
@@ -68,6 +38,21 @@ const Navbar: FC = ({}) => {
   const showDriveWithUsRef = useRef(null);
   useOnClickOutside(showServiceRef, () => setShowServices(false));
   useOnClickOutside(showDriveWithUsRef, () => setShowDrivewithUsMenu(false));
+
+  const { allServices } = useSelector((store: RootState) => store.services);
+  const dispatch = useDispatch<AppDispatch>();
+
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        await dispatch(getServices());
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    getData();
+  }, []);
 
   return (
     <div>
@@ -119,14 +104,14 @@ const Navbar: FC = ({}) => {
                     "flex-col absolute w-[17.5rem] pb-8 top-[80%] z-50 bg-white "
                   )}
                 >
-                  {servicesSubMenu.map((item) => (
+                  { allServices && allServices.map((item) => (
                     <Link
                       onClick={() => setShowServices(false)}
                       key={item.id}
-                      href={item.link}
+                      href={`/${item.id}`}
                       className="px-[2rem]  py-2 text-[1.4rem] text-black bg-white hover:bg-[#CC1815] hover:text-white"
                     >
-                      {item.text}
+                      {item.name}
                     </Link>
                   ))}
                 </div>

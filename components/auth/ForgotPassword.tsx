@@ -66,9 +66,9 @@ const ForgotPassword = () => {
   ) : (
     <div className="p-[4rem]">
       <form onSubmit={handleSubmit} className="space-y-[2rem]">
-        <div className=" space-y-4">
-          <h3 className="font-light text-[4rem] lg:text-[5rem] leading-[3rem]">
-            Reset Password
+        <div className=" space-y-6">
+          <h3 className="font-light  text-[3rem] lg:text-[4rem] leading-[3rem]">
+            Forgot Password
           </h3>
           <p className="text-gray-600 text-[1.4rem]">
             Enter your email address below to reset your password.

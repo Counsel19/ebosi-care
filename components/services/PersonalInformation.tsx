@@ -30,7 +30,13 @@ import { toast } from "@/hooks/use-toast";
 import { register } from "@/lib/redux/slices/auth/authThunk";
 import { AxiosError } from "axios";
 
-function PersonalInformation({ handleNext }: { handleNext: VoidFunction }) {
+function PersonalInformation({
+  handleNext,
+  handlPrev,
+}: {
+  handleNext: VoidFunction;
+  handlPrev: VoidFunction;
+}) {
   const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
   const { bookingDetails } = useSelector((store: RootState) => store.rides);
   const [isLoading, setIsLoading] = useState(false);
@@ -302,7 +308,11 @@ function PersonalInformation({ handleNext }: { handleNext: VoidFunction }) {
         </div>
 
         <div className="flex justify-between items-center  ">
-          <Button type="button" className="bg-[#D9D9D9] text-primary ">
+          <Button
+            onClick={handlPrev}
+            type="button"
+            className="bg-[#D9D9D9] text-primary hover:bg-slate-300 "
+          >
             <ChevronLeft /> Back
           </Button>
           <Button

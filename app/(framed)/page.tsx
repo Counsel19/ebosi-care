@@ -1,3 +1,5 @@
+"use client";
+
 import BookingBenefits from "@/components/home/BookingBenefits";
 import DownloadAppCTA from "@/components/home/DownloadAppCTA";
 import HomeBanner from "@/components/home/HomeBanner";
@@ -5,8 +7,10 @@ import ReachOutCTA from "@/components/home/ReachOutCTA";
 import ServicesWeOffer from "@/components/home/ServicesWeOffer";
 import Testimonials from "@/components/home/Testimonials";
 import WhyChooseUs from "@/components/home/WhyChooseUs";
+import useGetLocation from "@/components/shared/GetLocation";
 
 export default function Home() {
+  useGetLocation();
   return (
     <div className="grid gap-[8rem]">
       <HomeBanner />
@@ -16,7 +20,6 @@ export default function Home() {
       <BookingBenefits />
       <Testimonials />
       <ReachOutCTA />
-
     </div>
   );
 }

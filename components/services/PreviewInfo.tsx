@@ -7,7 +7,7 @@ import { AxiosError } from "axios";
 import { bookARide } from "@/lib/redux/slices/ride/rideThunk";
 import { useRouter } from "next/navigation";
 
-const testTime = "14:30"
+const testTime = "14:30";
 
 const PreviewInfo = () => {
   const { bookingDetails } = useSelector((store: RootState) => store.rides);
@@ -24,7 +24,7 @@ const PreviewInfo = () => {
         bookARide({
           ...bookingDetails,
           ride_date: bookingDetails.ride_date.split("/").reverse().join("-"),
-          ride_time:  testTime ?? bookingDetails.ride_time.slice(0, -3),
+          ride_time: testTime ?? bookingDetails.ride_time.slice(0, -3),
           service_id: "1",
         })
       );
@@ -50,7 +50,7 @@ const PreviewInfo = () => {
     }
   };
 
-  return (
+  return bookingDetails ? (
     <div className="p-[1rem] lg:p-[4rem] shadow-lg h-fit space-y-[4rem]">
       <div className="space-y-[3rem]">
         <h4 className="font-bold text-[2.6rem]">Preview your Information</h4>
@@ -95,6 +95,13 @@ const PreviewInfo = () => {
       >
         Proceed to Book
       </Button>
+    </div>
+  ) : (
+    <div className="grid place-content-center">
+      <div className="space-y-[1.5rem]">
+        <h4 className="font-bold text-[2.6rem]">Nothing to display</h4>
+        <p>No Booking Details</p>
+      </div>
     </div>
   );
 };

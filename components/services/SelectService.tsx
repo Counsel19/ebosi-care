@@ -6,7 +6,7 @@ import SelectServiceItem from "./molecules/SelectServiceItem";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/lib/redux/store";
 import { Button } from "../ui/button";
-import { updateServicesStateValues } from "@/lib/redux/slices/servicesSlice";
+import { updateServicesStateValues } from "@/lib/redux/slices/service/servicesSlice";
  
 const SelectService = () => {
   const { selectedServices } = useSelector(

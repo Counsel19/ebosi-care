@@ -9,6 +9,7 @@ export interface IRide {
   is_self_booking: boolean;
   passengers: number;
   luggage: number;
+  notes?: string;
   user_details: {
     name: string;
     email: string;

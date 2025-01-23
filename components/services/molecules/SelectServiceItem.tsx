@@ -10,7 +10,7 @@ import { FC, useState } from "react";
 import { format } from "date-fns";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/lib/redux/store";
-import { updateServicesStateValues } from "@/lib/redux/slices/servicesSlice";
+import { updateServicesStateValues } from "@/lib/redux/slices/service/servicesSlice";
 import { updateRideStateValues } from "@/lib/redux/slices/ride/rideSlice";
 
 interface SelectServiceItemProps {

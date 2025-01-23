@@ -9,11 +9,11 @@ import React from "react";
 const AboutPage = () => {
   return (
     <div className="bg-[#FFEAEA] space-y-[10rem]">
-      <div className="bg-[url('/images/woman-showing-app.png')] bg-no-repeat bg-cover bg-center h-[55rem] grid place-content-center relative ">
+      <div className="bg-[url('/images/woman-showing-app.png')] bg-no-repeat bg-cover bg-center h-[47rem] grid place-content-center relative ">
         <div className="absolute top-0 right-0 bottom-0 left-0 bg-[#000000B2]" />
 
-        <div className=" relative flex flex-col gap-[4rem] items-start justify-center max-w-[80%] mx-auto">
-          <h3 className="font-medium  text-white text-[5.4rem] leading-[5.5rem] lg:text-[6.4rem] lg:leading-[7rem] ">
+        <div className=" relative flex flex-col gap-[4rem] items-start justify-center  mx-auto">
+          <h3 className="font-medium  text-white text-[5.4rem] leading-[5.5rem] lg:text-[6rem] lg:leading-[7rem] ">
             Welcome to Ebosicare
           </h3>
 
@@ -21,7 +21,7 @@ const AboutPage = () => {
             href={"/book-a-ride"}
             className={cn(
               buttonVariants({
-                className: "bg-[#CC1815]",
+                className: "bg-[#CC1815] mx-auto",
               })
             )}
           >
