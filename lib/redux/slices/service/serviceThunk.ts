@@ -1,11 +1,11 @@
 import axios, { AxiosError } from "axios";
 import { createAppAsyncThunk } from "../../createAppAsyncThunk";
 
-const baseUrl = "http://34.234.91.143/api";
+const baseUrl = "https://api.ebosicare.com/api";
 
 // Add a request interceptor
 const axiosInstance = axios.create({
-  baseURL: "http://34.234.91.143/api",
+  baseURL: "https://api.ebosicare.com/api",
 });
 axiosInstance.interceptors.request.use(
   function (config) {

@@ -29,7 +29,7 @@ export const userSignupValidation = yup.object({
 });
 
 export const userSignInValidation = yup.object({
-  agreeToTerms: yup.boolean().required("Phone Number is required").isTrue(),
+  agreeToTerms: yup.boolean().required("You must accept terms").isTrue(),
   email: emailValidation,
   password: passwordValidation,
 });

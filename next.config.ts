@@ -4,8 +4,8 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: 'http',
-        hostname: '34.234.91.143',
+        protocol: 'https',
+        hostname: 'api.ebosicare.com',
         port: '',
         pathname: '/storage/services/**',
         search: '',

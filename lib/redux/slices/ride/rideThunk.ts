@@ -4,7 +4,7 @@ import { IRide } from "@/types/rides";
 
 // Add a request interceptor
 const axiosInstance = axios.create({
-  baseURL: "http://34.234.91.143/api",
+  baseURL: "https://api.ebosicare.com/api",
 });
 axiosInstance.interceptors.request.use(
   function (config) {
