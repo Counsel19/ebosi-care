@@ -45,7 +45,7 @@ const ServicesWeOffer: FC<ServicesWeOfferProps> = ({ filterSelected }) => {
         })
       );
     }
-  }, [allServices]);
+  }, [allServices, dispatch, pathname]);
 
   return (
     <div className="w__frame -mt-[25rem] grid gap-[4rem]">

@@ -1,15 +1,15 @@
 "use client";
 
-import { allServices } from "@/lib/data";
 import React from "react";
 import SelectServiceItem from "./molecules/SelectServiceItem";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/lib/redux/store";
 import { Button } from "../ui/button";
 import { updateServicesStateValues } from "@/lib/redux/slices/service/servicesSlice";
- 
+import { Hearts } from "react-loader-spinner";
+
 const SelectService = () => {
-  const { selectedServices } = useSelector(
+  const { selectedServices, allServices } = useSelector(
     (store: RootState) => store.services
   );
 
@@ -41,10 +41,19 @@ const SelectService = () => {
             key={selectedServices.id}
             service={selectedServices}
           />
-        ) : (
+        ) : allServices ? (
           allServices.map((service) => (
             <SelectServiceItem key={service.id} service={service} />
           ))
+        ) : (
+          <div className="bg-gray-300 grid place-content-center h-[40rem]">
+            <Hearts
+              height="150"
+              width="150"
+              color="#CC1815"
+              ariaLabel="hearts-loading"
+            />
+          </div>
         )}
       </div>
     </div>

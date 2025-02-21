@@ -76,7 +76,7 @@ const LoginForm: FC<LoginFormProps> = ({
           })
         );
       }
-
+     
       if (afterLoginFunc) {
         afterLoginFunc();
       }

@@ -29,16 +29,17 @@ const ServicePage: FC = ({}) => {
 
   const handleNext = () => {
     if (currentIndex < 3) {
-      setCurrentIndex(currentIndex + 1);
+      setCurrentIndex((curr) => curr + 1);
     }
   };
   const handlPrev = () => {
     if (currentIndex > 0) {
-      setCurrentIndex(currentIndex - 1);
+      setCurrentIndex((curr) => curr - 1);
     }
   };
 
   const handleValidate = (nextIndex: number, func: VoidFunction) => {
+   
     if (nextIndex === 2) {
       if (
         bookingDetails?.ride_date &&
@@ -59,6 +60,8 @@ const ServicePage: FC = ({}) => {
       ) {
         func();
       }
+    } else {
+      func();
     }
   };
 
@@ -142,7 +145,7 @@ const ServicePage: FC = ({}) => {
         <div className="grid gap-[2rem] lg:grid-cols-[3fr_2.5fr]">
           <PersonalInformation
             handlPrev={handlPrev}
-            handleNext={() => handleValidate(currentIndex + 1, handleNext)}
+            handleNext={handleNext}
           />
 
           <BookingSummary />

@@ -7,6 +7,7 @@ export interface IRide {
   apartment: string;
   service_id: string;
   is_self_booking: boolean;
+  amount: number;
   passengers: number;
   luggage: number;
   notes?: string;

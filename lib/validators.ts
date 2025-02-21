@@ -37,10 +37,11 @@ export const userSignInValidation = yup.object({
 export const ridePersonalDetailsValidator = yup.object({
   last_name: yup.string().required("Last Name is required"),
   first_name: yup.string().required("First Name is required"),
+  otp: yup.string().required("otp is required"),
   mobile_number: yup
     .string()
-    .required("Phone Number is required")
-    .matches(/^\d{10}$/, "Phone number must be exactly 10 digits"),
+    .required("Phone Number is required"),
+    // .matches(/^\d{10}$/, "Phone number must be exactly 10 digits"),
 
   email: emailValidation,
   password: passwordValidation,

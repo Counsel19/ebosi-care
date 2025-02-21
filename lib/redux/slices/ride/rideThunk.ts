@@ -30,7 +30,8 @@ export const bookARide = createAppAsyncThunk(
 
         postPayload
       );
-      const rideData = res.data.data;
+
+      const rideData = res.data.ride;
 
       return rideData;
     } catch (error) {

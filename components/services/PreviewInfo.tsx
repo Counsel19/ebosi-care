@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "../ui/button";
 import { toast } from "@/hooks/use-toast";
-import { AxiosError } from "axios";
+import axios, { AxiosError } from "axios";
 import { bookARide } from "@/lib/redux/slices/ride/rideThunk";
 import { useRouter } from "next/navigation";
 
@@ -15,6 +15,40 @@ const PreviewInfo = () => {
 
   const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
+
+  const initiatePayent = async ({
+    reservationNumber,
+    amount,
+  }: {
+    reservationNumber: string;
+    amount: number;
+  }) => {
+    const { data } = await axios.post(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/payment/checkout-session`,
+      {
+        reservation_number: reservationNumber,
+        amount: amount,
+      }
+    );
+
+    return data;
+  };
+
+  const handlePayment = async ({
+    reservationNumber,
+  }: {
+    reservationNumber: string;
+  }) => {
+    if (!bookingDetails) return;
+    const initiatePaymentResponse: {
+      url: string;
+    } = await initiatePayent({
+      reservationNumber,
+      amount: bookingDetails.amount,
+    });
+
+    router.push(initiatePaymentResponse.url);
+  };
 
   const handleBookRide = async () => {
     if (!bookingDetails) return;
@@ -34,7 +68,12 @@ const PreviewInfo = () => {
           description: res.payload as string,
           variant: "destructive",
         });
-      router.push("/services/success");
+
+      console.log(res, " res");
+
+      await handlePayment({
+        reservationNumber: res.payload.reservation_number,
+      });
     } catch (error) {
       if (error instanceof AxiosError) {
         if (error.response?.status === 400 || error.response?.status === 401) {

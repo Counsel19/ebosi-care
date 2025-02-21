@@ -28,7 +28,7 @@ import { updateRideStateValues } from "@/lib/redux/slices/ride/rideSlice";
 import { cn } from "@/lib/utils";
 import { toast } from "@/hooks/use-toast";
 import { register } from "@/lib/redux/slices/auth/authThunk";
-import { AxiosError } from "axios";
+import axios, { AxiosError } from "axios";
 
 function PersonalInformation({
   handleNext,
@@ -40,6 +40,8 @@ function PersonalInformation({
   const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
   const { bookingDetails } = useSelector((store: RootState) => store.rides);
   const [isLoading, setIsLoading] = useState(false);
+  const [showOTPForm, setShowOTPForm] = useState(false);
+  const [requestOTPLoading, setRequestOTPLoading] = useState(false);
 
   const dispatch = useDispatch<AppDispatch>();
 
@@ -51,30 +53,105 @@ function PersonalInformation({
       mobile_number: "",
       password: "",
       confirm_password: "",
+      otp: "",
     },
     validationSchema: ridePersonalDetailsValidator,
-    onSubmit(values: {
+    onSubmit(
+      values: {
+        first_name: string;
+        last_name: string;
+        email: string;
+        mobile_number: string;
+        password: string;
+        confirm_password: string;
+        otp: string;
+      },
+      { setFieldError }
+    ) {
+      handleStoreUser(values, setFieldError);
+    },
+  });
+
+ 
+  const handleVerifyOTP = async ({
+    phone,
+    otp,
+    setFieldError,
+  }: {
+    phone: string;
+    otp: string;
+    setFieldError: (field: string, message: string | undefined) => void;
+  }) => {
+    try {
+      setFieldError("otp", "");
+      await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/verify-otp`, {
+        phone,
+        otp,
+      });
+    } catch (error) {
+    
+      if (error instanceof AxiosError) {
+        setFieldError(
+          "otp",
+          error?.response?.data?.error?.opt ||
+            error?.response?.data?.error ||
+            "Error Verifying OTP"
+        );
+      } else {
+        setFieldError("otp", "Error Verifying OTP");
+      }
+
+      throw new Error("Error Verifying OTP");
+    }
+  };
+
+  const requestOTP = async (phone: string) => {
+    try {
+      setRequestOTPLoading(true);
+      await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/send-otp`, {
+        phone,
+      });
+
+      setShowOTPForm(true);
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        toast({
+          title: "Error Requesting OTP",
+          description: error.response?.data,
+          variant: "destructive",
+        });
+      }
+      toast({
+        title: "Error Requesting OTP",
+        description: "Something went wrong",
+        variant: "destructive",
+      });
+    } finally {
+      setRequestOTPLoading(false);
+    }
+  };
+
+  const handleStoreUser = async (
+    userInfo: {
       first_name: string;
       last_name: string;
       email: string;
       mobile_number: string;
       password: string;
       confirm_password: string;
-    }) {
-      handleStoreUser(values);
+      otp: string;
     },
-  });
-
-  const handleStoreUser = async (userInfo: {
-    first_name: string;
-    last_name: string;
-    email: string;
-    mobile_number: string;
-    password: string;
-    confirm_password: string;
-  }) => {
+    setFieldError: (field: string, message: string | undefined) => void
+  ) => {
     try {
       setIsLoading(true);
+
+      // await handleVerifyOTP({
+      //   phone: values.mobile_number,
+      //   otp: values.otp,
+      //   setFieldError,
+      // });
+
       const res = await dispatch(register(userInfo));
 
       if (res.type.includes("rejected"))
@@ -232,13 +309,38 @@ function PersonalInformation({
               />
             </div>
             <Button
+              isLoading={requestOTPLoading}
+              onClick={() => requestOTP(values.mobile_number)}
               type="button"
               className="bg-[#D9D9D9] h-[4.5rem] m-0 rounded-none hover:bg-500-600 text-primary"
             >
-              Verify <ChevronDown />
+              Request OTP <ChevronDown />
             </Button>
           </div>
         </div>
+
+        {showOTPForm && (
+          <div className="space-y-2 text-gray-500">
+            <label htmlFor="">Enter OTP</label>
+            <Input
+              placeholder=" "
+              name="otp"
+              value={values.otp}
+              error={errors["otp"]}
+              touched={touched["otp"]}
+              onChange={handleChange}
+              className="rounded-none"
+            />
+            <p
+              className={cn(
+                "text-[1.2rem] mt-1 text-rose-500",
+                !(errors["otp"] && touched["otp"]) && "hidden"
+              )}
+            >
+              {errors["otp"]}
+            </p>
+          </div>
+        )}
 
         <div className="space-y-2 text-gray-500">
           <label htmlFor="">Password</label>
@@ -317,6 +419,7 @@ function PersonalInformation({
           </Button>
           <Button
             isLoading={isLoading}
+            disabled={!showOTPForm}
             type="submit"
             className="bg-primary text-white"
           >
@@ -342,8 +445,8 @@ const RideLoginDialog = ({ handleNext }: { handleNext: VoidFunction }) => {
           <h4 className="mb-[2rem] text-[3rem]">Login Here</h4>
           <LoginForm
             afterLoginFunc={() => {
-              setShowDialog(false);
               handleNext();
+              setShowDialog(false);
             }}
             setUserToRide
           />

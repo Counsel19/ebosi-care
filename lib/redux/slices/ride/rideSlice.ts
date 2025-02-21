@@ -24,6 +24,7 @@ const initialState: RideSliceState = {
     apartment: "",
     service_id: "",
     is_self_booking: false,
+    amount: 0,
     passengers: 1,
     luggage: 0,
     user_details: {

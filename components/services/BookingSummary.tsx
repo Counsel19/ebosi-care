@@ -1,23 +1,30 @@
+"use client";
+
 import { Briefcase, User } from "lucide-react";
 import Image from "next/image";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import AddressBox from "../home/molecules/AddressBox";
 import { Textarea } from "../ui/textarea";
-import { useSelector } from "react-redux";
-import { RootState } from "@/lib/redux/store";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "@/lib/redux/store";
 import { format } from "date-fns";
 import { formatToCurrency } from "@/lib/utils";
+import { updateRideStateValues } from "@/lib/redux/slices/ride/rideSlice";
 
 const BookingSummary = () => {
   const { bookingDetails } = useSelector((store: RootState) => store.rides);
+  const [totalPrice, setTotalPrice] = useState(0);
   const { selectedServices } = useSelector(
     (store: RootState) => store.services
   );
 
+  const dispatch = useDispatch<AppDispatch>();
+
   const today = new Date();
   const tomorrow = new Date();
   tomorrow.setDate(today.getDate() + 1).toString();
-  const calculateTotal = () => {
+
+  useEffect(() => {
     let total = 0;
     if (selectedServices) {
       total =
@@ -28,8 +35,18 @@ const BookingSummary = () => {
         Number(selectedServices.rider_fee);
     }
 
-    return formatToCurrency.format(total);
-  };
+    dispatch(
+      updateRideStateValues({
+        name: "bookingDetails",
+        value: {
+          ...bookingDetails,
+          amount: total,
+        },
+      })
+    );
+
+    setTotalPrice(total);
+  }, []);
 
   return (
     <div className=" shadow-lg">
@@ -107,7 +124,7 @@ const BookingSummary = () => {
 
             <div className="grid grid-cols-2 text-[3rem] font-light items-center">
               <b className="">Total: </b>
-              <b>{calculateTotal()}</b>
+              <b>{totalPrice}</b>
             </div>
           </div>
 
