@@ -27,17 +27,17 @@ const BecomeAPartner = () => {
               <BecomeAPartnerStep
                 icon={<CreditCard className="text-white" />}
                 description="Set your own prices and enjoy real-time payments on confirmed bookings. It's that easy."
-                title="Prices & Payment"
+                title="On Demand Trips"
               />
               <BecomeAPartnerStep
                 icon={<CreditCard className="text-white" />}
                 description="Set your own prices and enjoy real-time payments on confirmed bookings. It's that easy."
-                title="Prices & Payment"
+                title="Instant payout"
               />
               <BecomeAPartnerStep
                 icon={<CreditCard className="text-white" />}
                 description="Set your own prices and enjoy real-time payments on confirmed bookings. It's that easy."
-                title="Prices & Payment"
+                title="Fast Onboarding"
               />
             </div>
             <div className="grid place-content-center mt-[4rem]">

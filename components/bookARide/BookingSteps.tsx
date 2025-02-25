@@ -6,7 +6,7 @@ const BookingSteps = () => {
   return (
     <div className="w__frame py-[8rem]">
       <h3 className="font-bold mb-[4rem]  text-[3.4rem] leading-[4rem] text-center">
-        3 steps to book an airport transfer
+        3 steps to book your healthcare ride
       </h3>
 
       <div className="flex items-center flex-col lg:flex-row">
