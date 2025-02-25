@@ -182,24 +182,24 @@ export const allServices = [
 export const testimonials = [
   {
     id: "1",
-    name: "John Doe",
+    name: "Emily Hawthorne",
     subname: "REGULAR CLIENT",
     image: "/images/avatar_.png",
-    note: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
+    note: "Ebosi Care has been a game-changer for my health routine. Easy to book a ride/service, Their drivers are always on time, courteous, and genuinely compassionate. I feel safe and valued every time I ride with them",
   },
   {
     id: "2",
-    name: "John Doe",
+    name: "James Caldwell",
     subname: "REGULAR CLIENT",
     image: "/images/avatar_.png",
-    note: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
+    note: "I never imagined a transportation service could feel so personal. Ebosi Care's team goes the extra mile. Punctual, professional, and caring. They truly understand the importance of my medical appointments",
   },
   {
     id: "3",
-    name: "John Doe",
+    name: "Sophie Whitaker",
     subname: "REGULAR CLIENT",
     image: "/images/avatar_.png",
-    note: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
+    note: "When I needed reliable, stress-free transport for my treatments, Ebosi Care delivered. Their efficient booking, friendly drivers, and consistent service have made a world of difference in my healthcare journey",
   },
 ];
 
@@ -211,6 +211,7 @@ export const testRide = {
   ride_time: "14:30",
   apartment: "Apartment 5B",
   service_id: "1",
+  amount: 2000,
   is_self_booking: true,
   passengers: 1,
   luggage: 2,

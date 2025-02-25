@@ -10,11 +10,15 @@ const BecomeAPartner = () => {
     <div className="">
       <div className="bg-[20rem] bg-primary lg:h-[30rem] py-[6rem]">
         <div className=" w__frame space-y-[6rem]">
-          <div className="lg:w-[40%] mx-auto gap-2 text-white flex flex-col justify-center items-center">
-            <h3 className="font-bold text-[1.8rem]">Become a Partner</h3>
+          <div className="lg:w-[80%] mx-auto gap-2 text-white flex flex-col justify-center items-center">
+            <h3 className="font-bold text-[2.4rem]">Become a Partner</h3>
             <p className="text-center">
-              Come aboard Nigeria No. 1 travel company & unfold infinite
-              possibilities of growth.
+              Join our movement to transform healthcare transportation. Partner
+              with Ebosi to bring timely, reliable rides to patients in need.
+              Together, we leverage cutting-edge technology and compassionate
+              service to ensure no appointment is missed and every journey
+              matters. Lets drive change and create a healthier future. One ride
+              at a time.
             </p>
           </div>
 

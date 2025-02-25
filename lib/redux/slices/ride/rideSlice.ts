@@ -1,10 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { bookARide, cancelRide } from "./rideThunk";
+import { bookARide, cancelRide, getSingleRide } from "./rideThunk";
 import { IRide } from "@/types/rides";
 
 interface RideSliceState {
   [key: string]: unknown;
   bookingDetails: IRide | null;
+  singleRide: IRide | null;
   isLoading: boolean;
   error: string;
 }
@@ -15,6 +16,7 @@ interface UpdatedRideStatePayload {
 }
 
 const initialState: RideSliceState = {
+  singleRide: null,
   bookingDetails: {
     pickup_location: "",
     dropoff_location: "",
@@ -50,6 +52,18 @@ const rideSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      .addCase(getSingleRide.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getSingleRide.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.singleRide = action.payload;
+      })
+      .addCase(getSingleRide.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload || "";
+      })
+
       .addCase(bookARide.pending, (state) => {
         state.isLoading = true;
       })

@@ -21,6 +21,29 @@ axiosInstance.interceptors.request.use(
   }
 );
 
+export const getSingleRide = createAppAsyncThunk(
+  "ride/getSingleRide",
+  async (reservationNumber: string, thunkAPI) => {
+    try {
+      const res = await axiosInstance.get(`/rides/${reservationNumber}`);
+
+      const rideData = res.data.ride;
+
+      return rideData;
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        return thunkAPI.rejectWithValue(
+          Object.values(error.response?.data)
+            .map((item) => item)
+            .join(" ")
+        );
+      }
+
+      return thunkAPI.rejectWithValue("Could not Login User");
+    }
+  }
+);
+
 export const bookARide = createAppAsyncThunk(
   "ride/bookARide",
   async (postPayload: IRide, thunkAPI) => {

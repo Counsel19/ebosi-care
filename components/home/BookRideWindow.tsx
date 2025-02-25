@@ -77,7 +77,7 @@ const BookRideWindow = () => {
               value={pickupLocation}
               onChange={(e) => setPickUpLocation(e.target.value)}
               className="w-full flex-1 border-none outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
-              placeholder="E.g Airport, Hotel"
+              placeholder="E.g Home, Pharmacy, Hospital"
             />
             {!addStop ? (
               <Button
@@ -99,7 +99,7 @@ const BookRideWindow = () => {
                 value={stopLocation}
                 onChange={(e) => setStopLocation(e.target.value)}
                 className="w-full flex-1 border-none outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
-                placeholder="E.g Airport, Hotel"
+                placeholder="E.g Home, Pharmacy, Hospital"
               />
 
               <Button
@@ -118,7 +118,7 @@ const BookRideWindow = () => {
             value={dropOffLocation}
             onChange={(e) => setDropOffLocation(e.target.value)}
             className="w-full shadow-inner rounded-sm outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
-            placeholder="E.g Airport, Hotel"
+            placeholder="E.g Home, Pharmacy, Hospital"
           />
         </div>
       </div>
@@ -140,7 +140,7 @@ const BookRideWindow = () => {
               );
               router.push("/services");
             }}
-            className="bg-[#CC1815] hover:bg-[#960d0a] w-full  text-white"
+            className="bg-[#CC1815] disabled:bg-blue-500 hover:bg-[#960d0a] w-full  text-white"
           >
             Book Now/Later
           </Button>
@@ -150,17 +150,19 @@ const BookRideWindow = () => {
               href={"/edit-cancel-ride"}
               className={cn(
                 buttonVariants({
+                  className: "text-blue-500 hover:text-black",
                   variant: "ghost",
                 })
               )}
             >
               <FilePenLine />
-              <span>Edit/Cancel your ride</span>
+              <span className="">Edit/Cancel your ride</span>
             </Link>
             <Link
               href={"/track-vehicle"}
               className={cn(
                 buttonVariants({
+                  className: "text-blue-500 hover:text-black",
                   variant: "ghost",
                 })
               )}
