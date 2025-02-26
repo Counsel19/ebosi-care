@@ -16,12 +16,14 @@ import { updateRideStateValues } from "@/lib/redux/slices/ride/rideSlice";
 
 interface LoginFormProps {
   setShowForgotPassword?: React.Dispatch<React.SetStateAction<boolean>>;
+  setOpenAuthDialog?: React.Dispatch<React.SetStateAction<boolean>>;
   setUserToRide?: boolean;
   afterLoginFunc?: VoidFunction;
 }
 
 const LoginForm: FC<LoginFormProps> = ({
   setUserToRide,
+  setOpenAuthDialog,
   setShowForgotPassword,
   afterLoginFunc,
 }) => {
@@ -76,9 +78,12 @@ const LoginForm: FC<LoginFormProps> = ({
           })
         );
       }
-     
+
       if (afterLoginFunc) {
         afterLoginFunc();
+      }
+      if (setOpenAuthDialog) {
+        setOpenAuthDialog(false);
       }
 
       return toast({

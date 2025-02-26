@@ -1,11 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { bookARide, cancelRide, getSingleRide } from "./rideThunk";
-import { IRide } from "@/types/rides";
+import { IRide, ISingleRide } from "@/types/rides";
 
 interface RideSliceState {
   [key: string]: unknown;
   bookingDetails: IRide | null;
-  singleRide: IRide | null;
+  singleRide: ISingleRide | null;
   isLoading: boolean;
   error: string;
 }
@@ -27,7 +27,7 @@ const initialState: RideSliceState = {
     service_id: "",
     is_self_booking: false,
     amount: 0,
-    passengers: 1,
+    passengers: 0,
     luggage: 0,
     user_details: {
       name: "",

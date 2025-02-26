@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Input } from "../ui/input";
 import {
   Select,
@@ -33,17 +33,26 @@ import axios, { AxiosError } from "axios";
 function PersonalInformation({
   handleNext,
   handlPrev,
+  setCurrentIndex,
 }: {
   handleNext: VoidFunction;
   handlPrev: VoidFunction;
+  setCurrentIndex: Dispatch<SetStateAction<number>>;
 }) {
   const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
   const { bookingDetails } = useSelector((store: RootState) => store.rides);
+  const { userProfile } = useSelector((store: RootState) => store.auth);
   const [isLoading, setIsLoading] = useState(false);
   const [showOTPForm, setShowOTPForm] = useState(false);
   const [requestOTPLoading, setRequestOTPLoading] = useState(false);
 
   const dispatch = useDispatch<AppDispatch>();
+
+  useEffect(() => {
+    if (userProfile && Object.keys(userProfile).length > 0) {
+      setCurrentIndex(3);
+    }
+  }, [setCurrentIndex, userProfile]);
 
   const { handleChange, handleSubmit, values, errors, touched } = useFormik({
     initialValues: {
@@ -72,7 +81,6 @@ function PersonalInformation({
     },
   });
 
- 
   const handleVerifyOTP = async ({
     phone,
     otp,
@@ -89,7 +97,6 @@ function PersonalInformation({
         otp,
       });
     } catch (error) {
-    
       if (error instanceof AxiosError) {
         setFieldError(
           "otp",
@@ -146,11 +153,11 @@ function PersonalInformation({
     try {
       setIsLoading(true);
 
-      // await handleVerifyOTP({
-      //   phone: values.mobile_number,
-      //   otp: values.otp,
-      //   setFieldError,
-      // });
+      await handleVerifyOTP({
+        phone: values.mobile_number,
+        otp: values.otp,
+        setFieldError,
+      });
 
       const res = await dispatch(register(userInfo));
 

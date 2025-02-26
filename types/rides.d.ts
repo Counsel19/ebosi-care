@@ -17,3 +17,27 @@ export interface IRide {
     mobile_number: string;
   };
 }
+
+export interface IRideRetrieved  {
+  id: number;
+  reservation_number: string;
+  pickup_location: string;
+  dropoff_location: string;
+  schedule_type: string;
+  ride_date: string;
+  ride_time: string;
+  status: string;
+  service_id: number;
+  passengers: number;
+  luggage: number;
+  is_self_booking?: boolean;
+  notes?: string;
+}
+
+export interface ISingleRide {
+  ride: IRideRetrieved ;
+  user: {
+    first_name: string;
+    last_name: string;
+  };
+}

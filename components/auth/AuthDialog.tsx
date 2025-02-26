@@ -16,10 +16,11 @@ import ForgotPassword from "./ForgotPassword";
 
 const AuthDialog = ({}) => {
   const [selectedTab, setSelectedTab] = useState(1);
+  const [ openAuthDialog, setOpenAuthDialog ] = useState(false)
   const [showForgotPassword, setShowForgotPassword] = useState(false);
 
   return (
-    <Dialog>
+    <Dialog open={openAuthDialog} onOpenChange={setOpenAuthDialog}>
       <DialogTrigger
         onClick={() => setShowForgotPassword(false)}
         className="text-blue-500"
@@ -72,7 +73,7 @@ const AuthDialog = ({}) => {
             </div>
             <div className="p-[4rem]">
               {selectedTab == 1 ? (
-                <LoginForm setShowForgotPassword={setShowForgotPassword} />
+                <LoginForm setOpenAuthDialog={setOpenAuthDialog} setShowForgotPassword={setShowForgotPassword} />
               ) : (
                 <RegisterForm />
               )}

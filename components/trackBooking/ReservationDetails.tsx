@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import React, { FC, ReactNode, useEffect } from "react";
 import {
@@ -11,14 +11,14 @@ import {
   UserRound,
 } from "lucide-react";
 import { FaDog } from "react-icons/fa";
-import { IRide } from "@/types/rides";
+import {  IRideRetrieved } from "@/types/rides";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/lib/redux/store";
 import { getServices } from "@/lib/redux/slices/service/serviceThunk";
 import { IServices } from "@/types/services";
 
 interface ReservationDetailsProps {
-  reservationDetails: IRide;
+  reservationDetails: IRideRetrieved;
 }
 
 const ReservationDetails: FC<ReservationDetailsProps> = ({
@@ -46,8 +46,9 @@ const ReservationDetails: FC<ReservationDetailsProps> = ({
     let found: IServices | null = null;
     if (allServices) {
       found =
-        allServices.find((item) => item.id == reservationDetails.service_id) ||
-        null;
+        allServices.find(
+          (item) => item.id == reservationDetails.service_id.toString()
+        ) || null;
     }
 
     return found;
@@ -113,7 +114,7 @@ const ReservationDetails: FC<ReservationDetailsProps> = ({
           icon={<CarFront className="text-[#CC1815]" size={12} />}
         />
         <h5 className="font-semibold">
-          {reservationDetails.is_self_booking
+          {reservationDetails?.is_self_booking
             ? "Booking for myself"
             : "Booking for someone else"}
         </h5>

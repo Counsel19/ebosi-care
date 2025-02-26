@@ -146,6 +146,7 @@ const ServicePage: FC = ({}) => {
           <PersonalInformation
             handlPrev={handlPrev}
             handleNext={handleNext}
+            setCurrentIndex={setCurrentIndex}
           />
 
           <BookingSummary />

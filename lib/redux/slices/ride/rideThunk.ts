@@ -23,11 +23,20 @@ axiosInstance.interceptors.request.use(
 
 export const getSingleRide = createAppAsyncThunk(
   "ride/getSingleRide",
-  async (reservationNumber: string, thunkAPI) => {
+  async (
+    payload: {
+      reservationNumber: string;
+      firstname: string;
+      lastname: string;
+    },
+    thunkAPI
+  ) => {
     try {
-      const res = await axiosInstance.get(`/rides/${reservationNumber}`);
+      const res = await axiosInstance.get(
+        `rides/details?reservation_number=${payload.reservationNumber}&first_name=${payload.firstname}&last_name=${payload.lastname}`
+      );
 
-      const rideData = res.data.ride;
+      const rideData = res.data;
 
       return rideData;
     } catch (error) {

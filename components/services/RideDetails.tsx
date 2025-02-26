@@ -1,12 +1,15 @@
-import React from "react";
+import React, { FC } from "react";
 import { Input } from "../ui/input";
 
 import DateTimeDialog from "./molecules/DateTimeDialog";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/lib/redux/store";
 import { updateRideStateValues } from "@/lib/redux/slices/ride/rideSlice";
+import { cn } from "@/lib/utils";
 
-const RideDetails = () => {
+const RideDetails:FC<{
+  fromEditRide?: boolean
+}> = ({ fromEditRide }) => {
   const { bookingDetails } = useSelector((store: RootState) => store.rides);
 
   const dispatch = useDispatch<AppDispatch>();
@@ -32,7 +35,7 @@ const RideDetails = () => {
   return (
     <div className="lg:p-[4rem] p-[1rem] shadow-lg grid gap-[4rem] border">
       <h3 className="font-semibold text-[2rem] ">1. Your Ride Details </h3>
-      <div className="grid lg:grid-cols-4 gap-[2rem] text-gray-600">
+      <div className={cn(`grid  gap-[2rem] text-gray-600`, fromEditRide ? "lg:grid-cols-2": "lg:grid-cols-4")}>
         <div className="w-full space-y-4 ">
           <label htmlFor=" ">When do you need a ride:</label>
           <DateTimeDialog />
@@ -49,7 +52,7 @@ const RideDetails = () => {
               })
             }
             className="w-full rounded-sm"
-            placeholder="1"
+            placeholder="E.g 1"
           />
         </div>
         <div className="w-full space-y-4">
@@ -64,7 +67,7 @@ const RideDetails = () => {
               })
             }
             className="w-full rounded-sm"
-            placeholder="1"
+           placeholder="E.g 1"
           />
         </div>
         <div className="w-full space-y-4">

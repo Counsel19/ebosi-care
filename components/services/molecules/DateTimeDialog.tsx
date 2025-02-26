@@ -55,11 +55,13 @@ const DateTimeDialog: FC = ({}) => {
 
   const handleSelectDateTime = () => {
     if (!date) return;
+
     dispatch(
       updateRideStateValues({
         name: "bookingDetails",
         value: {
           ...bookingDetails,
+          schedule_type: "scheduled",
           ride_time: `${selectedHour}:${selectedMinute}:${selectedAmPm}`,
           ride_date: format(date, "d/M/yyyy"),
         },
@@ -75,6 +77,7 @@ const DateTimeDialog: FC = ({}) => {
         name: "bookingDetails",
         value: {
           ...bookingDetails,
+          schedule_type: "asap",
           ride_time: `${hours}:${minutes}:${amPm}`,
           ride_date: format(nowDate, "d/M/yyyy"),
         },
@@ -106,15 +109,6 @@ const DateTimeDialog: FC = ({}) => {
               variant={"ghost"}
               onClick={() => {
                 setSelectedTab(1);
-                dispatch(
-                  updateRideStateValues({
-                    name: "bookingDetails",
-                    value: {
-                      ...bookingDetails,
-                      schedule_type: "scheduled",
-                    },
-                  })
-                );
               }}
               className={cn(
                 "w-full h-full rounded-none hover:bg-white",
@@ -130,16 +124,6 @@ const DateTimeDialog: FC = ({}) => {
               variant={"ghost"}
               onClick={() => {
                 setSelectedTab(2);
-
-                dispatch(
-                  updateRideStateValues({
-                    name: "bookingDetails",
-                    value: {
-                      ...bookingDetails,
-                      schedule_type: "asap",
-                    },
-                  })
-                );
               }}
               className={cn(
                 "w-full h-full rounded-none hover:bg-white",

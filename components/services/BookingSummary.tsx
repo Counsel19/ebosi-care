@@ -17,6 +17,7 @@ const BookingSummary = () => {
   const { selectedServices } = useSelector(
     (store: RootState) => store.services
   );
+  const { userProfile } = useSelector((store: RootState) => store.auth);
 
   const dispatch = useDispatch<AppDispatch>();
 
@@ -41,6 +42,11 @@ const BookingSummary = () => {
         value: {
           ...bookingDetails,
           amount: total,
+          user_details: {
+            name: `${userProfile?.first_name} ${userProfile?.last_name}`,
+            email: userProfile?.email,
+            mobile_number: userProfile?.mobile_number,
+          },
         },
       })
     );

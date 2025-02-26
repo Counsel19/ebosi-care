@@ -69,7 +69,7 @@ const PreviewInfo = () => {
           variant: "destructive",
         });
 
-      console.log(res, " res");
+   
 
       await handlePayment({
         reservationNumber: res.payload.reservation_number,
