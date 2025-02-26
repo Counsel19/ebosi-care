@@ -15,10 +15,7 @@ export const emailValidation = yup
 export const userSignupValidation = yup.object({
   last_name: yup.string().required("Last Name is required"),
   first_name: yup.string().required("First Name is required"),
-  mobile_number: yup
-    .string()
-    .required("Phone Number is required")
-    .matches(/^\d{10}$/, "Phone number must be exactly 10 digits"),
+  mobile_number: yup.string().required("Phone Number is required"),
   agreeToTerms: yup.boolean().required("Phone Number is required").isTrue(),
   email: emailValidation,
   password: passwordValidation,
@@ -38,10 +35,8 @@ export const ridePersonalDetailsValidator = yup.object({
   last_name: yup.string().required("Last Name is required"),
   first_name: yup.string().required("First Name is required"),
   otp: yup.string().required("otp is required"),
-  mobile_number: yup
-    .string()
-    .required("Phone Number is required"),
-    // .matches(/^\d{10}$/, "Phone number must be exactly 10 digits"),
+  mobile_number: yup.string().required("Phone Number is required"),
+  // .matches(/^\d{10}$/, "Phone number must be exactly 10 digits"),
 
   email: emailValidation,
   password: passwordValidation,
@@ -51,11 +46,8 @@ export const ridePersonalDetailsValidator = yup.object({
     .required("Confirm Password is required"),
 });
 
-
 export const trackRideValidator = yup.object({
   last_name: yup.string().required("Last Name is required"),
   first_name: yup.string().required("First Name is required"),
   reservation_number: yup.string().required("Reservation No. is required"),
-  
-  
 });

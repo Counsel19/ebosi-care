@@ -77,7 +77,7 @@ const DateTimeDialog: FC = ({}) => {
         name: "bookingDetails",
         value: {
           ...bookingDetails,
-          schedule_type: "asap",
+          schedule_type: "ASAP",
           ride_time: `${hours}:${minutes}:${amPm}`,
           ride_date: format(nowDate, "d/M/yyyy"),
         },

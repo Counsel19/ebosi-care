@@ -5,7 +5,7 @@ import Link from "next/link";
 import React, { Suspense } from "react";
 
 const TrackedVechiclePage = () => {
-  return (
+return (
     <div className="w__frame py-[6rem]">
       <Suspense>
         <TrackingResult />

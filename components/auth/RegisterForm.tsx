@@ -1,31 +1,27 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { FC, useState } from "react";
 import { Input } from "../ui/input";
 import { Checkbox } from "../ui/checkbox";
 import Link from "next/link";
 import { Button } from "../ui/button";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "../ui/select";
-import { countryOptions } from "@/lib/countryData";
 import { useFormik } from "formik";
 import { userSignupValidation } from "@/lib/validators";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/lib/redux/store";
 import { toast } from "@/hooks/use-toast";
 import { AxiosError } from "axios";
-
+import { PhoneInput } from "react-international-phone";
+import "react-international-phone/style.css";
 import { IRegister } from "@/types/users";
 import { register } from "@/lib/redux/slices/auth/authThunk";
 import { cn } from "@/lib/utils";
 
-const RegisterForm = () => {
-  const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
+interface RegisterFormProps {
+  setOpenAuthDialog?: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const RegisterForm: FC<RegisterFormProps> = ({ setOpenAuthDialog }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const dispatch = useDispatch<AppDispatch>();
@@ -66,6 +62,10 @@ const RegisterForm = () => {
           description: res.payload as string,
           variant: "destructive",
         });
+
+      if (setOpenAuthDialog) {
+        setOpenAuthDialog(false);
+      }
 
       return toast({
         title: "Account Creation Successful",
@@ -154,43 +154,25 @@ const RegisterForm = () => {
         </p>
       </div>
 
-      <div className="flex  flex-col ">
-        <div
-          className={cn(
-            "flex gap-2 items-center px-6 py-4  h-[4.5rem]  w-full rounded-none border",
-            errors.mobile_number && touched.mobile_number
-              ? " border-rose-500"
-              : "border-input"
-          )}
-        >
-          <Select
-            onValueChange={(value) => {
-              const newCountry =
-                countryOptions.find((item) => item.value === value)?.code || "";
-              if (newCountry !== selectedCountry) {
-                setSelectedCountry(newCountry);
-              }
-            }}
+      <div className="space-y-2 text-gray-500">
+        <div className="flex items-center">
+          <div
+            className={cn(
+              "flex gap-2 items-center px-2 h-[4.5rem]  w-full rounded-none border",
+              errors.mobile_number && touched.mobile_number
+                ? " border-rose-500"
+                : "border-input"
+            )}
           >
-            <SelectTrigger className="w-[3rem] h-full p-0 border-0 rounded-none ">
-              <SelectValue defaultValue={countryOptions[0].value} />
-            </SelectTrigger>
-            <SelectContent>
-              {countryOptions.map((item, index) => (
-                <SelectItem className="" key={index} value={item.value}>
-                  {item.flag} {item.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          {selectedCountry}
-          <Input
-            placeholder="00-000-000"
-            name="mobile_number"
-            value={values.mobile_number}
-            onChange={handleChange}
-            className="border-0 p-0 focus-visible:ring-0 focus-visible:ring-offset-0 rounded-none "
-          />
+            <PhoneInput
+              defaultCountry="us"
+              className="w-full"
+              onChange={(phone) => {
+                setFieldValue("mobile_number", phone);
+              }}
+              value={values.mobile_number}
+            />
+          </div>
         </div>
         <p
           className={cn(

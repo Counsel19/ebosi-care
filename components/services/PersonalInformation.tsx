@@ -2,20 +2,13 @@
 
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Input } from "../ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "../ui/select";
+
 import {
   Dialog,
   DialogContent,
   DialogTitle,
   DialogTrigger,
 } from "../ui/dialog";
-import { countryOptions } from "@/lib/countryData";
 import { Button } from "../ui/button";
 import { ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
 import { Checkbox } from "../ui/checkbox";
@@ -30,6 +23,10 @@ import { toast } from "@/hooks/use-toast";
 import { register } from "@/lib/redux/slices/auth/authThunk";
 import axios, { AxiosError } from "axios";
 
+// import PhoneInput from 'react-phone-number-input
+import { PhoneInput } from "react-international-phone";
+import "react-international-phone/style.css";
+
 function PersonalInformation({
   handleNext,
   handlPrev,
@@ -39,7 +36,6 @@ function PersonalInformation({
   handlPrev: VoidFunction;
   setCurrentIndex: Dispatch<SetStateAction<number>>;
 }) {
-  const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
   const { bookingDetails } = useSelector((store: RootState) => store.rides);
   const { userProfile } = useSelector((store: RootState) => store.auth);
   const [isLoading, setIsLoading] = useState(false);
@@ -54,32 +50,33 @@ function PersonalInformation({
     }
   }, [setCurrentIndex, userProfile]);
 
-  const { handleChange, handleSubmit, values, errors, touched } = useFormik({
-    initialValues: {
-      first_name: "",
-      last_name: "",
-      email: "",
-      mobile_number: "",
-      password: "",
-      confirm_password: "",
-      otp: "",
-    },
-    validationSchema: ridePersonalDetailsValidator,
-    onSubmit(
-      values: {
-        first_name: string;
-        last_name: string;
-        email: string;
-        mobile_number: string;
-        password: string;
-        confirm_password: string;
-        otp: string;
+  const { handleChange, handleSubmit, setFieldValue, values, errors, touched } =
+    useFormik({
+      initialValues: {
+        first_name: "",
+        last_name: "",
+        email: "",
+        mobile_number: "",
+        password: "",
+        confirm_password: "",
+        otp: "",
       },
-      { setFieldError }
-    ) {
-      handleStoreUser(values, setFieldError);
-    },
-  });
+      validationSchema: ridePersonalDetailsValidator,
+      onSubmit(
+        values: {
+          first_name: string;
+          last_name: string;
+          email: string;
+          mobile_number: string;
+          password: string;
+          confirm_password: string;
+          otp: string;
+        },
+        { setFieldError }
+      ) {
+        handleStoreUser(values, setFieldError);
+      },
+    });
 
   const handleVerifyOTP = async ({
     phone,
@@ -279,42 +276,22 @@ function PersonalInformation({
           <div className="flex items-center">
             <div
               className={cn(
-                "flex gap-2 items-center px-6 py-4  h-[4.5rem]  w-full rounded-none border",
+                "flex gap-2 items-center px-2 h-[4.5rem]  w-full rounded-none border",
                 errors.mobile_number && touched.mobile_number
                   ? " border-rose-500"
                   : "border-input"
               )}
             >
-              <Select
-                onValueChange={(value) => {
-                  const newCountry =
-                    countryOptions.find((item) => item.value === value)?.code ||
-                    "";
-                  if (newCountry !== selectedCountry) {
-                    setSelectedCountry(newCountry);
-                  }
+              <PhoneInput
+                defaultCountry="us"
+                className="w-full"
+                onChange={(phone) => {
+                  setFieldValue("mobile_number", phone);
                 }}
-              >
-                <SelectTrigger className="w-[3rem] h-full p-0 border-0 rounded-none ">
-                  <SelectValue defaultValue={countryOptions[0].value} />
-                </SelectTrigger>
-                <SelectContent>
-                  {countryOptions.map((item, index) => (
-                    <SelectItem className="" key={index} value={item.value}>
-                      {item.flag} {item.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              {selectedCountry}
-              <Input
-                placeholder="00-000-000"
-                name="mobile_number"
                 value={values.mobile_number}
-                onChange={handleChange}
-                className="border-0 p-0 focus-visible:ring-0 focus-visible:ring-offset-0 rounded-none "
               />
             </div>
+
             <Button
               isLoading={requestOTPLoading}
               onClick={() => requestOTP(values.mobile_number)}
