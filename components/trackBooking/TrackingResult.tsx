@@ -101,17 +101,19 @@ const TrackingResult: FC = () => {
           </span>
           <CustomBadge status={singleRide.ride.status} />
         </h2>
-        <div className="flex gap-[2rem]  items-center ">
-          <EditRideModal />
-          <Button
-            type="button"
-            isLoading={isCanceledLoading}
-            onClick={handleCancelRide}
-            className="bg-rose-500 hover:bg-rose-700 text-white min-w-[13.5rem]"
-          >
-            <span>Cancel ride</span>
-          </Button>
-        </div>
+        {singleRide.ride.status == "active" && (
+          <div className="flex gap-[2rem]  items-center ">
+            <EditRideModal />
+            <Button
+              type="button"
+              isLoading={isCanceledLoading}
+              onClick={handleCancelRide}
+              className="bg-rose-500 hover:bg-rose-700 text-white min-w-[13.5rem]"
+            >
+              <span>Cancel ride</span>
+            </Button>
+          </div>
+        )}
       </div>
 
       <div className="grid  grid-cols-[2.8fr_1fr] gap-[2rem] ">
