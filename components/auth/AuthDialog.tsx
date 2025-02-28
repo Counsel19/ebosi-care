@@ -75,7 +75,7 @@ const AuthDialog = ({}) => {
               {selectedTab == 1 ? (
                 <LoginForm setOpenAuthDialog={setOpenAuthDialog} setShowForgotPassword={setShowForgotPassword} />
               ) : (
-                <RegisterForm />
+                <RegisterForm  setOpenAuthDialog={setOpenAuthDialog} />
               )}
             </div>
           </>

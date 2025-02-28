@@ -1,5 +1,6 @@
 import { Briefcase, User } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import { FC } from "react";
 
 interface ServiceItemProps {
@@ -8,6 +9,7 @@ interface ServiceItemProps {
   description: string;
   passengers: number;
   luggage: number;
+  id: string;
 }
 const ServiceItem: FC<ServiceItemProps> = ({
   description,
@@ -15,9 +17,10 @@ const ServiceItem: FC<ServiceItemProps> = ({
   passengers,
   luggage,
   name,
+  id,
 }) => {
   return (
-    <div className="">
+    <Link href={`/${id}`} className="">
       <Image
         alt={name}
         src={image}
@@ -38,7 +41,7 @@ const ServiceItem: FC<ServiceItemProps> = ({
       <p className="text-[1.4rem] text-gray-500 leading-[2.2rem]">
         {description}
       </p>
-    </div>
+    </Link>
   );
 };
 

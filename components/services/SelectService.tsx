@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { FC } from "react";
 import SelectServiceItem from "./molecules/SelectServiceItem";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/lib/redux/store";
@@ -8,7 +8,7 @@ import { Button } from "../ui/button";
 import { updateServicesStateValues } from "@/lib/redux/slices/service/servicesSlice";
 import { Hearts } from "react-loader-spinner";
 
-const SelectService = () => {
+const SelectService: FC = () => {
   const { selectedServices, allServices } = useSelector(
     (store: RootState) => store.services
   );
@@ -42,7 +42,7 @@ const SelectService = () => {
             service={selectedServices}
           />
         ) : allServices ? (
-          allServices.map((service) => (
+          allServices.slice(0, -1).map((service) => (
             <SelectServiceItem key={service.id} service={service} />
           ))
         ) : (

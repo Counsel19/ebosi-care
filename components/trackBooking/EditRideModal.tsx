@@ -58,11 +58,32 @@ const EditRideModal = () => {
   const handleUpdateRide = async () => {
     try {
       setIsLoading(true);
+
+      console.log({
+        reservation_number: singleRide?.ride.reservation_number,
+
+        pickup_location: bookingDetails?.pickup_location,
+        dropoff_location: bookingDetails?.dropoff_location,
+        schedule_type: bookingDetails?.schedule_type,
+        ride_date: bookingDetails?.ride_date,
+        ride_time: bookingDetails?.ride_time,
+        service_id: bookingDetails?.service_id,
+        passengers: bookingDetails?.passengers,
+        luggage: bookingDetails?.luggage,
+      });
       await axios.put(
         `${process.env.NEXT_PUBLIC_BASE_URL}/rides/update`,
         {
           reservation_number: singleRide?.ride.reservation_number,
-          ...bookingDetails,
+
+          pickup_location: bookingDetails?.pickup_location,
+          dropoff_location: bookingDetails?.dropoff_location,
+          schedule_type: bookingDetails?.schedule_type,
+          ride_date: bookingDetails?.ride_date,
+          ride_time: bookingDetails?.ride_time,
+          service_id: bookingDetails?.service_id,
+          passengers: bookingDetails?.passengers,
+          luggage: bookingDetails?.luggage,
         },
         {
           headers: {

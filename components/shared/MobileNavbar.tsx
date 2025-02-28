@@ -9,44 +9,13 @@ import { X } from "lucide-react";
 import Image from "next/image";
 import { Button } from "../ui/button";
 import { IoMdArrowDropdown } from "react-icons/io";
+import { RootState } from "@/lib/redux/store";
+import { useSelector } from "react-redux";
 
 interface MobileNavbarProps {
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   isOpen: boolean;
 }
-
-const servicesSubMenu = [
-  {
-    id: 1,
-    text: "Wheelchair",
-    link: "/services/wheelchair",
-  },
-  {
-    id: 2,
-    text: "Stretcher",
-    link: "/services/stretcher",
-  },
-  {
-    id: 3,
-    text: "Sedan Ambulatory",
-    link: "/services/sedan-ambulatory",
-  },
-  {
-    id: 4,
-    text: "Medical Courier",
-    link: "/services/medical-courier",
-  },
-  {
-    id: 5,
-    text: "Regular Delivery",
-    link: "/services/regular-delivery",
-  },
-  {
-    id: 6,
-    text: "Book Qualified Patient Support",
-    link: "/services/book-support",
-  },
-];
 
 const driveWithUsSubmenu = [
   {
@@ -65,6 +34,7 @@ const MobileNavbar: FC<MobileNavbarProps> = ({ setIsOpen, isOpen }) => {
   const [showServices, setShowServices] = useState(false);
   const [showDrivewithUsMenu, setShowDrivewithUsMenu] = useState(false);
 
+  const { allServices } = useSelector((store: RootState) => store.services);
   const pathname = usePathname();
   const isActive = (path: string) => pathname === path;
 
@@ -86,7 +56,7 @@ const MobileNavbar: FC<MobileNavbarProps> = ({ setIsOpen, isOpen }) => {
         <div></div>
       </div>
       <ul className="flex flex-col justify-start gap-[3rem] font-medium  ">
-        <li  className="w-fit">
+        <li className="w-fit">
           <Link
             onClick={() => setIsOpen(false)}
             className={cn(
@@ -98,7 +68,7 @@ const MobileNavbar: FC<MobileNavbarProps> = ({ setIsOpen, isOpen }) => {
             Home
           </Link>
         </li>
-        <li >
+        <li>
           <Button
             onClick={() => {
               setShowServices(!showServices);
@@ -119,22 +89,23 @@ const MobileNavbar: FC<MobileNavbarProps> = ({ setIsOpen, isOpen }) => {
               "flex-col  pb-8 bg-white "
             )}
           >
-            {servicesSubMenu.map((item) => (
-              <Link
-                onClick={() => {
-                  setShowServices(false);
-                  setIsOpen(false);
-                }}
-                key={item.id}
-                href={item.link}
-                className="px-[2rem]  py-2 text-[1.4rem] text-black bg-white hover:bg-[#CC1815] hover:text-white"
-              >
-                {item.text}
-              </Link>
-            ))}
+            {allServices &&
+              allServices.map((item) => (
+                <Link
+                  onClick={() => {
+                    setShowServices(false);
+                    setIsOpen(false);
+                  }}
+                  key={item.id}
+                  href={`/${item.id}`}
+                  className="px-[2rem]  py-2 text-[1.4rem] text-black bg-white hover:bg-[#CC1815] hover:text-white"
+                >
+                  {item.name}
+                </Link>
+              ))}
           </div>
         </li>
-        <li >
+        <li>
           <Link
             onClick={() => setIsOpen(false)}
             className={cn(
@@ -148,7 +119,7 @@ const MobileNavbar: FC<MobileNavbarProps> = ({ setIsOpen, isOpen }) => {
             About Us
           </Link>
         </li>
-        <li >
+        <li>
           <Link
             onClick={() => setIsOpen(false)}
             className={cn(
@@ -162,7 +133,7 @@ const MobileNavbar: FC<MobileNavbarProps> = ({ setIsOpen, isOpen }) => {
             Book a Ride
           </Link>
         </li>
-        <li >
+        <li>
           <Button
             onClick={() => setShowDrivewithUsMenu(!showDrivewithUsMenu)}
             className={cn(
@@ -196,7 +167,7 @@ const MobileNavbar: FC<MobileNavbarProps> = ({ setIsOpen, isOpen }) => {
             ))}
           </div>
         </li>
-        <li >
+        <li>
           <Link
             onClick={() => setIsOpen(false)}
             className={cn(

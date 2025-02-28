@@ -12,15 +12,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/lib/redux/store";
 import { updateServicesStateValues } from "@/lib/redux/slices/service/servicesSlice";
 import { updateRideStateValues } from "@/lib/redux/slices/ride/rideSlice";
+import { useRouter } from "next/navigation";
 
 interface SelectServiceItemProps {
   service: IServices;
   isPatientSupport?: boolean;
+  fromHomePage?: boolean;
 }
 
 const SelectServiceItem: FC<SelectServiceItemProps> = ({
   service,
   isPatientSupport,
+  fromHomePage,
 }) => {
   const {
     id,
@@ -44,6 +47,7 @@ const SelectServiceItem: FC<SelectServiceItemProps> = ({
   const [isMobile, setIsMobile] = useState(false);
 
   useTargetBreakpoint({ setIsMobile, breakPoint: 640 });
+  const router = useRouter();
 
   const { selectedServices } = useSelector(
     (store: RootState) => store.services
@@ -55,23 +59,30 @@ const SelectServiceItem: FC<SelectServiceItemProps> = ({
   return (
     <div
       onClick={() => {
-        dispatch(
-          updateServicesStateValues({
-            name: "selectedServices",
-            value: service,
-          })
-        );
-        dispatch(
-          updateRideStateValues({
-            name: "bookingDetails",
-            value: {
-              ...bookingDetails,
-              service_id: service.id,
-            },
-          })
-        );
+        if (!fromHomePage) {
+          dispatch(
+            updateServicesStateValues({
+              name: "selectedServices",
+              value: service,
+            })
+          );
+          dispatch(
+            updateRideStateValues({
+              name: "bookingDetails",
+              value: {
+                ...bookingDetails,
+                service_id: service.id,
+              },
+            })
+          );
+        } else {
+          router.push(`/${service.id}`);
+        }
       }}
-      className="grid md:grid-cols-[1fr_3fr] rounded-lg border border-[#395BA6] cursor-pointer  "
+      className={cn(
+        "grid md:grid-cols-[1fr_3fr] rounded-lg border border-[#395BA6] cursor-pointer  ",
+        fromHomePage && "cursor-pointer"
+      )}
     >
       <div
         className={cn(
@@ -160,9 +171,13 @@ const SelectServiceItem: FC<SelectServiceItemProps> = ({
             </div>
 
             <div className="w-[19.3rem] flex flex-col gap-3 justify-center items-center h-[7.8rem] text-white bg-[url('/images/sales_badge.png')] bg-contain bg-center bg-no-repeat">
-              <h5 className=" text-[1.2rem] font-normal uppercase text-center">Additional Miles</h5>
-         
-              <h4 className="text-center font-bold text-[2rem]">${additional_mile_price}/mile</h4>
+              <h5 className=" text-[1.2rem] font-normal uppercase text-center">
+                Additional Miles
+              </h5>
+
+              <h4 className="text-center font-bold text-[2rem]">
+                ${additional_mile_price}/mile
+              </h4>
             </div>
 
             <div>

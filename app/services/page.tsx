@@ -121,7 +121,7 @@ const ServicePage: FC = ({}) => {
       {currentIndex == 1 ? (
         <>
           <RideDetails />
-          <SelectService />
+          <SelectService  />
 
           <div className="flex justify-between items-center ">
             <Button
