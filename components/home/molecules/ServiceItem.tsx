@@ -20,7 +20,7 @@ const ServiceItem: FC<ServiceItemProps> = ({
   id,
 }) => {
   return (
-    <Link href={`/${id}`} className="">
+    <Link href={`/${id}?service=${name.replace(" ", "_")}`} className="">
       <Image
         alt={name}
         src={image}

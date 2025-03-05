@@ -15,7 +15,7 @@ import { cn } from "@/lib/utils";
 import AuthDialog from "../auth/AuthDialog";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/lib/redux/store";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { updateRideStateValues } from "@/lib/redux/slices/ride/rideSlice";
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
 import { calculateDistance } from "@/lib/calculateDistance";
@@ -42,6 +42,13 @@ const BookRideWindow = () => {
     null
   );
 
+  const [boxTitle, setBoxTitle] = useState("Book a Ride/Service");
+  const { selectedServices } = useSelector(
+    (store: RootState) => store.services
+  );
+
+  const pathname = usePathname();
+
   const { bookingDetails } = useSelector((store: RootState) => store.rides);
 
   const dispatch = useDispatch<AppDispatch>();
@@ -54,6 +61,14 @@ const BookRideWindow = () => {
   useEffect(() => {
     setIsClient(true);
   }, []);
+
+  useEffect(() => {
+    if (selectedServices && selectedServices.id == pathname.split("/")[1]) {
+      setBoxTitle(`Book a ${selectedServices.name}`);
+    } else {
+      setBoxTitle("Book a Ride/Service");
+    }
+  }, [pathname, selectedServices]);
 
   useEffect(() => {
     const getData = async () => {
@@ -111,7 +126,7 @@ const BookRideWindow = () => {
           </div>
         </div>
 
-        <h4 className="text-center font-bold text-xl">Book a Ride/Service</h4>
+        <h4 className="text-center font-bold text-xl">{boxTitle}</h4>
       </div>
 
       {!isClient ? (

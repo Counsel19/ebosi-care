@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import EditCancelRide from "./EditCancelRide";
 import TrackVehicle from "./TrackVehicle";
 
+
 const carouselSlides = [
   "bg-[url('/images/weelchair-car-transaport.jpg')]",
   "bg-[url('/images/customer-entering-car.jpg')]",
@@ -19,6 +20,8 @@ interface HomeBannerProps {
 
 const HomeBanner: FC<HomeBannerProps> = ({ editCancelRide, trackVehicle }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
+ 
+
 
   useEffect(() => {
     const interval = setInterval(() => {
