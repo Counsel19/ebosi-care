@@ -1,6 +1,6 @@
 "use client";
 
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import {
   Select,
   SelectContent,
@@ -9,10 +9,14 @@ import {
   SelectValue,
 } from "../ui/select";
 import { Input } from "../ui/input";
-import { useRouter } from "next/navigation";
 import { Button } from "../ui/button";
-import { useFormik } from "formik";
-import { trackRideValidator } from "@/lib/validators";
+import { useRouter } from "next/navigation";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/lib/redux/store";
+import { getSingleRide } from "@/lib/redux/slices/ride/rideThunk";
+import { ErrorMessage, Field, Form, Formik } from "formik";
+import * as Yup from "yup";
+import { toast } from "@/hooks/use-toast";
 
 // interface TrackVehicleProps {
 
@@ -21,101 +25,142 @@ import { trackRideValidator } from "@/lib/validators";
 const languageOptions = [{ value: "english", label: "English" }];
 const currencyOptions = [{ value: "usd", label: "$(USD)" }];
 
-interface ISubmitValus {
-  first_name: string;
-  last_name: string;
-  reservation_number: string;
+const validationSchema = Yup.object({
+  reservationNumber: Yup.string().required("Required"),
+  firstname: Yup.string().required("Required"),
+  lastname: Yup.string().required("Required"),
+});
+
+interface IUserInput {
+  reservationNumber: string;
+  firstname: string;
+  lastname: string;
 }
 
 const TrackVehicle: FC = ({}) => {
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+  const dispatch = useDispatch<AppDispatch>();
 
-  const { handleChange, handleSubmit, values, errors, touched } = useFormik({
-    initialValues: {
-      first_name: "",
-      last_name: "",
-      reservation_number: "",
-    },
-    validationSchema: trackRideValidator,
-    onSubmit(values: ISubmitValus) {
-      handleContinue(values);
-    },
-  });
+  const handleContinue = async (values: IUserInput) => {
+    setIsLoading(true);
+    const res = await dispatch(
+      getSingleRide({
+        firstname: values.firstname,
+        lastname: values.lastname,
+        reservationNumber: values.reservationNumber,
+      })
+    );
 
-  const handleContinue = (values: ISubmitValus) => {
-    console.log(values);
-    router.push("/track-vehicle/1");
+    if (res.type.includes("rejected"))
+      return toast({
+        title: "An Error Occurred",
+        description: res.payload as string,
+        variant: "destructive",
+      });
+
+    router.push(
+      `/track-vehicle/${res.payload.ride.reservation_number}?first_name=${res.payload.user.first_name}&last_name=${res.payload.user.last_name}`
+    );
+
+    setIsLoading(false);
   };
 
   return (
-    <div className="p-[4rem] mb-[4rem] w-full rounded-lg bg-white shadow-lg space-y-[2rem]">
-      <div className="space-y-[2rem] w-full grid">
-        <div className="flex justify-end max-w-full">
-          <div className="flex  gap-[1rem] ">
-            <Select>
-              <SelectTrigger className="lg:w-[180px]">
-                <SelectValue placeholder="Select Language" />
-              </SelectTrigger>
-              <SelectContent>
-                {languageOptions.map((item) => (
-                  <SelectItem key={item.value} value={item.value}>
-                    {item.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-            <Select>
-              <SelectTrigger className="lg:w-[180px]">
-                <SelectValue placeholder="Select Currency" />
-              </SelectTrigger>
-              <SelectContent>
-                {currencyOptions.map((item) => (
-                  <SelectItem key={item.value} value={item.value}>
-                    {item.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+    <Formik
+      initialValues={{
+        reservationNumber: "",
+        firstname: "",
+        lastname: "",
+      }}
+      validationSchema={validationSchema}
+      onSubmit={(values) => {
+        handleContinue(values);
+      }}
+    >
+      <Form className="p-[4rem] mb-[4rem] w-full  rounded-lg bg-white shadow-lg space-y-[2rem]">
+        <div className="space-y-[2rem] w-full grid">
+          <div className="flex justify-end max-w-full">
+            <div className="flex  gap-[1rem] ">
+              <Select>
+                <SelectTrigger className="lg:w-[180px]">
+                  <SelectValue placeholder="Select Language" />
+                </SelectTrigger>
+                <SelectContent>
+                  {languageOptions.map((item) => (
+                    <SelectItem key={item.value} value={item.value}>
+                      {item.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <Select>
+                <SelectTrigger className="lg:w-[180px]">
+                  <SelectValue placeholder="Select Currency" />
+                </SelectTrigger>
+                <SelectContent>
+                  {currencyOptions.map((item) => (
+                    <SelectItem key={item.value} value={item.value}>
+                      {item.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
           </div>
         </div>
-      </div>
-      <form onSubmit={handleSubmit} className="space-y-[2rem]">
-        <h3 className="text-[3rem] leading-[3.8rem] ">Track Your Vehicle</h3>
+
+        <h3 className="text-[3rem] leading-[3.8rem] ">
+          Track your Ride
+        </h3>
 
         <div className="space-y-[2rem]">
           <label htmlFor="">
             Please enter the following information to proceed:
           </label>
-          <div className="flex flex-col gap-[1rem] lg:flex-row lg:gap-[2rem] ">
-            <Input
-              className="w-full shadow-inner rounded-sm  "
-              placeholder="Reservation Number"
-              name="reservation_number"
-              value={values.reservation_number}
-              error={errors["reservation_number"]}
-              touched={touched["reservation_number"]}
-              onChange={handleChange}
-            />
 
-            <Input
-              className="w-full shadow-inner rounded-sm  "
-              placeholder="First Name"
-              name="first_name"
-              value={values.first_name}
-              error={errors["first_name"]}
-              touched={touched["first_name"]}
-              onChange={handleChange}
-            />
+          <div className="flex flex-col gap-[1rem] lg:flex-row lg:gap-[2rem]">
+            <div className="w-full">
+              <Field
+                name="reservationNumber"
+                as={Input}
+                className="w-full shadow-inner rounded-sm outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
+                placeholder="Reservation Number"
+              />
+              <ErrorMessage
+                name="reservationNumber"
+                component="div"
+                className="text-[1.2rem] text-[#D92626]"
+              />
+            </div>
 
-            <Input
-              className="w-full shadow-inner rounded-sm  "
-              placeholder="Last Name"
-              name="last_name"
-              value={values.last_name}
-              error={errors["last_name"]}
-              touched={touched["last_name"]}
-              onChange={handleChange}
-            />
+            <div className="w-full">
+              <Field
+                name="firstname"
+                as={Input}
+                className="w-full shadow-inner rounded-sm outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
+                placeholder="First Name"
+              />
+              <ErrorMessage
+                name="firstname"
+                component="div"
+                className="text-[1.2rem] text-[#D92626]"
+              />
+            </div>
+
+            <div className="w-full">
+              <Field
+                name="lastname"
+                as={Input}
+                className="w-full shadow-inner rounded-sm outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
+                placeholder="Last Name"
+              />
+              <ErrorMessage
+                name="lastname"
+                component="div"
+                className="text-[1.2rem] text-[#D92626]"
+              />
+            </div>
           </div>
         </div>
         <div className="flex lg:justify-end">
@@ -131,6 +176,7 @@ const TrackVehicle: FC = ({}) => {
               <span>Cancel</span>
             </Button>
             <Button
+              isLoading={isLoading}
               type="submit"
               className="bg-[#395BA6] text-white min-w-[13.5rem]"
             >
@@ -138,9 +184,9 @@ const TrackVehicle: FC = ({}) => {
             </Button>
           </div>
         </div>
-      </form>
-    </div>
+      </Form>
+    </Formik>
   );
 };
 
-export default React.memo(TrackVehicle);
+export default TrackVehicle;

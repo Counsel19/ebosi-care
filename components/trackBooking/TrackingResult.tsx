@@ -117,8 +117,11 @@ const TrackingResult: FC = () => {
       </div>
 
       <div className="grid  grid-cols-[2.8fr_1fr] gap-[2rem] ">
-        <div className="grid gap-[2rem] grid-rows-[60rem_1fr]">
-          <TrackingMap />
+        <div className="grid gap-[4rem] grid-rows-[65rem_1fr]">
+          <TrackingMap
+            origin={singleRide.ride.pickup_location}
+            destination={singleRide.ride.dropoff_location}
+          />
           <DriverDetails />
         </div>
         <div className="grid gap-[2rem] grid-rows-[2.8fr_1fr]">

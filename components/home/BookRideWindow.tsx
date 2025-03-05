@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Select,
   SelectContent,
@@ -8,7 +8,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
-import { Input } from "../ui/input";
 import { Button, buttonVariants } from "../ui/button";
 import { FilePenLine, MapPinned, Minus, Plus } from "lucide-react";
 import Link from "next/link";
@@ -18,21 +17,67 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/lib/redux/store";
 import { useRouter } from "next/navigation";
 import { updateRideStateValues } from "@/lib/redux/slices/ride/rideSlice";
+import GooglePlacesAutocomplete from "react-google-places-autocomplete";
+import { calculateDistance } from "@/lib/calculateDistance";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
+import { toast } from "@/hooks/use-toast";
 
 const languageOptions = [{ value: "english", label: "English" }];
 const currencyOptions = [{ value: "usd", label: "$(USD)" }];
 
-const BookRideWindow = () => {
-  const [addStop, setAddStop] = useState(false);
+type PlaceOption = { label: string; value: unknown };
 
-  const [pickupLocation, setPickUpLocation] = useState("");
-  const [stopLocation, setStopLocation] = useState("");
-  const [dropOffLocation, setDropOffLocation] = useState("");
+const BookRideWindow = () => {
+  const [isClient, setIsClient] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [addStop, setAddStop] = useState(false);
+  const [distanceInMiles, setDistanceInMiles] = useState(0);
+
+  const [pickupLocation, setPickUpLocation] = useState<PlaceOption | null>(
+    null
+  );
+  const [stopLocation, setStopLocation] = useState<PlaceOption | null>(null);
+  const [dropOffLocation, setDropOffLocation] = useState<PlaceOption | null>(
+    null
+  );
 
   const { bookingDetails } = useSelector((store: RootState) => store.rides);
 
   const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
+
+  function metersToMiles(meters: number) {
+    return meters / 1609.34;
+  }
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        if (pickupLocation && dropOffLocation) {
+          setIsLoading(true);
+          const { distanceValue } = await calculateDistance(
+            pickupLocation.label,
+            dropOffLocation.label
+          );
+          setDistanceInMiles(metersToMiles(distanceValue));
+        }
+      } catch (error) {
+        const err = error as Error;
+        toast({
+          title: "An Error Occurred",
+          description: err.message,
+          variant: "destructive",
+        });
+      } finally {
+      }
+    };
+    getData();
+  }, [dropOffLocation, pickupLocation]);
 
   return (
     <div className="p-[2rem] w-full  rounded-lg bg-white shadow-lg space-y-[2rem]">
@@ -69,73 +114,103 @@ const BookRideWindow = () => {
         <h4 className="text-center font-bold text-xl">Book a Ride/Service</h4>
       </div>
 
-      <div className="flex flex-col gap-[1rem] lg:flex-row lg:gap-[2rem] ">
-        <div className="w-full space-y-4">
-          <label htmlFor="">Enter your pickup Location:</label>
-          <div className="flex shadow-inner w-full rounded-sm  border border-input bg-transparent p-0  ring-offset-background file:border-0 file:bg-transparent file:text-base file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accentGreen focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
-            <Input
-              value={pickupLocation}
-              onChange={(e) => setPickUpLocation(e.target.value)}
-              className="w-full flex-1 border-none outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
-              placeholder="E.g Home, Pharmacy, Hospital"
-            />
-            {!addStop ? (
-              <Button
-                onClick={() => setAddStop(true)}
-                className="w-[4rem] h-18 p-0  m-0  border-y-0 border-r-0"
-                variant={"outline"}
-              >
-                <Plus />
-              </Button>
-            ) : null}
-          </div>
+      {!isClient ? (
+        <div className="grid gap-[1rem] lg:grid-cols-2 ">
+          <Skeleton baseColor="#FFFFFF" width={"100%"} height={50} />
+          <Skeleton baseColor="#FFFFFF" width={"100%"} height={50} />
         </div>
+      ) : (
+        <div className="flex flex-col gap-[1rem] lg:flex-row lg:gap-[2rem] ">
+          <div className="w-full space-y-4">
+            <label htmlFor="">Enter your pickup Location:</label>
 
-        {addStop ? (
-          <div className="w-full  space-y-4">
-            <label htmlFor="">Extra stop:</label>
             <div className="flex shadow-inner w-full rounded-sm  border border-input bg-transparent p-0  ring-offset-background file:border-0 file:bg-transparent file:text-base file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accentGreen focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
-              <Input
-                value={stopLocation}
-                onChange={(e) => setStopLocation(e.target.value)}
-                className="w-full flex-1 border-none outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
-                placeholder="E.g Home, Pharmacy, Hospital"
+              <GooglePlacesAutocomplete
+                selectProps={{
+                  value: pickupLocation,
+                  onChange: setPickUpLocation,
+                  placeholder: "E.g Home, Pharmacy, Hospital",
+                  className:
+                    "google-input w-full flex-1 border-none outline-none focus-visible:ring-0 focus-visible:ring-offset-0",
+                }}
+                apiKey={process.env.NEXT_PUBLIC_GOOGLE_API_KEY}
               />
 
-              <Button
-                onClick={() => setAddStop(false)}
-                className="w-[4rem] h-18 p-0  m-0  border-y-0 border-r-0"
-                variant={"outline"}
-              >
-                <Minus />
-              </Button>
+              {!addStop ? (
+                <Button
+                  onClick={() => setAddStop(true)}
+                  className="w-[4rem] h-18 p-0  m-0  border-y-0 border-r-0"
+                  variant={"outline"}
+                >
+                  <Plus />
+                </Button>
+              ) : null}
             </div>
           </div>
-        ) : null}
-        <div className="w-full  space-y-4">
-          <label htmlFor="">Enter your dropoff Location:</label>
-          <Input
-            value={dropOffLocation}
-            onChange={(e) => setDropOffLocation(e.target.value)}
-            className="w-full shadow-inner rounded-sm outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
-            placeholder="E.g Home, Pharmacy, Hospital"
-          />
+
+          {addStop ? (
+            <div className="w-full  space-y-4">
+              <label htmlFor="">Extra stop:</label>
+              <div className="flex shadow-inner w-full rounded-sm  border border-input bg-transparent p-0  ring-offset-background file:border-0 file:bg-transparent file:text-base file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accentGreen focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
+                <GooglePlacesAutocomplete
+                  selectProps={{
+                    value: stopLocation,
+                    onChange: setStopLocation,
+                    placeholder: "E.g Home, Pharmacy, Hospital",
+                    className:
+                      "google-input w-full flex-1 border-none outline-none focus-visible:ring-0 focus-visible:ring-offset-0",
+                  }}
+                  apiKey={process.env.NEXT_PUBLIC_GOOGLE_API_KEY}
+                />
+
+                <Button
+                  onClick={() => setAddStop(false)}
+                  className="w-[4rem] h-18 p-0  m-0  border-y-0 border-r-0"
+                  variant={"outline"}
+                >
+                  <Minus />
+                </Button>
+              </div>
+            </div>
+          ) : null}
+          <div className="w-full  space-y-4">
+            <label htmlFor="">Enter your dropoff Location:</label>
+            <div className="flex shadow-inner w-full rounded-sm  border border-input bg-transparent p-0  ring-offset-background file:border-0 file:bg-transparent file:text-base file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accentGreen focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
+              <GooglePlacesAutocomplete
+                selectProps={{
+                  value: dropOffLocation,
+                  onChange: setDropOffLocation,
+                  placeholder: "E.g Home, Pharmacy, Hospital",
+                  className:
+                    "google-input w-full flex-1 border-none outline-none focus-visible:ring-0 focus-visible:ring-offset-0",
+                }}
+                apiKey={process.env.NEXT_PUBLIC_GOOGLE_API_KEY}
+              />
+            </div>
+          </div>
         </div>
-      </div>
+      )}
 
       <div className="w-full space-y-[1.5rem] text-[1.4rem] lg:text-base">
         <div className=" mx-auto lg:w-[50%]  space-y-[1rem]">
           <Button
-            disabled={!pickupLocation || !dropOffLocation}
+            disabled={!pickupLocation || !dropOffLocation || !isLoading}
+            isLoading={isLoading}
             onClick={() => {
               dispatch(
                 updateRideStateValues({
                   name: "bookingDetails",
                   value: {
                     ...bookingDetails,
-                    pickup_location: pickupLocation,
-                    dropoff_location: dropOffLocation,
+                    pickup_location: pickupLocation?.label,
+                    dropoff_location: dropOffLocation?.label,
                   },
+                })
+              );
+              dispatch(
+                updateRideStateValues({
+                  name: "distanceInMiles",
+                  value: distanceInMiles,
                 })
               );
               router.push("/services");

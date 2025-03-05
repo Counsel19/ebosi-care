@@ -12,7 +12,9 @@ import { formatToCurrency } from "@/lib/utils";
 import { updateRideStateValues } from "@/lib/redux/slices/ride/rideSlice";
 
 const BookingSummary = () => {
-  const { bookingDetails } = useSelector((store: RootState) => store.rides);
+  const { bookingDetails, distanceInMiles } = useSelector(
+    (store: RootState) => store.rides
+  );
   const [totalPrice, setTotalPrice] = useState(0);
   const { selectedServices } = useSelector(
     (store: RootState) => store.services
@@ -27,9 +29,9 @@ const BookingSummary = () => {
 
   useEffect(() => {
     let total = 0;
-    if (selectedServices) {
+    if (selectedServices && distanceInMiles) {
       total =
-        Number(selectedServices.base_price) -
+        Number(selectedServices.base_price) * distanceInMiles -
         Number(selectedServices.discount.amount) +
         Number(selectedServices.fuel_surcharge) +
         Number(selectedServices.rider_fee) +

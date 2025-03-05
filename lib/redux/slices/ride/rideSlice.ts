@@ -5,8 +5,10 @@ import { IRide, ISingleRide } from "@/types/rides";
 interface RideSliceState {
   [key: string]: unknown;
   bookingDetails: IRide | null;
+  distanceInMiles: number;
   singleRide: ISingleRide | null;
   isLoading: boolean;
+  loadedGoogleMap: boolean;
   error: string;
 }
 
@@ -17,6 +19,7 @@ interface UpdatedRideStatePayload {
 
 const initialState: RideSliceState = {
   singleRide: null,
+  distanceInMiles: 0,
   bookingDetails: {
     pickup_location: "",
     dropoff_location: "",
@@ -26,6 +29,7 @@ const initialState: RideSliceState = {
     apartment: "",
     service_id: "",
     is_self_booking: false,
+
     amount: 0,
     passengers: 0,
     luggage: 0,
@@ -35,6 +39,7 @@ const initialState: RideSliceState = {
       mobile_number: "",
     },
   },
+  loadedGoogleMap: false,
   isLoading: false,
   error: "",
 };

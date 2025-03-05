@@ -30,6 +30,23 @@ h5 {
   flex: 1;
 }
 
+.google-input * {
+  border-width: 0px !important;
+  font-size: 1.4rem;
+}
+.google-input > div:first-of-type:hover,
+.google-input > div:first-of-type {
+  box-shadow: none !important;
+  border-color: transparent !important;
+}
+
+.google-input > div:first-of-type > div:nth-of-type(2) {
+  display: none;
+}
+.map-wrapper > div:first-of-type {
+  display: none !important;
+}
+
 @layer utilities {
   .w__frame {
     max-width: 1200px;

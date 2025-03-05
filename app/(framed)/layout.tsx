@@ -1,11 +1,16 @@
+"use client";
+
+
 import Footer from "@/components/home/Footer";
 import Navbar from "@/components/shared/Navbar";
 import { FC } from "react";
+// import useLoadMap from "@/hooks/useLoadMap";
 
 interface layoutProps {
   children: React.ReactNode;
 }
-const layout: FC<layoutProps> = ({ children }) => {
+const Layout: FC<layoutProps> = ({ children }) => {
+  // useLoadMap();
   return (
     <>
       <Navbar />
@@ -15,4 +20,4 @@ const layout: FC<layoutProps> = ({ children }) => {
   );
 };
 
-export default layout;
+export default Layout;

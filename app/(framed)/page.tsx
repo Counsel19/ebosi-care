@@ -8,9 +8,11 @@ import ServicesWeOffer from "@/components/home/ServicesWeOffer";
 import Testimonials from "@/components/home/Testimonials";
 import WhyChooseUs from "@/components/home/WhyChooseUs";
 import useGetLocation from "@/components/shared/GetLocation";
+// import useLoadMap from "@/hooks/useLoadMap";
 
 export default function Home() {
   useGetLocation();
+  // useLoadMap();
   return (
     <div className="grid gap-[8rem]">
       <HomeBanner />
