@@ -64,7 +64,9 @@ const Footer: FC = ({}) => {
 
         <hr className="mt-[5rem] mb-[1rem] " />
         <div className="flex flex-col lg:flex-row gap-[4rem] justify-between lg:items-center  text-slate-400">
-          <span>Ebosi ©. All rights reserved</span>
+          <span>
+            All Right Reserved &copy; Ebosicare {new Date().getFullYear()}
+          </span>
 
           <div className="flex flex-col lg:flex-row lg:items-center text-[1.2rem] gap-[4rem]">
             <Link href={"/"}>PRIVACY POLICY </Link>
