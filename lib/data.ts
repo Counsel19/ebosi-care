@@ -182,21 +182,21 @@ export const allServices = [
 export const testimonials = [
   {
     id: "1",
-    name: "Emily Hawthorne",
+    name: "Emily",
     subname: "REGULAR CLIENT",
     image: "/images/avatar_.png",
     note: "Ebosi Care has been a game-changer for my health routine. Easy to book a ride/service, Their drivers are always on time, courteous, and genuinely compassionate. I feel safe and valued every time I ride with them",
   },
   {
     id: "2",
-    name: "James Caldwell",
+    name: "James ",
     subname: "REGULAR CLIENT",
     image: "/images/avatar_.png",
     note: "I never imagined a transportation service could feel so personal. Ebosi Care's team goes the extra mile. Punctual, professional, and caring. They truly understand the importance of my medical appointments",
   },
   {
     id: "3",
-    name: "Sophie Whitaker",
+    name: "Sophie ",
     subname: "REGULAR CLIENT",
     image: "/images/avatar_.png",
     note: "When I needed reliable, stress-free transport for my treatments, Ebosi Care delivered. Their efficient booking, friendly drivers, and consistent service have made a world of difference in my healthcare journey",
