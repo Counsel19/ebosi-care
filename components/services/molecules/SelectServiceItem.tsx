@@ -7,7 +7,6 @@ import { IServices } from "@/types/services";
 import { Briefcase, User } from "lucide-react";
 import Image from "next/image";
 import { FC, useState } from "react";
-import { format } from "date-fns";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/lib/redux/store";
 import { updateServicesStateValues } from "@/lib/redux/slices/service/servicesSlice";
@@ -32,14 +31,10 @@ const SelectServiceItem: FC<SelectServiceItemProps> = ({
     base_price,
     additional_mile_price,
     discount,
-    distance_lower_limit,
-    distance_upper_limit,
-
     is_one_way,
     luggage,
     name,
     passengers,
-
     hourly_rate_cna,
     hourly_rate_rn,
   } = service;
@@ -158,11 +153,10 @@ const SelectServiceItem: FC<SelectServiceItemProps> = ({
               ) : null}
             </div>
             <div className="flex gap-2 font-semibold">
-              {distance_lower_limit} - {distance_upper_limit} miles
+              {0} - {9} miles
             </div>
             <div className="flex gap-4 items-center">
               <h5 className="text-[1.8rem] line-through">
-                {" "}
                 {formatToCurrency.format(Number(base_price))}
               </h5>
               <div className="bg-[#CC1815] rounded-md text-[1rem] text-white p-[0.5rem]">
@@ -178,24 +172,6 @@ const SelectServiceItem: FC<SelectServiceItemProps> = ({
               <h4 className="text-center font-bold text-[2rem]">
                 ${additional_mile_price}/mile
               </h4>
-            </div>
-
-            <div>
-              <p>Discount</p>
-              <p>
-                {Math.floor(
-                  (new Date(discount.end).getTime() -
-                    new Date(discount.start).getTime()) /
-                    (1000 * 60 * 60 * 24)
-                )}{" "}
-                days left
-              </p>
-            </div>
-            <div>
-              <p>*Drop Off: {format(new Date(), "h:m a")}</p>
-              {new Date(new Date()).getTime >= new Date().getTime ? (
-                <p>Book in advance</p>
-              ) : null}
             </div>
           </div>
         )}
