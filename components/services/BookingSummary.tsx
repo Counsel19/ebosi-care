@@ -36,13 +36,8 @@ const BookingSummary = () => {
           const { data } = await axios.get(
             `/api/get-price-for-distance?id=${selectedServices.id}&distance=${distanceInMiles}`
           );
-      
-          total =
-            Number(data) -
-            Number(selectedServices.discount.amount) +
-            Number(selectedServices.fuel_surcharge) +
-            Number(selectedServices.rider_fee) +
-            Number(selectedServices.rider_fee);
+
+          total = Number(data) - Number(selectedServices.discount.amount);
         }
 
         dispatch(
@@ -103,11 +98,19 @@ const BookingSummary = () => {
 
           <div className="p-[1rem] lg:p-[4rem] bg-[#F3F3F3] text-[1.4rem] space-y-[2rem]">
             <div className="grid grid-cols-2  items-center">
+              <span className="font-semibold">Distance (In Miles):</span>
+              <span>{distanceInMiles}</span>
+            </div>
+            <div className="grid grid-cols-2  items-center">
               <span className="font-semibold">Fare:</span>
               <div className="flex gap-2">
                 {selectedServices?.discount?.amount > 0 ? (
                   <>
-                    <span className="text-gray-400 line-through">$62.47 </span>
+                    <span className="text-gray-400 line-through">
+                      {formatToCurrency.format(
+                        Number(selectedServices.base_price)
+                      )}
+                    </span>
                     <span>
                       {formatToCurrency.format(
                         Number(selectedServices.base_price) -
@@ -116,30 +119,40 @@ const BookingSummary = () => {
                     </span>
                   </>
                 ) : (
-                  <span>${selectedServices.base_price}</span>
+                  <span>
+                    {formatToCurrency.format(
+                      Number(selectedServices.base_price)
+                    )}
+                  </span>
                 )}
               </div>
             </div>
             <div className="grid grid-cols-2  items-center">
+              <span className="font-semibold">Discount:</span>
+              <span>
+                {formatToCurrency.format(Number(selectedServices.discount.amount))}
+              </span>
+            </div>
+            {/* <div className="grid grid-cols-2  items-center">
               <span className="font-semibold">Rider Fee:</span>
               <span>
                 {formatToCurrency.format(Number(selectedServices.rider_fee))}
               </span>
-            </div>
-            <div className="grid grid-cols-2  items-center">
+            </div> */}
+            {/* <div className="grid grid-cols-2  items-center">
               <span className="font-semibold">Fuel Surcharge:</span>
               <span>
                 {formatToCurrency.format(
                   Number(selectedServices.fuel_surcharge)
                 )}
               </span>
-            </div>
-            <div className="grid grid-cols-2  items-center">
+            </div> */}
+            {/* <div className="grid grid-cols-2  items-center">
               <span className="font-semibold">Tip:</span>
               <span>
                 {formatToCurrency.format(Number(selectedServices.tip))}
               </span>
-            </div>
+            </div> */}
 
             <hr className="my-[2rem]" />
 
