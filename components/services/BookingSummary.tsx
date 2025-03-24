@@ -10,6 +10,7 @@ import { AppDispatch, RootState } from "@/lib/redux/store";
 import { format } from "date-fns";
 import { formatToCurrency } from "@/lib/utils";
 import { updateRideStateValues } from "@/lib/redux/slices/ride/rideSlice";
+import axios from "axios";
 
 const BookingSummary = () => {
   const { bookingDetails, distanceInMiles } = useSelector(
@@ -28,32 +29,44 @@ const BookingSummary = () => {
   tomorrow.setDate(today.getDate() + 1).toString();
 
   useEffect(() => {
-    let total = 0;
-    if (selectedServices && distanceInMiles) {
-      total =
-        Number(selectedServices.base_price) * distanceInMiles -
-        Number(selectedServices.discount.amount) +
-        Number(selectedServices.fuel_surcharge) +
-        Number(selectedServices.rider_fee) +
-        Number(selectedServices.rider_fee);
-    }
+    const updateDetails = async () => {
+      try {
+        let total = 0;
+        if (selectedServices && distanceInMiles) {
+          const { data } = await axios.get(
+            `/api/get-price-for-distance?id=${selectedServices.id}&distance=${distanceInMiles}`
+          );
+      
+          total =
+            Number(data) -
+            Number(selectedServices.discount.amount) +
+            Number(selectedServices.fuel_surcharge) +
+            Number(selectedServices.rider_fee) +
+            Number(selectedServices.rider_fee);
+        }
 
-    dispatch(
-      updateRideStateValues({
-        name: "bookingDetails",
-        value: {
-          ...bookingDetails,
-          amount: total,
-          user_details: {
-            name: `${userProfile?.first_name} ${userProfile?.last_name}`,
-            email: userProfile?.email,
-            mobile_number: userProfile?.mobile_number,
-          },
-        },
-      })
-    );
+        dispatch(
+          updateRideStateValues({
+            name: "bookingDetails",
+            value: {
+              ...bookingDetails,
+              amount: total,
+              user_details: {
+                name: `${userProfile?.first_name} ${userProfile?.last_name}`,
+                email: userProfile?.email,
+                mobile_number: userProfile?.mobile_number,
+              },
+            },
+          })
+        );
 
-    setTotalPrice(total);
+        setTotalPrice(total);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    updateDetails();
   }, []);
 
   return (
@@ -132,7 +145,7 @@ const BookingSummary = () => {
 
             <div className="grid grid-cols-2 text-[3rem] font-light items-center">
               <b className="">Total: </b>
-              <b>{totalPrice}</b>
+              <b>{formatToCurrency.format(totalPrice)}</b>
             </div>
           </div>
 

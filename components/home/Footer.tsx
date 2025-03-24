@@ -56,6 +56,7 @@ const Footer: FC = ({}) => {
           <div className="space-y-[1rem]">
             <h5 className="font-bold">CONTACT</h5>
             <p className="text-white text-[1.4rem]">info@ebosicare.com</p>
+            <p className="text-white text-[1.4rem]"> 832-433-4985</p>
             <p className="text-white text-[1.4rem]">
               8 The Green St R, Country City Dover DE 19901 USA
             </p>

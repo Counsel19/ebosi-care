@@ -26,7 +26,17 @@ import { toast } from "@/hooks/use-toast";
 const languageOptions = [{ value: "english", label: "English" }];
 const currencyOptions = [{ value: "usd", label: "$(USD)" }];
 
-type PlaceOption = { label: string; value: unknown };
+type PlaceOption = {
+  label: string;
+  value: {
+    description: string;
+    place_id: string;
+    structured_formatting: {
+      main_text: string;
+      secondary_text: string;
+    };
+  };
+};
 
 const BookRideWindow = () => {
   const [isClient, setIsClient] = useState(false);
@@ -55,7 +65,7 @@ const BookRideWindow = () => {
   const router = useRouter();
 
   function metersToMiles(meters: number) {
-    return meters / 1609.34;
+    return Number((meters / 1609.34).toFixed(2));
   }
 
   useEffect(() => {
@@ -75,9 +85,9 @@ const BookRideWindow = () => {
       try {
         if (pickupLocation && dropOffLocation) {
           setIsLoading(true);
-          const { distanceValue } = await calculateDistance(
-            pickupLocation.label,
-            dropOffLocation.label
+          const distanceValue = await calculateDistance(
+            pickupLocation.value.place_id as string,
+            dropOffLocation.value.place_id as string
           );
           setDistanceInMiles(metersToMiles(distanceValue));
         }
@@ -89,6 +99,7 @@ const BookRideWindow = () => {
           variant: "destructive",
         });
       } finally {
+        setIsLoading(false);
       }
     };
     getData();
@@ -209,7 +220,7 @@ const BookRideWindow = () => {
       <div className="w-full space-y-[1.5rem] text-[1.4rem] lg:text-base">
         <div className=" mx-auto lg:w-[50%]  space-y-[1rem]">
           <Button
-            disabled={!pickupLocation || !dropOffLocation || !isLoading}
+            disabled={!pickupLocation || !dropOffLocation || isLoading}
             isLoading={isLoading}
             onClick={() => {
               dispatch(
