@@ -32,6 +32,7 @@ const BookingSummary = () => {
     const updateDetails = async () => {
       try {
         let total = 0;
+        console.log(selectedServices, "selectedServices");
         if (selectedServices && distanceInMiles) {
           const { data } = await axios.get(
             `/api/get-price-for-distance?id=${selectedServices.id}&distance=${distanceInMiles}`
@@ -39,6 +40,8 @@ const BookingSummary = () => {
 
           total = Number(data) - Number(selectedServices.discount.amount);
         }
+
+        console.log(total, "total");
 
         dispatch(
           updateRideStateValues({
@@ -130,7 +133,9 @@ const BookingSummary = () => {
             <div className="grid grid-cols-2  items-center">
               <span className="font-semibold">Discount:</span>
               <span>
-                {formatToCurrency.format(Number(selectedServices.discount.amount))}
+                {formatToCurrency.format(
+                  Number(selectedServices.discount.amount)
+                )}
               </span>
             </div>
             {/* <div className="grid grid-cols-2  items-center">
