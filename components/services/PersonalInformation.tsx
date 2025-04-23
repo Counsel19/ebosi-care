@@ -39,7 +39,7 @@ function PersonalInformation({
   const { bookingDetails } = useSelector((store: RootState) => store.rides);
   const { userProfile } = useSelector((store: RootState) => store.auth);
   const [isLoading, setIsLoading] = useState(false);
-  const [showOTPForm, setShowOTPForm] = useState(false);
+  const [showOTPForm, setShowOTPForm] = useState(true);
   const [requestOTPLoading, setRequestOTPLoading] = useState(false);
 
   const dispatch = useDispatch<AppDispatch>();
@@ -72,42 +72,43 @@ function PersonalInformation({
           confirm_password: string;
           otp: string;
         },
-        { setFieldError }
+        // { setFieldError }
       ) {
-        handleStoreUser(values, setFieldError);
+        // handleStoreUser(values, setFieldError);
+        handleStoreUser(values);
       },
     });
 
-  const handleVerifyOTP = async ({
-    phone,
-    otp,
-    setFieldError,
-  }: {
-    phone: string;
-    otp: string;
-    setFieldError: (field: string, message: string | undefined) => void;
-  }) => {
-    try {
-      setFieldError("otp", "");
-      await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/verify-otp`, {
-        phone,
-        otp,
-      });
-    } catch (error) {
-      if (error instanceof AxiosError) {
-        setFieldError(
-          "otp",
-          error?.response?.data?.error?.opt ||
-            error?.response?.data?.error ||
-            "Error Verifying OTP"
-        );
-      } else {
-        setFieldError("otp", "Error Verifying OTP");
-      }
+  // const handleVerifyOTP = async ({
+  //   phone,
+  //   otp,
+  //   setFieldError,
+  // }: {
+  //   phone: string;
+  //   otp: string;
+  //   setFieldError: (field: string, message: string | undefined) => void;
+  // }) => {
+  //   try {
+  //     setFieldError("otp", "");
+  //     await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/verify-otp`, {
+  //       phone,
+  //       otp,
+  //     });
+  //   } catch (error) {
+  //     if (error instanceof AxiosError) {
+  //       setFieldError(
+  //         "otp",
+  //         error?.response?.data?.error?.opt ||
+  //           error?.response?.data?.error ||
+  //           "Error Verifying OTP"
+  //       );
+  //     } else {
+  //       setFieldError("otp", "Error Verifying OTP");
+  //     }
 
-      throw new Error("Error Verifying OTP");
-    }
-  };
+  //     throw new Error("Error Verifying OTP");
+  //   }
+  // };
 
   const requestOTP = async (phone: string) => {
     try {
@@ -144,17 +145,18 @@ function PersonalInformation({
       password: string;
       confirm_password: string;
       otp: string;
-    },
-    setFieldError: (field: string, message: string | undefined) => void
+    }
+    // setFieldError: (field: string, message: string | undefined) => void
   ) => {
+    console.log(userInfo, "userInfo")
     try {
       setIsLoading(true);
 
-      await handleVerifyOTP({
-        phone: values.mobile_number,
-        otp: values.otp,
-        setFieldError,
-      });
+      // await handleVerifyOTP({
+      //   phone: values.mobile_number,
+      //   otp: values.otp,
+      //   setFieldError,
+      // });
 
       const res = await dispatch(register(userInfo));
 
@@ -303,7 +305,8 @@ function PersonalInformation({
           </div>
         </div>
 
-        {showOTPForm && (
+
+        {/* {showOTPForm && (
           <div className="space-y-2 text-gray-500">
             <label htmlFor="">Enter OTP</label>
             <Input
@@ -324,7 +327,7 @@ function PersonalInformation({
               {errors["otp"]}
             </p>
           </div>
-        )}
+        )}  */}
 
         <div className="space-y-2 text-gray-500">
           <label htmlFor="">Password</label>

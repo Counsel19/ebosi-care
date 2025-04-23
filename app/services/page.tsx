@@ -21,11 +21,15 @@ import Link from "next/link";
 import { FC, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/lib/redux/store";
+import { useRouter } from "next/navigation";
+import { toast } from "@/hooks/use-toast";
 
 const ServicePage: FC = ({}) => {
   const [currentIndex, setCurrentIndex] = useState(1);
 
   const { bookingDetails } = useSelector((store: RootState) => store.rides);
+
+  const router = useRouter();
 
   const handleNext = () => {
     if (currentIndex < 3) {
@@ -39,16 +43,25 @@ const ServicePage: FC = ({}) => {
   };
 
   const handleValidate = (nextIndex: number, func: VoidFunction) => {
-   
     if (nextIndex === 2) {
+      if (
+        !bookingDetails?.pickup_location ||
+        !bookingDetails.dropoff_location
+      ) {
+        toast({
+          title: "Mising Fields",
+          description: "Please provide a destination location and address",
+          variant: "destructive",
+        });
+        return router.push("/");
+      }
+
       if (
         bookingDetails?.ride_date &&
         bookingDetails?.ride_time &&
         bookingDetails?.passengers &&
-        bookingDetails.luggage &&
-        bookingDetails?.pickup_location &&
-        bookingDetails.dropoff_location &&
         bookingDetails.service_id
+        // bookingDetails.luggage &&
       ) {
         func();
       }
@@ -121,7 +134,7 @@ const ServicePage: FC = ({}) => {
       {currentIndex == 1 ? (
         <>
           <RideDetails />
-          <SelectService  />
+          <SelectService />
 
           <div className="flex justify-between items-center ">
             <Button

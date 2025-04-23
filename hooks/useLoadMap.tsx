@@ -14,8 +14,9 @@ const LoadGoogleMap = () => {
       src={`https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_API_KEY}&libraries=places`}
       strategy="lazyOnload"
       onLoad={() => {
-        console.log("Google Maps script loaded!");
-        dispatch(updateRideStateValues({ name: "loadedGoogleMap", value: true }));
+        dispatch(
+          updateRideStateValues({ name: "loadedGoogleMap", value: true })
+        );
       }}
     />
   );

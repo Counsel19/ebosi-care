@@ -1,12 +1,13 @@
 "use client";
 
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import SelectServiceItem from "./molecules/SelectServiceItem";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/lib/redux/store";
 import { Button } from "../ui/button";
 import { updateServicesStateValues } from "@/lib/redux/slices/service/servicesSlice";
 import { Hearts } from "react-loader-spinner";
+import { getServices } from "@/lib/redux/slices/service/serviceThunk";
 
 const SelectService: FC = () => {
   const { selectedServices, allServices } = useSelector(
@@ -14,6 +15,20 @@ const SelectService: FC = () => {
   );
 
   const dispatch = useDispatch<AppDispatch>();
+
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        await dispatch(getServices());
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    if (!allServices) {
+      getData();
+    }
+  }, []);
 
   return (
     <div className="p-[1rem] lg:p-[4rem] shadow-lg grid gap-[4rem] border">
@@ -42,9 +57,11 @@ const SelectService: FC = () => {
             service={selectedServices}
           />
         ) : allServices ? (
-          allServices.slice(0, -1).map((service) => (
-            <SelectServiceItem key={service.id} service={service} />
-          ))
+          allServices
+            .slice(0, -1)
+            .map((service) => (
+              <SelectServiceItem key={service.id} service={service} />
+            ))
         ) : (
           <div className="bg-gray-300 grid place-content-center h-[40rem]">
             <Hearts

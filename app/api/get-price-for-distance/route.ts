@@ -3,12 +3,12 @@ import { NextRequest } from "next/server";
 const baseDistance = 9;
 
 const basePrice = [
-  { id: 7, basePrice: 40, extraMile: 2.5 },
-  { id: 8, basePrice: 138, extraMile: 3 },
-  { id: 9, basePrice: 18, extraMile: 1.5 },
-  { id: 10, basePrice: 15, extraMile: 1.25 },
-  { id: 11, basePrice: 13, extraMile: 1.2 },
-  { id: 12, basePrice: 35, extraMile: 1.2 },
+  { id: 1, basePrice: 40, extraMile: 2.5 },
+  { id: 2, basePrice: 138, extraMile: 3 },
+  { id: 3, basePrice: 18, extraMile: 1.5 },
+  { id: 4, basePrice: 15, extraMile: 1.25 },
+  { id: 5, basePrice: 13, extraMile: 1.2 },
+  { id: 6, basePrice: 35, extraMile: 1.2 },
 ];
 
 export async function GET(request: NextRequest) {

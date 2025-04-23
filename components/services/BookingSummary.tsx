@@ -28,11 +28,12 @@ const BookingSummary = () => {
   const tomorrow = new Date();
   tomorrow.setDate(today.getDate() + 1).toString();
 
+  console.log(userProfile, "userProfile")
+
   useEffect(() => {
     const updateDetails = async () => {
       try {
         let total = 0;
-        console.log(selectedServices, "selectedServices");
         if (selectedServices && distanceInMiles) {
           const { data } = await axios.get(
             `/api/get-price-for-distance?id=${selectedServices.id}&distance=${distanceInMiles}`
@@ -40,8 +41,6 @@ const BookingSummary = () => {
 
           total = Number(data) - Number(selectedServices.discount.amount);
         }
-
-        console.log(total, "total");
 
         dispatch(
           updateRideStateValues({

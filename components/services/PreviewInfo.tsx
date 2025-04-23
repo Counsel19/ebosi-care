@@ -89,6 +89,8 @@ const PreviewInfo = () => {
     }
   };
 
+  console.log(bookingDetails, "bookingDetails")
+
   return bookingDetails ? (
     <div className="p-[1rem] lg:p-[4rem] shadow-lg h-fit space-y-[4rem]">
       <div className="space-y-[3rem]">

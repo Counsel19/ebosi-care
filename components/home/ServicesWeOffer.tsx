@@ -20,6 +20,7 @@ const ServicesWeOffer: FC<ServicesWeOfferProps> = ({ filterSelected }) => {
   );
   const dispatch = useDispatch<AppDispatch>();
   const pathname = usePathname();
+  console.log(allServices, "allServices")
 
   useEffect(() => {
     const getData = async () => {

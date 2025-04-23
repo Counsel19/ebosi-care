@@ -2,10 +2,9 @@
 
 import { useState, useEffect } from "react";
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
-import { useSelector } from "react-redux";
-import { RootState } from "@/lib/redux/store";
-
-
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "@/lib/redux/store";
+import { updateRideStateValues } from "@/lib/redux/slices/ride/rideSlice";
 
 const mapContainerStyle = {
   width: "100%",
@@ -37,9 +36,10 @@ export default function TrackingMap({ origin, destination }: Props) {
   );
   const [distance, setDistance] = useState<string | null>(null);
 
+  const dispatch = useDispatch<AppDispatch>();
+
   useEffect(() => {
     if (!loadedGoogleMap || !origin || !destination) return;
-
     const geocoder = new google.maps.Geocoder();
 
     // Convert addresses to coordinates
@@ -70,6 +70,7 @@ export default function TrackingMap({ origin, destination }: Props) {
         travelMode: google.maps.TravelMode.DRIVING,
       },
       (response, status) => {
+        console.log(response, "response");
         if (status === "OK" && response) {
           setDistance(response.rows[0].elements[0].distance.text);
         }
@@ -81,6 +82,11 @@ export default function TrackingMap({ origin, destination }: Props) {
     <div className="map-wrapper">
       <LoadScript
         googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_API_KEY as string}
+        onLoad={() =>
+          dispatch(
+            updateRideStateValues({ name: "loadedGoogleMap", value: true })
+          )
+        }
       >
         <div className="shadow-lg border p-6">
           <h2 className="text-lg font-bold">Distance Calculation</h2>
