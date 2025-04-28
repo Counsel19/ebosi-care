@@ -1,3 +1,4 @@
+"use client";
 import React, { FC, useState } from "react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
@@ -13,6 +14,7 @@ import { toast } from "@/hooks/use-toast";
 import { AxiosError } from "axios";
 import { cn } from "@/lib/utils";
 import { updateRideStateValues } from "@/lib/redux/slices/ride/rideSlice";
+import { useTranslation } from "react-i18next";
 
 interface LoginFormProps {
   setShowForgotPassword?: React.Dispatch<React.SetStateAction<boolean>>;
@@ -31,6 +33,8 @@ const LoginForm: FC<LoginFormProps> = ({
   const { bookingDetails } = useSelector((store: RootState) => store.rides);
 
   const dispatch = useDispatch<AppDispatch>();
+
+  const { t } = useTranslation("form");
 
   const { handleChange, setFieldValue, handleSubmit, values, errors, touched } =
     useFormik({
@@ -109,7 +113,7 @@ const LoginForm: FC<LoginFormProps> = ({
   return (
     <form onSubmit={handleSubmit} className="space-y-[2rem]">
       <div className="w-full  space-y-4">
-        <label htmlFor="">Email:</label>
+        <label htmlFor="">{t(`email`)}:</label>
         <Input
           type="email"
           className="w-full shadow-inner rounded-sm outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
@@ -130,7 +134,7 @@ const LoginForm: FC<LoginFormProps> = ({
         </p>
       </div>
       <div className="w-full  space-y-4">
-        <label htmlFor="">Password:</label>
+        <label htmlFor="">{t(`password`)}:</label>
         <Input
           type="password"
           className="w-full shadow-inner rounded-sm outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
@@ -167,9 +171,9 @@ const LoginForm: FC<LoginFormProps> = ({
               }}
             />
             <p className="text-[1.4rem]">
-              I Agree with all the{" "}
+              {t(`agree_text`)}{" "}
               <Link href={"/"} className="text-primary">
-                Terms & Conditions
+                {t(`terms_and_condition`)}
               </Link>
             </p>
           </div>
@@ -178,7 +182,7 @@ const LoginForm: FC<LoginFormProps> = ({
               onClick={() => setShowForgotPassword(true)}
               className="cursor-pointer "
             >
-              Forgot Password?
+              {t(`forgot_password`)}
             </span>
           )}
         </div>
@@ -188,7 +192,7 @@ const LoginForm: FC<LoginFormProps> = ({
         isLoading={isLoading}
         className="bg-[#CC1815] hover:bg-[#960d0a] w-full  text-white"
       >
-        Login
+        {t(`login`)}
       </Button>
     </form>
   );

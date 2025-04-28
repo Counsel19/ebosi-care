@@ -1,3 +1,5 @@
+"use client";
+
 import AboutEbosi from "@/components/aboutUs/AboutEbosi";
 import EbosiFairPrices from "@/components/aboutUs/EbosiFairPrices";
 import MissonAndVision from "@/components/aboutUs/MissonAndVision";
@@ -5,8 +7,11 @@ import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 const AboutPage = () => {
+  const { t } = useTranslation("about");
+  
   return (
     <div className="bg-[#FFEAEA] space-y-[10rem]">
       <div className="bg-[url('/images/woman-showing-app.png')] bg-no-repeat bg-cover bg-center h-[47rem] grid place-content-center relative ">
@@ -14,7 +19,7 @@ const AboutPage = () => {
 
         <div className=" relative flex flex-col gap-[4rem] items-start justify-center  mx-auto">
           <h3 className="font-medium  text-white text-[5.4rem] leading-[5.5rem] lg:text-[6rem] lg:leading-[7rem] ">
-            Welcome to Ebosicare
+            {t(`welcome`)}
           </h3>
 
           <Link
@@ -25,7 +30,7 @@ const AboutPage = () => {
               })
             )}
           >
-            Book Now
+            {t(`book_now`)}
           </Link>
         </div>
       </div>

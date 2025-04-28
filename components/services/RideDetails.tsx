@@ -34,7 +34,7 @@ const RideDetails:FC<{
 
   return (
     <div className="lg:p-[4rem] p-[1rem] shadow-lg grid gap-[4rem] border">
-      <h3 className="font-semibold text-[2rem] ">1. Your Ride Details </h3>
+      <h3 className="font-semibold text-[2rem] "> Your Ride Details </h3>
       <div className={cn(`grid  gap-[2rem] text-gray-600`, fromEditRide ? "lg:grid-cols-2": "lg:grid-cols-4")}>
         <div className="w-full space-y-4 ">
           <label htmlFor=" ">When do you need a ride:</label>

@@ -1,0 +1,13 @@
+{
+    "firstname":"Firstname",
+    "lastname":"Lastname",
+    "email":"Email",
+    "login": "Login",
+    "signup": "Sign up",
+    "register": "Register",
+    "password": "Password",
+    "confirm_password": "Confirm Password",
+    "agree_text": "I Agree with all the",
+    "terms_and_condition": " Terms & Conditions",
+    "forgot_password":"Forgot Password?"
+}

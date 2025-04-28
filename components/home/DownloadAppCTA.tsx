@@ -1,26 +1,30 @@
+"use client";
+
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { buttonVariants } from "../ui/button";
+import { useTranslation } from "react-i18next";
 
 const DownloadAppCTA = () => {
+  const { t } = useTranslation("home");
+
   return (
     <div className="w__frame ">
       <div className=" grid lg:grid-cols-2 gap-[4rem] items-center">
         <div className=" space-y-[2rem]">
           <h3 className="font-bold text-[3rem] leading-[4rem] lg:text-[5rem] uppercase lg:leading-[4.5rem] text-[#506BA5]">
-            Download the app
+            {t("download_app")}
           </h3>
-          <p>
-            Download our app and enjoy the best service from EBOSICARE. All you
-            have to do to begin using it is to enter your name and mobile phone
-            number. You&apos;ll access:
-          </p>
+          <p>{t("download_app_desc")}</p>
           <ul>
-            <li> Special offers </li>
-            <li>EBOSICARE loyalty program</li>
-            <li> More pricing plans</li>
+            <li> {t("special_off")} </li>
+            <li> {t("driver_bonus")}</li>
+            <li> {t("rider_discount")} </li>
+            <li> {t("ebosi_bonus")}</li>
+            <li> {t("loyalty_programs")}</li>
+            <li> {t("pricing_plans")}</li>
           </ul>
 
           <div className="flex flex-col lg:flex-row gap-[2rem] lg:items-center">
@@ -42,9 +46,9 @@ const DownloadAppCTA = () => {
               />
               <div className="flex flex-col">
                 <span className="uppercase font-light text-[1rem]">
-                  Avialable On
+                  {t("avialable_on")}
                 </span>
-                <span >Google Play</span>
+                <span> {t("google_play")}</span>
               </div>
             </Link>
             <Link
@@ -66,9 +70,9 @@ const DownloadAppCTA = () => {
               />
               <div className="flex flex-col">
                 <span className="uppercase font-light text-[1rem]">
-                  Avialable On
+                  {t("avialable_on")}
                 </span>
-                <span >App Store</span>
+                <span> {t("apple_store")}</span>
               </div>
             </Link>
           </div>

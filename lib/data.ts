@@ -185,21 +185,30 @@ export const testimonials = [
     name: "Emily",
     subname: "REGULAR CLIENT",
     image: "/images/avatar_.png",
-    note: "Ebosi Care has been a game-changer for my health routine. Easy to book a ride/service, Their drivers are always on time, courteous, and genuinely compassionate. I feel safe and valued every time I ride with them",
+    note: {
+      en: "Ebosi Care has been a game-changer for my health routine. Easy to book a ride/service, Their drivers are always on time, courteous, and genuinely compassionate. I feel safe and valued every time I ride with them",
+      es: "Ebosi Care ha sido un cambio radical en mi rutina de salud. Es fácil reservar un viaje o servicio. Sus conductores siempre son puntuales, corteses y genuinamente compasivos. Me siento seguro y valorado cada vez que viajo con ellos.",
+    },
   },
   {
     id: "2",
     name: "James ",
     subname: "REGULAR CLIENT",
     image: "/images/avatar_.png",
-    note: "I never imagined a transportation service could feel so personal. Ebosi Care's team goes the extra mile. Punctual, professional, and caring. They truly understand the importance of my medical appointments",
+    note: {
+      en: "I never imagined a transportation service could feel so personal. Ebosi Care's team goes the extra mile. Punctual, professional, and caring. They truly understand the importance of my medical appointments",
+      es: "Nunca imaginé que un servicio de transporte pudiera ser tan personal. El equipo de Ebosi Care se esfuerza al máximo. Son puntuales, profesionales y atentos. Realmente comprenden la importancia de mis citas médicas.",
+    },
   },
   {
     id: "3",
     name: "Sophie ",
     subname: "REGULAR CLIENT",
     image: "/images/avatar_.png",
-    note: "When I needed reliable, stress-free transport for my treatments, Ebosi Care delivered. Their efficient booking, friendly drivers, and consistent service have made a world of difference in my healthcare journey",
+    note: {
+      en: "When I needed reliable, stress-free transport for my treatments, Ebosi Care delivered. Their efficient booking, friendly drivers, and consistent service have made a world of difference in my healthcare journey",
+      es: "Cuando necesité transporte confiable y sin estrés para mis tratamientos, Ebosi Care me lo proporcionó. Su eficiente sistema de reservas, la amabilidad de sus conductores y su servicio constante han marcado una gran diferencia en mi experiencia con la atención médica.",
+    },
   },
 ];
 

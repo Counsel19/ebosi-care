@@ -13,11 +13,13 @@ import { Button } from "../ui/button";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import ForgotPassword from "./ForgotPassword";
+import { useTranslation } from "react-i18next";
 
 const AuthDialog = ({}) => {
   const [selectedTab, setSelectedTab] = useState(1);
-  const [ openAuthDialog, setOpenAuthDialog ] = useState(false)
+  const [openAuthDialog, setOpenAuthDialog] = useState(false);
   const [showForgotPassword, setShowForgotPassword] = useState(false);
+  const { t } = useTranslation("home");
 
   return (
     <Dialog open={openAuthDialog} onOpenChange={setOpenAuthDialog}>
@@ -25,10 +27,10 @@ const AuthDialog = ({}) => {
         onClick={() => setShowForgotPassword(false)}
         className="text-blue-500"
       >
-        Login/Signup here
+        {t(`login_signup`)}
       </DialogTrigger>
       <DialogContent className=" p-0 min-w-[60%]">
-        <DialogTitle className="hidden">Auth Form</DialogTitle>
+        <DialogTitle className="hidden">{t(`auth_form`)}</DialogTitle>
         {showForgotPassword ? (
           <ForgotPassword />
         ) : (
@@ -50,7 +52,7 @@ const AuthDialog = ({}) => {
                   width={50}
                   className="w-[3rem]"
                 />
-                <span>Login</span>
+                <span> {t(`login`)}</span>
               </Button>
               <Button
                 onClick={() => setSelectedTab(2)}
@@ -68,14 +70,17 @@ const AuthDialog = ({}) => {
                   width={50}
                   className="w-[3rem]"
                 />
-                <span>Sign up</span>
+                <span> {t(`signup`)}</span>
               </Button>
             </div>
             <div className="p-[4rem]">
               {selectedTab == 1 ? (
-                <LoginForm setOpenAuthDialog={setOpenAuthDialog} setShowForgotPassword={setShowForgotPassword} />
+                <LoginForm
+                  setOpenAuthDialog={setOpenAuthDialog}
+                  setShowForgotPassword={setShowForgotPassword}
+                />
               ) : (
-                <RegisterForm  setOpenAuthDialog={setOpenAuthDialog} />
+                <RegisterForm setOpenAuthDialog={setOpenAuthDialog} />
               )}
             </div>
           </>

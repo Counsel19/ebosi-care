@@ -1,10 +1,14 @@
+"use client";
+
 import Image from "next/image";
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 const EbosiFairPrices = () => {
+  const { t } = useTranslation("about");
   return (
     <div className="w__frame bg-white  rounded-[3rem] p-[2.5rem] lg:p-[4rem] grid lg:grid-cols-[1.6fr_2fr] gap-[4rem]">
-      <div className="hidden lg:block"> 
+      <div className="hidden lg:block">
         <Image
           alt="about_ebosi_driver"
           src={"/images/about_ebosi_driver.png"}
@@ -23,15 +27,15 @@ const EbosiFairPrices = () => {
         />
 
         <h3 className="mb-[2rem] flex gap-[1rem] font-semibold text-[4rem] lg:text-[5rem]">
-          Fair
-          <span className="flex bg-[url('/images/vector_bg.png')] bg-cover bg-no-repeat">prices</span>
-          for all
+          {t(`fair`)}
+          <span className="flex bg-[url('/images/vector_bg.png')] bg-cover bg-no-repeat">
+            prices
+          </span>
+          {t(`for_all`)}
         </h3>
 
         <p className="text-[1.8rem] leading-[2.2rem] lg:text-[2.3rem] lg:leading-[3.2rem]">
-          Ebosi has evolved into a comprehensive platform, extending beyond
-          ride-hailing to deliver affordable, honest, and ethical services to
-          global communities.
+          {t(`fair_price_desc`)}
         </p>
       </div>
     </div>

@@ -22,8 +22,13 @@ import { calculateDistance } from "@/lib/calculateDistance";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { toast } from "@/hooks/use-toast";
+import i18next from "i18next";
+import { useTranslation } from "react-i18next";
 
-const languageOptions = [{ value: "english", label: "English" }];
+const languageOptions = [
+  { value: "en", label: "English" },
+  { value: "es", label: "Español" },
+];
 const currencyOptions = [{ value: "usd", label: "$(USD)" }];
 
 type PlaceOption = {
@@ -42,6 +47,9 @@ const BookRideWindow = () => {
   const [isClient, setIsClient] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [addStop, setAddStop] = useState(false);
+  const [language, setLanguage] = useState(
+    localStorage.getItem("lang") || "en"
+  );
   const [distanceInMiles, setDistanceInMiles] = useState(0);
 
   const [pickupLocation, setPickUpLocation] = useState<PlaceOption | null>(
@@ -58,6 +66,7 @@ const BookRideWindow = () => {
   );
 
   const pathname = usePathname();
+  const { t } = useTranslation("home");
 
   const { bookingDetails } = useSelector((store: RootState) => store.rides);
 
@@ -74,9 +83,9 @@ const BookRideWindow = () => {
 
   useEffect(() => {
     if (selectedServices && selectedServices.id == pathname.split("/")[1]) {
-      setBoxTitle(`Book a ${selectedServices.name}`);
+      setBoxTitle(`${t(`book_a`)} ${selectedServices.name}`);
     } else {
-      setBoxTitle("Book a Ride/Service");
+      setBoxTitle(t(`book_a_ride`));
     }
   }, [pathname, selectedServices]);
 
@@ -105,14 +114,24 @@ const BookRideWindow = () => {
     getData();
   }, [dropOffLocation, pickupLocation]);
 
+  const changeLanguage = (lng: unknown) => {
+    const lang = lng as string;
+    localStorage.setItem("lang", lang);
+    setLanguage(lang);
+    i18next.changeLanguage(lang);
+  };
+
   return (
     <div className="p-[2rem] w-full  rounded-lg bg-white shadow-lg space-y-[2rem]">
       <div className="space-y-[2rem] w-full grid">
         <div className="flex justify-end max-w-full">
           <div className="flex  gap-[1rem] ">
-            <Select>
+            <Select
+              value={language}
+              onValueChange={(value) => changeLanguage(value)}
+            >
               <SelectTrigger className="lg:w-[180px]">
-                <SelectValue placeholder="Select Language" />
+                <SelectValue placeholder={"Select Language"} />
               </SelectTrigger>
               <SelectContent>
                 {languageOptions.map((item) => (
@@ -148,7 +167,7 @@ const BookRideWindow = () => {
       ) : (
         <div className="flex flex-col gap-[1rem] lg:flex-row lg:gap-[2rem] ">
           <div className="w-full space-y-4">
-            <label htmlFor="">Enter your pickup Location:</label>
+            <label htmlFor="">{t(`pickup_input_label`)}</label>
 
             <div className="flex shadow-inner w-full rounded-sm  border border-input bg-transparent p-0  ring-offset-background file:border-0 file:bg-transparent file:text-base file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accentGreen focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
               <GooglePlacesAutocomplete
@@ -176,7 +195,7 @@ const BookRideWindow = () => {
 
           {addStop ? (
             <div className="w-full  space-y-4">
-              <label htmlFor="">Extra stop:</label>
+              <label htmlFor="">{t(`extra_label`)}</label>
               <div className="flex shadow-inner w-full rounded-sm  border border-input bg-transparent p-0  ring-offset-background file:border-0 file:bg-transparent file:text-base file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accentGreen focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
                 <GooglePlacesAutocomplete
                   selectProps={{
@@ -200,7 +219,7 @@ const BookRideWindow = () => {
             </div>
           ) : null}
           <div className="w-full  space-y-4">
-            <label htmlFor="">Enter your dropoff Location:</label>
+            <label htmlFor="">{t(`dropoff_input_label`)}</label>
             <div className="flex shadow-inner w-full rounded-sm  border border-input bg-transparent p-0  ring-offset-background file:border-0 file:bg-transparent file:text-base file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accentGreen focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
               <GooglePlacesAutocomplete
                 selectProps={{
@@ -243,7 +262,7 @@ const BookRideWindow = () => {
             }}
             className="bg-[#CC1815] disabled:bg-blue-500 hover:bg-[#960d0a] w-full  text-white"
           >
-            Book Now/Later
+            {t(`book_now_btn`)}
           </Button>
 
           <div className="grid  items-center grid-cols-2 justify-between">
@@ -257,7 +276,7 @@ const BookRideWindow = () => {
               )}
             >
               <FilePenLine />
-              <span className="">Edit/Cancel your ride</span>
+              <span className="">{t(`edit_cancel_ride_btn`)}</span>
             </Link>
             <Link
               href={"/track-vehicle"}
@@ -269,17 +288,17 @@ const BookRideWindow = () => {
               )}
             >
               <MapPinned />
-              <span>Track your vehicle</span>
+              <span>{t(`track_btn`)}</span>
             </Link>
           </div>
         </div>
         {/*  */}
         <div className="mx-auto md:w-[60%] text-[1.4rem] lg:text-base ">
           <div className=" before:flex before:w-full before:h-1 before:bg-[#00000040] italic text-[2rem] flex items-center gap-4  after:flex after:w-full after:h-1 after:bg-[#00000040] ">
-            or
+            {t(`or`)}
           </div>
           <p className="text-slate-500 text-[1.6rem] text-center">
-            Do you have a coperate account? <AuthDialog />
+            {t(`signup_txt`)} <AuthDialog />
           </p>
         </div>
       </div>

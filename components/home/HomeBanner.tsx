@@ -5,7 +5,7 @@ import BookRideWindow from "./BookRideWindow";
 import { cn } from "@/lib/utils";
 import EditCancelRide from "./EditCancelRide";
 import TrackVehicle from "./TrackVehicle";
-
+import { useTranslation } from "react-i18next";
 
 const carouselSlides = [
   "bg-[url('/images/weelchair-car-transaport.jpg')]",
@@ -20,8 +20,8 @@ interface HomeBannerProps {
 
 const HomeBanner: FC<HomeBannerProps> = ({ editCancelRide, trackVehicle }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
- 
 
+  const { t } = useTranslation("home");
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -43,7 +43,7 @@ const HomeBanner: FC<HomeBannerProps> = ({ editCancelRide, trackVehicle }) => {
 
         <div className=" relative  w-full  md:w-[80%] mx-auto">
           <h3 className="font-semibold  text-white text-[2.7rem] leading-[4rem] lg:text-[4.5rem] lg:leading-[5rem] text-center">
-            Ebosicare: Your trusted Healthcare ride and health services
+            {t(`tagline`)}
           </h3>
         </div>
       </div>

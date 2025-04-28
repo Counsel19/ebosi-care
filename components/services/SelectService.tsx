@@ -33,7 +33,7 @@ const SelectService: FC = () => {
   return (
     <div className="p-[1rem] lg:p-[4rem] shadow-lg grid gap-[4rem] border">
       <div className="flex justify-between items-center">
-        <h3 className="font-semibold text-[2rem] ">2. Select A Service </h3>
+        <h3 className="font-semibold text-[2rem] ">Select A Service </h3>
         {selectedServices != null ? (
           <Button
             onClick={() => {

@@ -1,11 +1,14 @@
+"use client";
+
 import Image from "next/image";
 import { FC } from "react";
+import { useTranslation } from "react-i18next";
 
 interface TestimonialItemProps {
   image: string;
   name: string;
   subname: string;
-  note: string;
+  note: { [key: string]: string };
 }
 const TestimonialItem: FC<TestimonialItemProps> = ({
   image,
@@ -13,6 +16,12 @@ const TestimonialItem: FC<TestimonialItemProps> = ({
   subname,
   note,
 }) => {
+  const { i18n } = useTranslation();
+
+  const currentLang = i18n.language || "en";
+
+  const translatedNote = note[currentLang];
+
   return (
     <div className="shadow-xl rounded-lg">
       <div className="flex  items-center gap-[1rem] p-[2rem] border-b ">
@@ -30,7 +39,9 @@ const TestimonialItem: FC<TestimonialItemProps> = ({
           </span>
         </div>
       </div>
-      <p className="text-gray-500 leading-[3rem] text-[1.8rem]  p-[2rem]">{note}</p>
+      <p className="text-gray-500 leading-[3rem] text-[1.8rem]  p-[2rem]">
+        {translatedNote}
+      </p>
     </div>
   );
 };

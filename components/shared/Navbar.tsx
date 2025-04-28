@@ -13,6 +13,7 @@ import { useOnClickOutside } from "@/hooks/useOnClickOutside";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/lib/redux/store";
 import { getServices } from "@/lib/redux/slices/service/serviceThunk";
+import { useTranslation } from "react-i18next";
 
 const driveWithUsSubmenu = [
   {
@@ -38,6 +39,8 @@ const Navbar: FC = ({}) => {
   const showDriveWithUsRef = useRef(null);
   useOnClickOutside(showServiceRef, () => setShowServices(false));
   useOnClickOutside(showDriveWithUsRef, () => setShowDrivewithUsMenu(false));
+
+  const { t } = useTranslation("common")
 
   const { allServices } = useSelector((store: RootState) => store.services);
   const dispatch = useDispatch<AppDispatch>();
@@ -82,7 +85,7 @@ const Navbar: FC = ({}) => {
                   )}
                   href={"/"}
                 >
-                  Home
+                  {t("home")}
                 </Link>
               </li>
               <li ref={showServiceRef} className="h-[10rem] relative ">
@@ -95,7 +98,7 @@ const Navbar: FC = ({}) => {
                     " h-full flex gap-2 justify-center items-center rounded-none bg-transparent hover:bg-transparent text-black text-[1.5rem] uppercase"
                   )}
                 >
-                  Services
+                {t("services")}
                   <IoMdArrowDropdown size={22} />
                 </Button>
                 <div
@@ -126,7 +129,7 @@ const Navbar: FC = ({}) => {
                   )}
                   href={"/about-us"}
                 >
-                  About Us
+              {t("about_us")}
                 </Link>
               </li>
               <li className="grid uppercase h-[10rem] ">
@@ -139,7 +142,7 @@ const Navbar: FC = ({}) => {
                   )}
                   href={"/book-a-ride"}
                 >
-                  Book a Ride
+                {t("book_a_ride")} 
                 </Link>
               </li>
 
@@ -153,7 +156,7 @@ const Navbar: FC = ({}) => {
                     " h-full flex gap-2 justify-center items-center rounded-none bg-transparent hover:bg-transparent text-black text-[1.5rem] uppercase"
                   )}
                 >
-                  Drive with us
+                    {t("drive_with_us")}
                   <IoMdArrowDropdown size={22} />
                 </Button>
                 <div
@@ -183,7 +186,7 @@ const Navbar: FC = ({}) => {
                   )}
                   href={"/contact-us"}
                 >
-                  Contact Us
+                   {t("contact_us")}
                 </Link>
               </li>
             </ul>

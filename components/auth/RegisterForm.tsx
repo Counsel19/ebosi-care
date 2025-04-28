@@ -16,6 +16,7 @@ import "react-international-phone/style.css";
 import { IRegister } from "@/types/users";
 import { register } from "@/lib/redux/slices/auth/authThunk";
 import { cn } from "@/lib/utils";
+import { useTranslation } from "react-i18next";
 
 interface RegisterFormProps {
   setOpenAuthDialog?: React.Dispatch<React.SetStateAction<boolean>>;
@@ -25,6 +26,8 @@ const RegisterForm: FC<RegisterFormProps> = ({ setOpenAuthDialog }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const dispatch = useDispatch<AppDispatch>();
+
+  const { t } = useTranslation("form");
 
   const { handleChange, setFieldValue, handleSubmit, values, errors, touched } =
     useFormik({
@@ -94,7 +97,7 @@ const RegisterForm: FC<RegisterFormProps> = ({ setOpenAuthDialog }) => {
           <Input
             type="text"
             className="w-full shadow-inner rounded-sm outline-none "
-            placeholder="Firstname"
+            placeholder={t(`firstname`)}
             name="first_name"
             value={values.first_name}
             error={errors["first_name"]}
@@ -115,7 +118,7 @@ const RegisterForm: FC<RegisterFormProps> = ({ setOpenAuthDialog }) => {
           <Input
             type="text"
             className="w-full shadow-inner rounded-sm outline-none "
-            placeholder="Lastname"
+            placeholder={t(`lastname`)}
             name="last_name"
             value={values.last_name}
             error={errors["last_name"]}
@@ -137,7 +140,7 @@ const RegisterForm: FC<RegisterFormProps> = ({ setOpenAuthDialog }) => {
         <Input
           type="email"
           className="w-full shadow-inner rounded-sm outline-none "
-          placeholder="Email"
+          placeholder={t(`email`)}
           name="email"
           value={values.email}
           error={errors["email"]}
@@ -188,7 +191,7 @@ const RegisterForm: FC<RegisterFormProps> = ({ setOpenAuthDialog }) => {
         <Input
           type="password"
           className="w-full shadow-inner rounded-sm outline-none "
-          placeholder="Password"
+          placeholder={t(`password`)}
           value={values.password}
           error={errors["password"]}
           touched={touched["password"]}
@@ -210,7 +213,7 @@ const RegisterForm: FC<RegisterFormProps> = ({ setOpenAuthDialog }) => {
           <Input
             type="password"
             className="w-full shadow-inner rounded-sm outline-none "
-            placeholder="Confirm Password"
+            placeholder={t(`confirm_password`)}
             name="confirm_password"
             value={values.confirm_password}
             error={errors["confirm_password"]}
@@ -245,9 +248,9 @@ const RegisterForm: FC<RegisterFormProps> = ({ setOpenAuthDialog }) => {
             }}
           />
           <p className="text-[1.2rem]">
-            I Agree with all the{" "}
+            {t(`agree_text`)}{" "}
             <Link href={"/"} className="text-primary">
-              Terms & Conditions
+              {t(`terms_and_condition`)}
             </Link>
           </p>
         </div>
@@ -257,7 +260,7 @@ const RegisterForm: FC<RegisterFormProps> = ({ setOpenAuthDialog }) => {
         isLoading={isLoading}
         className="bg-[#CC1815] hover:bg-[#960d0a] w-full  text-white"
       >
-        Register
+        {t(`register`)}
       </Button>
     </form>
   );

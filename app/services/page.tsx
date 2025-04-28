@@ -23,9 +23,19 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/lib/redux/store";
 import { useRouter } from "next/navigation";
 import { toast } from "@/hooks/use-toast";
+import i18next from "i18next";
+
+const languageOptions = [
+  { value: "en", label: "English" },
+  { value: "es", label: "Español" },
+];
+const currencyOptions = [{ value: "usd", label: "$(USD)" }];
 
 const ServicePage: FC = ({}) => {
   const [currentIndex, setCurrentIndex] = useState(1);
+  const [language, setLanguage] = useState(
+    localStorage.getItem("lang") || "en"
+  );
 
   const { bookingDetails } = useSelector((store: RootState) => store.rides);
 
@@ -78,17 +88,24 @@ const ServicePage: FC = ({}) => {
     }
   };
 
-  const languageOptions = [{ value: "english", label: "English" }];
-  const currencyOptions = [{ value: "usd", label: "$(USD)" }];
+  const changeLanguage = (lng: unknown) => {
+    const lang = lng as string;
+    localStorage.setItem("lang", lang);
+    setLanguage(lang);
+    i18next.changeLanguage(lang);
+  };
 
   return (
     <div className="py-[4rem] grid gap-[5rem] w__frame">
       <div className="">
         <div className="flex justify-end ">
           <div className="flex gap-[1rem] w-fit">
-            <Select>
-              <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="Select Language" />
+            <Select
+              value={language}
+              onValueChange={(value) => changeLanguage(value)}
+            >
+              <SelectTrigger className="lg:w-[180px]">
+                <SelectValue placeholder={"Select Language"} />
               </SelectTrigger>
               <SelectContent>
                 {languageOptions.map((item) => (
