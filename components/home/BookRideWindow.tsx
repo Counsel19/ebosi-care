@@ -48,7 +48,7 @@ const BookRideWindow = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [addStop, setAddStop] = useState(false);
   const [language, setLanguage] = useState(
-    localStorage.getItem("lang") || "en"
+    (typeof window !== "undefined" && localStorage.getItem("lang")) || "en"
   );
   const [distanceInMiles, setDistanceInMiles] = useState(0);
 
