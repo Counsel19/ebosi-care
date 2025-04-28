@@ -34,7 +34,7 @@ const currencyOptions = [{ value: "usd", label: "$(USD)" }];
 const ServicePage: FC = ({}) => {
   const [currentIndex, setCurrentIndex] = useState(1);
   const [language, setLanguage] = useState(
-    localStorage.getItem("lang") || "en"
+  (typeof window !== "undefined" && localStorage.getItem("lang")) || "en"
   );
 
   const { bookingDetails } = useSelector((store: RootState) => store.rides);
